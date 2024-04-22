@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+
+.titrefooter{
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: bold;
+    font-size: 2.6rem;
+
+}
+.highlightfooter{
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: bolder;
+    font-size: 2.4rem;
+    color: #4A9AC3;
+
+
+}
+.titrefooter1{
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: bolder;
+    font-size: 1.8rem;
+}
+.listfooter{
+    list-style: none;
+    
+}

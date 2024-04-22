@@ -1,0 +1,170 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+
+
+.container.ban{
+    background-color: #4A9AC3;
+}
+.titre {
+    font-size: 3.3rem;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: 750;
+    color: #FFFFFF;
+}
+
+.highlight {
+    font-size: 3.3rem;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: 750;
+    color: #2D185D;
+    word-spacing: 10px;
+}
+.text {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-family: 'Poppins Medium', sans-serif;
+    letter-spacing: 0.07vw;
+    word-spacing: 0.5vw;
+    text-align: justify;
+    /* Remove the text-wrap property, it's not valid */
+}
+.btn {
+    width: 100%; /* Set the button width to 100% of its container */
+    max-width: 200px; /* Set a maximum width for the button to prevent it from becoming too wide */
+    height: 5.5vh;
+    font-size: 1.2rem;
+    font-family: 'Poppins Medium', sans-serif;
+    font-weight: bold;
+    background-color: #F2E52F;
+    border-radius: 22px;
+    white-space: normal; /* Allow text to wrap within the button */
+    padding: 10px 20px; /* Adjust padding for better appearance */
+}
+
+.btn:hover{
+    transition: 500ms;
+    background-color: #FFFFFF;
+}
+.banner{
+    width: 80%;
+    height: auto;
+   
+}
+.titre1{
+    font-size: 2rem;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: 600;
+    color: #2D185D;
+}
+.highlight1{
+    color: #4A9AC3;
+    
+}
+.text-1{
+    font-size: 1.5rem;
+    font-family: 'Poppins Medium', sans-serif;
+    letter-spacing: 0.07vw;
+    font-weight: 500;
+    word-spacing: 0.5vw;
+    color: black;
+}
+.btn.btn1{
+    background-color: white;
+    border-color: #F2E52F;
+    border-width: 2px;
+}
+.btn.btn1:hover{
+    background-color: #F2E52F;
+    color:#FFFFFF;
+}
+.image1{
+    max-width: 70%;
+
+}
+.titre2{
+    font-size: 2.3rem;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: 600;
+    color: #2D185D;
+    letter-spacing: 0.4rem;
+    word-spacing: 0.4rem;
+}
+.text-2{ 
+    font-size: 1.5rem;
+    font-family: 'Poppins Medium', sans-serif;
+    letter-spacing: 0.07vw;
+    font-weight: 500;
+    word-spacing: 0.5vw;
+    color: black;
+    letter-spacing: 0.2rem;
+    word-spacing: 0.5rem;
+}
+.titre3{
+    font-size: 2.3rem;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: 800;
+    color: #2D185D;
+    
+}
+.text3{
+    font-size: 1.5rem;
+    font-family: 'Poppins Medium', sans-serif;
+    letter-spacing: 0.07vw;
+    font-weight: 545;
+    word-spacing: 0.5vw;
+    color: black;
+
+}
+.card{
+    background-color: #4A9AC3;
+    max-width: 100%;
+    width: 70%;
+    height: 110%;
+    border-width: 0;
+    border-radius: 20px;
+    
+}
+.card-img-top{
+    max-width: 40%;
+    margin-left: 30%;   
+    margin-top: -16%; 
+}
+.card-title{
+    font-family: 'Poppins Medium', sans-serif;
+    font-size: 1rem;
+    color: white;
+    font-weight: 550;
+}
+.card-text{
+    font-family: 'Poppins Medium', sans-serif;  
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 0.09rem;
+}
+.text-3{
+    color: #FFFFFF;
+    font-family: 'Poppins Semi-Bold', sans-serif;
+
+    font-weight: medium;
+}
+.inpt{
+    border-radius: 22px;
+    background-color: transparent;
+    border-width: 1px;
+    border-color: #FFFFFF;
+}
+.input::placeholder{
+    color: white;
+}
+.btn.btn3{
+    width: 40%;
+    
+}
