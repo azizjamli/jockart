@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -11,23 +12,20 @@ import Contact from './contact'; // Assuming you have a Contact component
 import Footer from './footer';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('acceuil');
-
-  const handleNavigation = (page) => {
-    setCurrentPage(page.toLowerCase()); // Ensure lowercase for consistency
-  };
-  
-
   return (
-    <div className="App">
-      <Header onNavigate={handleNavigation} />
-      {currentPage === 'acceuil' && <Acceuil />}
-      {currentPage === 'formations' && <Formations />}
-      {currentPage === 'communaute' && <Communauté />}
-      {currentPage === 'apropos' && <APropos />}
-      {currentPage === 'contact' && <Contact />}
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Acceuil />} />
+          <Route path="/formations" element={<Formations />} />
+          <Route path="/communaute" element={<Communauté />} />
+          <Route path="/apropos" element={<APropos />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
