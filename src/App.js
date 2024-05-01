@@ -10,6 +10,7 @@ import Communauté from './communauté'; // Assuming you have a Communauté comp
 import APropos from './aPropos'; // Assuming you have an APropos component
 import Contact from './contact'; // Assuming you have a Contact component
 import Footer from './footer';
+import Login from './login';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/communaute" element={<Communauté />} />
           <Route path="/apropos" element={<APropos />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </div>
