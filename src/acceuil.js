@@ -63,7 +63,7 @@ const Acceuil = () => {
       </div>
 
 
-      <div className="container mb-2">
+      <div className="container p-5">
   <div className="row mt-5 justify-content-center">
     <h3 className="titre3 text-lg-start">Témoignages</h3>
     <p className="text3 text-lg-start">Inspirants de Nos Étudiants</p>
@@ -103,8 +103,8 @@ const Acceuil = () => {
 
 
       <div className="container ban mt-5">
-        <div className="row">
-          <h3 className="titre">Newsletter</h3>
+        <div className="row mt-5">
+          <h3 className="titre ">Newsletter</h3>
           <p className="mt-3 text-3">VOUS VOULEZ REJOINDRE NOTRE NEWSLETTER ?</p>
         </div>
         <div className="row p-3  ">

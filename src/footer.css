@@ -12,7 +12,7 @@
 .titrefooter{
     font-family: 'Poppins Semi-Bold', sans-serif;
     font-weight: bold;
-    font-size: 2.6rem;
+    font-size: max(2.7vw, 27px); /* Set font size to 3vw or minimum of 20px */
 
 }
 .highlightfooter{
@@ -31,4 +31,11 @@
 .listfooter{
     list-style: none;
     
+}
+.text1footer{
+    font-size: max(1vw, 12px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight:normal;
+    word-spacing: 0px;
+    color: black;
 }

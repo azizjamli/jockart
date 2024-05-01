@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="row">
             <div className="col-md-5 col-sm-12">
                 <h1 className="text-start titrefooter">Embrassez Votre Créativité avec <br /> <span className="highlightfooter">Jock'Art Formation</span></h1>
-                <p className="text-start text1">Jock'Art Formation est votre partenaire dans votre parcours artistique. Avec notre engagement envers l'excellence et notre passion pour la créativité, nous sommes là pour vous aider à réaliser vos aspirations artistiques.</p>
+                <p className="text-start text1footer">Jock'Art Formation est votre partenaire dans votre parcours artistique. Avec notre engagement envers l'excellence et notre passion pour la créativité, nous sommes là pour vous aider à réaliser vos aspirations artistiques.</p>
             </div>
             <div className="col-md-3 col-sm-5 mt-5 pt-5 ">
                 <h3 className="text-start titrefooter1">Formations</h3>

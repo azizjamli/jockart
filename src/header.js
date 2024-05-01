@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./header.css";
 
-const Header = () => {
+const Header = ({ onNavigate }) => {
+    const [activeLink, setActiveLink] = useState("acceuil");
+
+    const handleClick = (page) => {
+        setActiveLink(page);
+        onNavigate(page);
+    };
+
     return (
         <nav className="navbar navbar-expand-lg container bg-white">
             <div className="container-fluid">
@@ -13,23 +20,22 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul className="navbar-nav mb-2 mb-lg-0 me-5">
-                        <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Acceuil</a>
+                        <li className={`nav-item ${activeLink === 'acceuil' ? 'active' : ''}`}>
+                            <a className="nav-link" href="#" onClick={() => handleClick('acceuil')}>Accueil</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Formations</a>
+                        <li className={`nav-item ${activeLink === 'formations' ? 'active' : ''}`}>
+                            <a className="nav-link" href="#" onClick={() => handleClick('Formations')}>Formations</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Communauté</a>
+                        <li className={`nav-item ${activeLink === 'communaute' ? 'active' : ''}`}>
+                            <a className="nav-link" href="#" onClick={() => handleClick('communauté')}>Communauté</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">A propos</a>
+                        <li className={`nav-item ${activeLink === 'apropos' ? 'active' : ''}`}>
+                            <a className="nav-link" href="#" onClick={() => handleClick('APropos')}>A propos</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Contact</a>
+                        <li className={`nav-item ${activeLink === 'contact' ? 'active' : ''}`}>
+                            <a className="nav-link" href="#" onClick={() => handleClick('contact')}>Contact</a>
                         </li>
                     </ul>
-                        
                 </div>
                 <button className="btn login" type="submit">Login</button>
             </div>

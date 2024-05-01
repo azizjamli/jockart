@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+
+input{
+    border: solid #4A9AC3  3px;
+    border-radius: 17px;
+    height: 7.6vh;
+    width: 100%;
+    padding: 2%;
+}
+.nmcontact{
+    width: 38%;
+}
+#message{
+    height:17.8vw;
+    min-height: 200px;
+}
+.imagecontact{
+    width: 90%;
+    min-width: 250px;
+    height: auto;
+}
+.textcontact{
+    font-size: max(1.6vw, 20px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    font-weight: bold;
+    width: 68%;
+    word-spacing: 0px ;
+    line-height: 1.8;
+    color: white;
+}
+.btncontact{
+    background-color: #F0E637;
+    min-width: 92%;
+    font-size: max(1.3vw, 20px); /* Set font size to 3vw or minimum of 20px */
+    border-radius: 15px;
+    width: 100vw;
+    height: auto;}

@@ -1,0 +1,26 @@
+.sectionformation1{
+    background-color: #4A9AC3;
+    height: max-content;
+}
+.titreformation1{
+    color: white;
+}
+.niveau{
+    color: #FFFF;
+}
+.niveaup{
+    color: #FFFF;
+    width: 14vw;
+   margin-left: 30%;
+}
+.theline{
+    background-color: #F0E637;
+    width: 0.8vw;
+    height: 10vh;
+}
+.circleformation1{
+    width: 10vw;
+    height: 10vw;
+    border: #F0E637 solid 4px;
+    border-radius:  360%;
+}
