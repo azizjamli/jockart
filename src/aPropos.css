@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+.titreapropos{
+    color: #311B61;
+    font-size: max(3vw, 25px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Semi-Bold', sans-serif;
+}
+.titre3{
+    color: #311B61;
+    font-size: max(1.6vw, 15px); /* Set font size to 3vw or minimum of 20px */
+
+}
+.doublearrows{
+    width: 3%;
+    min-width: 30px;
+    height: auto;
+}
+.section1{
+    background-color: #4A9AC3;
+    border-radius: 0px 27px 27px 0px;
+    height: max-content;
+}
+.text1{
+    font-size: max(1.6vw, 15px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Semi-Bold', sans-serif;
+    word-spacing: 10px ;
+    line-height: 1.8;
+    color: white;
+}
+.imageapropos1{
+    width: 100%;
+    min-width: 200px;
+    height: auto;
+}
+.btnapropos1{
+    font-size: max(1vw, 15px); /* Set font size to 3vw or minimum of 20px */
+}
+.cardapropos{
+    background-color: #FFFF;
+    max-width: 100%;
+    width: 70%;
+    height: max-content;
+    border-width: 0;
+    border-radius: 0px;
+    
+}
+.card-img-top-apropos {
+    margin-left: 0px;
+    margin-top: 0px;
+    max-width: 100%;
+    min-width: 15vw;
+    border-style: solid; /* Specify the border style */
+    border-color: #F0E637; /* Specify the border color */
+    border-width:0px 4px 4px 0px; /* Specify the border width */
+    border-radius: 0 0 48% 0;
+}
+
+.card-text-apropos{
+    font-family: 'Poppins Medium', sans-serif;  
+    font-weight: bold;
+    color: black;
+    font-size: max(1vw, 20px); /* Set font size to 3vw or minimum of 20px */
+    letter-spacing: 0.09rem;
+}
+.section2{
+    background-color: #4A9AC3;
+    border-radius: 27px 0px 0px 27px;
+    height: max-content;
+}
+.imageapropos2{
+    width: 80%;
+    min-width: 200px;
+    height: auto;
+}
