@@ -19,7 +19,7 @@ const Contact = () => {
       <>
       <div className="container mt-5">
         <div className="row">
-            <h1 className="titre">Contact</h1>
+            <h1 className="titrecontact">Contact</h1>
             <div className="d-flex align-items-basline  justify-content-center gap-3">
             <h3 className="titre3">Acceuil</h3> 
             <img src={doublearrows} className="doublearrows " alt="doublearrows" />

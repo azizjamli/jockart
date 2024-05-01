@@ -8,6 +8,11 @@
     src: url('./fonts/Poppins-Medium.ttf') format('truetype');
     /* You can add additional properties like font-weight, font-style, etc. here */
 }
+.titrecontact{
+    color: #311B61;
+    font-size: max(3vw, 25px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Semi-Bold', sans-serif;
+}
 
 input{
     border: solid #4A9AC3  3px;
