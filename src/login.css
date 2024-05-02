@@ -8,6 +8,7 @@
 }
 .signintogglediv{
     background-color: #4A9AC3;
+    height: 100%;
 }
 .motdepasseoublié{  text-decoration: none;
     color: #311B61;
@@ -23,7 +24,14 @@
   .slide-in-right {
     animation: slideInRight 0.8s ease forwards;
   }
-  
+  .inputlogin{
+    height: 6vh;
+  }
+  .togglelogin{
+    color: white;
+    border: 2px solid #F2E52F;
+    background-color: transparent;
+  }
   @keyframes slideInLeft {
     from {
       transform: translateX(100%);
