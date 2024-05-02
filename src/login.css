@@ -1,0 +1,48 @@
+.titresignin{
+    color: #311B61;
+
+}
+.iconsignin{
+    width: 8%;
+    min-width: 25px;
+}
+.signintogglediv{
+    background-color: #4A9AC3;
+}
+.motdepasseoublié{  text-decoration: none;
+    color: #311B61;
+    font-weight: bold;
+    border-bottom: 1px solid black; /* Change to the desired line color and style */
+    padding-bottom: 2px; /* Adjust the space between text and underline */
+}
+/* Add animation classes */
+.slide-in-left {
+    animation: slideInLeft 0.8s ease forwards;
+  }
+  
+  .slide-in-right {
+    animation: slideInRight 0.8s ease forwards;
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
