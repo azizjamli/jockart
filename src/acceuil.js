@@ -32,6 +32,9 @@ const Acceuil = () => {
     <div className="container mt-5">
       <div className="row">
             <div className="col-lg-5 col-md-12">
+            <svg viewBox="0 0 200 200" className="blobacceuil" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#FCF684" d="M47.6,-61.7C54.7,-50.8,48.7,-29.1,50.9,-10C53,10.2,63.3,60.8,60.3,60.5C60.7,61.2,0.9,60.9,0.9,60.6C5.9,60.4,-0.3,60.1,-2.3,50.5C-5.2,50.9,60,60.9,-80.8,60.1C-37.6,13.3,-35.5,3.7,-34.7,-7C-33.8,-17.7,-34.3,-29.5,-28.7,-40.7C-23.1,-51.9,-11.6,-62.5,4.3,-67.7C20.2,-72.8,40.5,-72.6,47.6,-61.7Z" transform="translate(100 100)" />
+</svg>
               <img className="img-fluid image1" src={image1} alt="" />
             </div>
             <div className="col-lg-7  col-md-12">
