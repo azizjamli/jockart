@@ -85,7 +85,10 @@
     color:#FFFFFF;
 }
 .image1{
-    max-width: 70%;
+    width: 25%;
+    position: absolute;
+    left: 12%;
+    z-index: 1;
 
 }
 .titre2{
@@ -167,3 +170,8 @@
     width: 40%;
     
 }
+.blobacceuil{
+    margin-left: 0;
+position: relative;
+width: 31.4vw;
+z-index: -1;}
