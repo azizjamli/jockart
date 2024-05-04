@@ -6,7 +6,6 @@ import image2 from './assets/image2.png'; // Corrected import statement
 import imagecard1 from './assets/imagecard1.png'; // Corrected import statement
 import imagecard2 from './assets/imagecard2.png'; // Corrected import statement
 import imagecard3 from './assets/imagecard3.png'; // Corrected import statement
-import { Button } from "bootstrap";
 
 
 const Acceuil = () => {
@@ -18,13 +17,13 @@ const Acceuil = () => {
           <span className="highlight">design et photographie</span>
         </h1>
         <div className="d-lg-none mb-4"> {/* Hidden for lg and larger screens */}
-          <img src={banner} className="banner" alt="Placeholder Image" />
+          <img src={banner} className="banner bannerAnimation" alt="Placeholder Image" />
         </div>
         <p className="text text-center text-lg-start mt-lg-4">Avec des cours interactifs, des instructeurs passionnés et une communauté dynamique, nous vous aidons à développer vos compétences et à libérer votre créativité.</p>
         <button className="btn mt-5">Rejoignez-nous</button>
       </div>
       <div className="col-lg-5 col-md-12 d-none d-lg-flex flex-column align-items-center align-items-lg-start"> {/* Hidden for md and smaller screens */}
-        <img src={banner} className="banner ms-1" alt="Placeholder Image" />
+        <img src={banner} className="banner bannerAnimation ms-1" alt="Placeholder Image" />
       </div>
     </div>
   </div>
@@ -105,7 +104,7 @@ const Acceuil = () => {
 </div>
 
 
-      <div className="container ban mt-5">
+      <div className="container ban newsletter p-4 mt-5">
         <div className="row mt-5">
           <h3 className="titre ">Newsletter</h3>
           <p className="mt-3 text-3">VOUS VOULEZ REJOINDRE NOTRE NEWSLETTER ?</p>
