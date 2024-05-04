@@ -55,6 +55,7 @@
 .banner{
     width: 80%;
     height: auto;
+    animation: slideInFromLeft 1s ease-in-out;
    
 }
 .titre1{
@@ -175,3 +176,16 @@
 position: relative;
 width: 31.4vw;
 z-index: -1;}
+.newsletter{
+    border-radius: 15px;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
