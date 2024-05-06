@@ -27,7 +27,7 @@ const Communauté = () => {
             <div className="row d-flex justify-content-center align-items-start mt-5">
               <div className="card col-md-6  align-self-start d-flex justify-content-center    border-0">
                 <div className="card-body card-body-communauté">
-                <img src={cardimage1} className="card-img-top card-img-communauté " alt="Placeholder Image" />
+                <img src={cardimage1} className="card-img-top card-img-communauté " alt="crdd" />
                   <img src={apostrophecard} className="apostrophe" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe1" alt="apostrophe"></img>
                   <h5 className="card-title mt-3 ">Dorra Masmoudi</h5>
