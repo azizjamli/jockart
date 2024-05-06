@@ -126,7 +126,7 @@
     color: black;
 
 }
-.card{
+.cardacceuil{
     background-color: #4A9AC3;
     max-width: 100%;
     width: 70%;
@@ -135,18 +135,18 @@
     border-radius: 20px;
     
 }
-.card-img-top{
+.card-img-top-acceuil{
     max-width: 40%;
     margin-left: 30%;   
     margin-top: -16%; 
 }
-.card-title{
+.card-title-acceuil{
     font-family: 'Poppins Medium', sans-serif;
     font-size: max(1.2vw, 20px); /* Set font size to 3vw or minimum of 20px */
     color: white;
     font-weight: 550;
 }
-.card-text{
+.card-text-acceuil{
     font-family: 'Poppins Medium', sans-serif;  
     color: white;
     font-size: max(1vw, 20px); /* Set font size to 3vw or minimum of 20px */
@@ -171,11 +171,6 @@
     width: 40%;
     
 }
-.blobacceuil{
-    margin-left: 0;
-position: relative;
-width: 31.4vw;
-z-index: -1;}
 .newsletter{
     border-radius: 15px;
 }
