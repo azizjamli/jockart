@@ -31,9 +31,6 @@ const Acceuil = () => {
     <div className="container mt-5">
       <div className="row">
             <div className="col-lg-5 col-md-12">
-            <svg viewBox="0 0 200 200" className="blobacceuil" xmlns="http://www.w3.org/2000/svg">
-  <path fill="#FCF684" d="M47.6,-61.7C54.7,-50.8,48.7,-29.1,50.9,-10C53,10.2,63.3,60.8,60.3,60.5C60.7,61.2,0.9,60.9,0.9,60.6C5.9,60.4,-0.3,60.1,-2.3,50.5C-5.2,50.9,60,60.9,-80.8,60.1C-37.6,13.3,-35.5,3.7,-34.7,-7C-33.8,-17.7,-34.3,-29.5,-28.7,-40.7C-23.1,-51.9,-11.6,-62.5,4.3,-67.7C20.2,-72.8,40.5,-72.6,47.6,-61.7Z" transform="translate(100 100)" />
-</svg>
               <img className="img-fluid image1" src={image1} alt="" />
             </div>
             <div className="col-lg-7  col-md-12">
@@ -72,31 +69,31 @@ const Acceuil = () => {
   </div>
   <div className="row testimonials mt-5 gx-4 gy-5 justify-content-center"> {/* Added gy-4 for vertical spacing */}
     <div className="col-lg-4 col-md-6 mb-4 d-flex justify-content-center">
-      <div className="card">
-        <img src={imagecard1} className="card-img-top" alt="Placeholder" />
+      <div className="card cardacceuil">
+        <img src={imagecard1} className="card-img-top card-img-top-acceuil " alt="Placeholder" />
         <div className="card-body ps-5 pe-5">
-          <h5 className="card-title mt-2">Formation de 3 mois en design graphique</h5>
-          <p className="card-text mt-5">La formation en design graphique de 3 mois chez Jock'Art Formation a été une expérience véritablement transformative pour moi.</p>
+          <h5 className="card-title card-title-acceuil mt-2">Formation de 3 mois en design graphique</h5>
+          <p className="card-text card-text-acceuil mt-5">La formation en design graphique de 3 mois chez Jock'Art Formation a été une expérience véritablement transformative pour moi.</p>
         </div>
       </div>
     </div>
 
     <div className="col-lg-4 col-md-6 mb-4 d-flex justify-content-center">
-      <div className="card">
-        <img src={imagecard2} className="card-img-top" alt="Placeholder" />
+      <div className="card cardacceuil">
+        <img src={imagecard2} className="card-img-top card-img-top-acceuil" alt="Placeholder" />
         <div className="card-body ps-5 pe-5">
-          <h5 className="card-title mt-2">Formation de 1 mois en cadrage vidéo et montage</h5>
-          <p className="card-text mt-5">Je suis reconnaissant envers Jock'Art Formation pour cette opportunité incroyable de développement personnel et professionnel.</p>
+          <h5 className="card-title card-title-acceuil mt-2">Formation de 1 mois en cadrage vidéo et montage</h5>
+          <p className="card-text card-text-acceuil mt-5">Je suis reconnaissant envers Jock'Art Formation pour cette opportunité incroyable de développement personnel et professionnel.</p>
         </div>
       </div>
     </div>
 
     <div className="col-lg-4 col-md-6 mb-4 d-flex justify-content-center">
-      <div className="card">
-        <img src={imagecard3} className="card-img-top" alt="Placeholder" />
+      <div className="card cardacceuil">
+        <img src={imagecard3} className="card-img-top card-img-top-acceuil" alt="Placeholder" />
         <div className="card-body ps-5 pe-5">
-          <h5 className="card-title mt-2">Formation de 1 mois en photographie</h5>
-          <p className="card-text mt-5">Merci à toute l'équipe de Jock'Art Formation pour cette expérience exceptionnelle!</p>
+          <h5 className="card-title card-title-acceuil mt-2">Formation de 1 mois en photographie</h5>
+          <p className="card-text card-text-acceuil mt-5">Merci à toute l'équipe de Jock'Art Formation pour cette expérience exceptionnelle!</p>
         </div>
       </div>
     </div>
