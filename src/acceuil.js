@@ -11,7 +11,6 @@ import imagecard3 from './assets/imagecard3.png'; // Corrected import statement
 const Acceuil = () => {
   return (
     <><div className="container ban">
-      <div>sdghf</div>
     <div className="row p-5 ">
       <div className="col-lg-7 col-md-12 d-flex flex-column align-items-center align-items-lg-start">
         <h1 className="titre text-center text-lg-start"> Explorez votre créativité avec notre école de <br />
