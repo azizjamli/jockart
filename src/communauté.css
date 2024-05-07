@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+  /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+  /* You can add additional properties like font-weight, font-style, etc. here */
+}
+
 
 .card-img-communauté{
     position: absolute;
@@ -63,6 +74,15 @@
     right: -10%;
     bottom:5%;
     width: 14px;
+}
+.card-title-communauté{
+  font-weight: bold;
+  font-family: 'Poppins Semi-Bold', sans-serif;
+
+}
+.card-text-communauté{
+  font-family: 'Poppins Semi-Bold', sans-serif;
+
 }
   
   
