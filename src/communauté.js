@@ -22,7 +22,7 @@ const Communauté = () => {
                 </div>
             </div>
             <div className="row mt-5">
-              <h2>Chez Jock'Art Formation , la satisfaction des formateurs et la collaboration étroite avec nos étudiants sont au cœur de notre réussite.</h2>
+              <h2 className="titrecommunauté">Chez Jock'Art Formation , la satisfaction des formateurs et la collaboration étroite avec nos étudiants sont au cœur de notre réussite.</h2>
             </div>
             <div className="row d-flex justify-content-center align-items-start mt-5">
               <div className="card col-md-6  align-self-start d-flex justify-content-center    border-0">

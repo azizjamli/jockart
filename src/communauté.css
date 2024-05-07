@@ -14,12 +14,14 @@
     position: absolute;
     top: 0;
     left: -65%;
-    width: 120px;
+    width: 7vw;
+    min-width: 80px;
 }
 .card-body-communauté {
     position: relative;
-    width: 200px;
+    width: 15vw;
     margin-left: 40%;
+    min-width: 150px;
   }
   
   .card-body-communauté::before,
@@ -53,35 +55,49 @@
     position: absolute;
     left: -5%;
     top:0;
-    width: 14px;
+    width: 1vw;
+    min-width: 12px;
 }
 .apostrophe1{
     position: absolute;
     left: 3%;
     top:0;
-    width: 14px;
+    width: 1vw;
+    min-width: 12px;
 }
 .apostrophe2{
     transform: scaleX(-1);
     position: absolute;
     right: -2%;
     bottom:5%;
-    width: 14px;
+    width: 1vw;
+    min-width: 12px;
 }
 .apostrophe3{
     transform: scaleX(-1);
     position: absolute;
     right: -10%;
     bottom:5%;
-    width: 14px;
+    width: 1vw;
+    min-width: 12px;
 }
 .card-title-communauté{
   font-weight: bold;
   font-family: 'Poppins Semi-Bold', sans-serif;
+  font-size: max(1.3vw , 12px);
+
 
 }
 .card-text-communauté{
+  font-size: max(1vw , 12px);
   font-family: 'Poppins Semi-Bold', sans-serif;
+
+}
+.titrecommunauté{
+  color: #311B61;
+  font-family: 'Poppins Semi-Bold', sans-serif;
+  font-weight: bold;
+  font-size: max(2vw , 18px);
 
 }
   

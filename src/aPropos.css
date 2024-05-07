@@ -66,8 +66,9 @@
 .card-text-apropos{
     font-family: 'Poppins Medium', sans-serif;  
     font-weight: bold;
+    width: 120%;
     color: black;
-    font-size: max(1vw, 20px); /* Set font size to 3vw or minimum of 20px */
+    font-size: max(1vw, 15px); /* Set font size to 3vw or minimum of 20px */
     letter-spacing: 0.09rem;
 }
 .section2{
