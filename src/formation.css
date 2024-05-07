@@ -1,6 +1,6 @@
 .sectionformation1{
     background-color: #4A9AC3;
-    height: max-content;
+    height: fit-content;
 }
 .titreformation1{
     color: white;
@@ -23,4 +23,7 @@
     height: 10vw;
     border: #F0E637 solid 4px;
     border-radius:  360%;
+}
+.textcircleformation{
+    font-weight: bold;
 }

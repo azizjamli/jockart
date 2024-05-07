@@ -5,17 +5,17 @@
     
 }
 
-.navbar .nav-item {
+.navbar .nav-item-header {
     font-size: 20px;
     color: black;
 }
 
 .navbar .nav-item a {
-    transition: color 0.3s ease; 
+    transition: color 0.3s solid ; 
 }
 
 .navbar .nav-item a.active {
-    color: blue; 
+    color: solid blue; 
 }
 
 
@@ -33,7 +33,7 @@
     width: 6.56vw;
     height: auto;
 }
-.navbar {
+.navbar-header {
     animation: slideInFromTop 0.5s ease-out;
     box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2); /* Add inset drop shadow only at the bottom */
     transition: transform 0.5s ease-out;
