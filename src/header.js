@@ -4,7 +4,7 @@ import "./header.css";
 
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg container bg-white">
+    <nav className="navbar navbar-header navbar-expand-lg container bg-white">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img src="/logo.png" alt="Logo" className="logoimg img-fluid" />
@@ -25,7 +25,7 @@ const Header = () => {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 me-5">
-            <li className="nav-item">
+            <li className="nav-item nav-item-header">
               <Link
                 to="/"
                 className="nav-link"
@@ -35,7 +35,7 @@ const Header = () => {
                 Accueil
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item nav-item-header">
               <Link
                 to="/formations"
                 className="nav-link"
@@ -44,7 +44,7 @@ const Header = () => {
                 Formations
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item nav-item-header">
               <Link
                 to="/communaute"
                 className="nav-link"
@@ -53,7 +53,7 @@ const Header = () => {
                 Communauté
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item nav-item-header">
               <Link
                 to="/apropos"
                 className="nav-link"
@@ -62,7 +62,7 @@ const Header = () => {
                 A propos
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item nav-item-header">
               <Link
                 to="/contact"
                 className="nav-link"
