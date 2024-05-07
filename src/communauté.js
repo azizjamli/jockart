@@ -30,8 +30,8 @@ const Communauté = () => {
                 <img src={cardimage1} className="card-img-top card-img-communauté " alt="crdd" />
                   <img src={apostrophecard} className="apostrophe" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe1" alt="apostrophe"></img>
-                  <h5 className="card-title mt-3 ">Dorra Masmoudi</h5>
-                  <p className="card-text mt-3">La communauté de Jock'Art est une source d'inspiration constante pour moi en tant que formateur de design graphique.</p>
+                  <h5 className="card-title card-title-communauté mt-3 ">Dorra Masmoudi</h5>
+                  <p className="card-text card-text-communauté mt-3">La communauté de Jock'Art est une source d'inspiration constante pour moi en tant que formateur de design graphique.</p>
                   <img src={apostrophecard} className="apostrophe2" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe3" alt="apostrophe"></img>
                 </div>
@@ -41,8 +41,8 @@ const Communauté = () => {
                 <img src={cardimage1} className="card-img-top card-img-communauté " alt="Placeholder Image" />
                   <img src={apostrophecard} className="apostrophe" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe1" alt="apostrophe"></img>
-                  <h5 className="card-title mt-3 ">Nour Ben Salah </h5>
-                  <p className="card-text mt-3">C'est un plaisir de partager mes connaissances et mon expertise avec des étudiants aussi enthousiastes et désireux d'apprendre.</p>
+                  <h5 className="card-title card-title-communauté mt-3 ">Nour Ben Salah </h5>
+                  <p className="card-text card-text-communauté mt-3">C'est un plaisir de partager mes connaissances et mon expertise avec des étudiants aussi enthousiastes et désireux d'apprendre. </p>
                   <img src={apostrophecard} className="apostrophe2" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe3" alt="apostrophe"></img>
                 </div>
@@ -55,8 +55,8 @@ const Communauté = () => {
                 <img src={cardimage1} className="card-img-top card-img-communauté " alt="Placeholder Image" />
                   <img src={apostrophecard} className="apostrophe" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe1" alt="apostrophe"></img>
-                  <h5 className="card-title mt-3 ">Dorra Masmoudi</h5>
-                  <p className="card-text mt-3">La communauté de Jock'Art est une source d'inspiration constante pour moi en tant que formateur de design graphique.</p>
+                  <h5 className="card-title card-title-communauté mt-3 ">Dorra Masmoudi</h5>
+                  <p className="card-text card-text-communauté mt-3">La communauté de Jock'Art est une source d'inspiration constante pour moi en tant que formateur de design graphique.</p>
                   <img src={apostrophecard} className="apostrophe2" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe3" alt="apostrophe"></img>
                 </div>
@@ -66,8 +66,8 @@ const Communauté = () => {
                 <img src={cardimage1} className="card-img-top card-img-communauté " alt="Placeholder Image" />
                   <img src={apostrophecard} className="apostrophe" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe1" alt="apostrophe"></img>
-                  <h5 className="card-title mt-3 ">Nour Ben Salah </h5>
-                  <p className="card-text mt-3">C'est un plaisir de partager mes connaissances et mon expertise avec des étudiants aussi enthousiastes et désireux d'apprendre.</p>
+                  <h5 className="card-title card-title-communauté mt-3 ">Nour Ben Salah </h5>
+                  <p className="card-text card-text-communauté mt-3">C'est un plaisir de partager mes connaissances et mon expertise avec des étudiants aussi enthousiastes et désireux d'apprendre.</p>
                   <img src={apostrophecard} className="apostrophe2" alt="apostrophe"></img>
                   <img src={apostrophecard} className="apostrophe3" alt="apostrophe"></img>
                 </div>
