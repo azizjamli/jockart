@@ -14,14 +14,15 @@
     background-color: #4A9AC3;
 }
     .titre {
-        font-size: max(3vw, 25px); /* Set font size to 3vw or minimum of 20px */
+        font-size: max(3.2vw, 20px);
+        width: 105%;
         font-family: 'Poppins Semi-Bold', sans-serif;
         font-weight: 750;
         color: #FFFFFF;
     }
 
 .highlight {
-    font-size: max(3.3vw, 40px); /* Set font size to 3vw or minimum of 20px */
+    font-size: max(3.4vw, 20px);
     font-family: 'Poppins Semi-Bold', sans-serif;
     font-weight: 750;
     color: #2D185D;
@@ -29,7 +30,6 @@
 }
 .text {
     color: #FFFFFF;
-    font-size: max(1.5vw, 20px); /* Set font size to 3vw or minimum of 20px */
     font-family: 'Poppins Medium', sans-serif;
     letter-spacing: 0.07vw;
     word-spacing: 0.5vw;
