@@ -1,11 +1,11 @@
 import React from "react";
 import "./aPropos.css";
-import doublearrows from './assets/doublearrows.png'; // Corrected import statement
-import imageapropos1 from './assets/imageapropos1.png'; // Corrected import statement
-import imagecardapropos1 from './assets/imagecardapropos1.png'; // Corrected import statement
-import imagecardapropos2 from './assets/imagecardapropos2.png'; // Corrected import statement
-import imagecardapropos3 from './assets/imagecardapropos3.png'; // Corrected import statement
-import imageapropos2 from './assets/imageapropos2.png'; // Corrected import statement
+import doublearrows from '../assets/doublearrows.png'; // Corrected import statement
+import imageapropos1 from '../assets/imageapropos1.png'; // Corrected import statement
+import imagecardapropos1 from '../assets/imagecardapropos1.png'; // Corrected import statement
+import imagecardapropos2 from '../assets/imagecardapropos2.png'; // Corrected import statement
+import imagecardapropos3 from '../assets/imagecardapropos3.png'; // Corrected import statement
+import imageapropos2 from '../assets/imageapropos2.png'; // Corrected import statement
 
 
 

@@ -1,8 +1,8 @@
 import React from "react";
 import "./footer.css";
-import phone from './assets/phone.png'; // Corrected import statement
-import mail from './assets/mail.png'; // Corrected import statement
-import localisation from './assets/localisation.png'; // Corrected import statement
+import phone from '../assets/phone.png'; // Corrected import statement
+import mail from '../assets/mail.png'; // Corrected import statement
+import localisation from '../assets/localisation.png'; // Corrected import statement
 
 const Footer = () => {
   return (

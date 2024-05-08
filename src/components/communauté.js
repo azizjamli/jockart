@@ -1,8 +1,8 @@
 import React from "react";
 import "./communauté.css";
-import doublearrows from "./assets/doublearrows.png";
-import cardimage1 from "./assets/imagecommunauté1.png";
-import apostrophecard from "./assets/communautécardapostrophe.png"
+import doublearrows from "../assets/doublearrows.png";
+import cardimage1 from "../assets/imagecommunauté1.png";
+import apostrophecard from "../assets/communautécardapostrophe.png"
 
 
 
