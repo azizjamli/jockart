@@ -53,4 +53,8 @@
       opacity: 1;
     }
   }
+  .error-message{
+    font-weight: bold;
+    color: red;
+  }
   
