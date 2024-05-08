@@ -1,7 +1,7 @@
 import React from "react";
 import "./contact.css";
-import doublearrows from './assets/doublearrows.png'; // Corrected import statement
-import imagecontact from './assets/imagecontact.png'; // Corrected import statement
+import doublearrows from '../assets/doublearrows.png'; // Corrected import statement
+import imagecontact from '../assets/imagecontact.png'; // Corrected import statement
 
 
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./login.css";
-import facebook from './assets/facebook.png';
-import instagram from './assets/instagram.png';
-import tiktok from './assets/tiktok.png';
+import facebook from '../assets/facebook.png';
+import instagram from '../assets/instagram.png';
+import tiktok from '../assets/tiktok.png';
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);

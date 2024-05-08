@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Poppins';
-    src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
+    src: url('../fonts/Poppins-SemiBold.ttf') format('truetype');
     /* You can add additional properties like font-weight, font-style, etc. here */
 }
 @font-face {
     font-family: 'Poppins';
-    src: url('./fonts/Poppins-Medium.ttf') format('truetype');
+    src: url('../fonts/Poppins-Medium.ttf') format('truetype');
     /* You can add additional properties like font-weight, font-style, etc. here */
 }
 .titreapropos{

@@ -5,7 +5,7 @@ import MontageVideo from './MontageVideo'; // Import other menu item components
 import MotionDesign from './MotionDesign'; // Import other menu item components
 import Photographie from './Photographie'; // Import other menu item components
 import Infographie from './Infographie'; // Import other menu item components
-import doublearrows from './assets/doublearrows.png'; // Assuming you have the doublearrows image
+import doublearrows from '../assets/doublearrows.png'; // Assuming you have the doublearrows image
 
 const FormationPage = () => {
     const [activeMenuItem, setActiveMenuItem] = useState(null); // State to track active menu item

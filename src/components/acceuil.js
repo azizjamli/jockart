@@ -1,11 +1,11 @@
 import React from "react";
 import "./acceuil.css";
-import banner from './assets/banner.png'; // Corrected import statement
-import image1 from './assets/image1.png'; // Corrected import statement
-import image2 from './assets/image2.png'; // Corrected import statement
-import imagecard1 from './assets/imagecard1.png'; // Corrected import statement
-import imagecard2 from './assets/imagecard2.png'; // Corrected import statement
-import imagecard3 from './assets/imagecard3.png'; // Corrected import statement
+import banner from '../assets/banner.png'; // Corrected import statement
+import image1 from '../assets/image1.png'; // Corrected import statement
+import image2 from '../assets/image2.png'; // Corrected import statement
+import imagecard1 from '../assets/imagecard1.png'; // Corrected import statement
+import imagecard2 from '../assets/imagecard2.png'; // Corrected import statement
+import imagecard3 from '../assets/imagecard3.png'; // Corrected import statement
 
 
 const Acceuil = () => {

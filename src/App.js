@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Header from './header';
-import Acceuil from './acceuil';
-import Formations from './formation'; // Assuming you have a Formations component
-import Communauté from './communauté'; // Assuming you have a Communauté component
-import APropos from './aPropos'; // Assuming you have an APropos component
-import Contact from './contact'; // Assuming you have a Contact component
-import Footer from './footer';
-import Login from './login';
+import Header from './components/header';
+import Acceuil from './components/acceuil';
+import Formations from './components/formation'; // Assuming you have a Formations component
+import Communauté from './components/communauté'; // Assuming you have a Communauté component
+import APropos from './components/aPropos'; // Assuming you have an APropos component
+import Contact from './components/contact'; // Assuming you have a Contact component
+import Footer from './components/footer';
+import Login from './components/login';
 
 function App() {
   return (
