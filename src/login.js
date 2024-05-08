@@ -11,6 +11,71 @@ const Login = () => {
         setIsSignUp(!isSignUp);
     };
 
+
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+
+
+    const validateEmail = () => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.trim()) {
+            setEmailError('Veuillez saisir votre email.');
+            return false;
+        } else if (!emailPattern.test(email)) {
+            setEmailError('Veuillez saisir une adresse email valide.');
+            return false;
+        } else {
+            setEmailError('');
+            return true;
+        }
+    };
+
+    const validatePassword = () => {
+        if (!password.trim()) {
+            setPasswordError('Veuillez saisir votre mot de passe.');
+            return false;
+        } else if (password.length < 6) {
+            setPasswordError('Le mot de passe doit comporter au moins 6 caractères.');
+            return false;
+        } else {
+            setPasswordError('');
+            return true;
+        }
+    };
+
+    const validateConfirmPassword = () => {
+        if (!confirmPassword.trim()) {
+            setConfirmPasswordError('Veuillez confirmer votre mot de passe.');
+            return false;
+        } else if (confirmPassword !== password) {
+            setConfirmPasswordError('Le mot de passe de confirmation ne correspond pas au mot de passe.');
+            return false;
+        } else {
+            setConfirmPasswordError('');
+            return true;
+        }
+    };
+
+
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateEmail() && validatePassword() && validateConfirmPassword() ) {
+            // Continuer avec la soumission du formulaire
+        } else {
+            // Gérer les erreurs de validation
+        }
+    };
+    
+    
+
     return (
         <div className="container">
             <div className="row">
@@ -24,10 +89,13 @@ const Login = () => {
                                 <img src={tiktok} alt="TikTok" className="iconsignin" />
                             </div>
                             <p className="mt-4">Ou utilisez votre compte email</p>
-                            <form>
-                                <input className="mt-4 inputlogin inputlogin" type="email" id="tel" placeholder="Numéro de téléphone" />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Confirmez le mot de passe" />
+                            <form onSubmit={handleSubmit}>
+                                <input className="mt-4 inputlogin inputlogin" type="email" id="tel" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
+                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Confirmez le mot de passe"     value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                                {emailError && <p className="error-message">{emailError}</p>}
+                                {passwordError && <p className="error-message">{passwordError}</p>}
+                                {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
                                 <button type="submit" className="btn mt-3">S'inscrire</button>
                             </form>
                         </div>
@@ -40,9 +108,11 @@ const Login = () => {
                                 <img src={tiktok} alt="TikTok" className="iconsignin" />
                             </div>
                             <p className="mt-5">Ou utilisez votre compte email</p>
-                            <form className="d-flex flex-column align-items-center gap-3">
-                                <input className="mt-4 inputlogin" type="email" id="tel" placeholder="Email" />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" />
+                            <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
+                                <input className="mt-4 inputlogin" type="email" id="tel" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                {emailError && <p className="error-message">{emailError}</p>}
+                                {passwordError && <p className="error-message">{passwordError}</p>}
                                 <a className="mt-4 mb-4 motdepasseoublié">Mot de passe oublié ?</a>
                                 <button type="submit" className="btn">Se connecter</button>
                             </form>
