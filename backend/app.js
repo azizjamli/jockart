@@ -1,18 +1,20 @@
-// jockart/backend/app.js
-
 const express = require('express');
-const dbConnection = require('./dbConfig'); // Importez la configuration de la base de données
-const apiRoutes = require('./routes/apiRoutes'); // Importez vos routes API
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const db = require('./dbConfig'); 
+const utilisateurRoutes = require('./routes/utilisateurRoutes'); // Import your API routes
 
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors());
 
-// Utilisez vos routes API
-app.use('/api', apiRoutes);
+// API Routes
+app.use('/api/users', utilisateurRoutes); // Mount user-related routes
 
-const PORT = process.env.PORT || 3001;
+// Start server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

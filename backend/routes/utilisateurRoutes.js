@@ -1,20 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const utilisateurController = require('../controllers/utilisateurController');
+const db = require('../dbConfig'); 
 
-// Route pour l'inscription d'un utilisateur
-router.post('/inscription', utilisateurController.inscriptionUtilisateur);
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    
+    try {
+        // Get database connection from dbConfig.js
+        const connection = await db.getConnection();
 
-// Route pour l'authentification d'un utilisateur
-router.post('/authentification', utilisateurController.authentificationUtilisateur);
+        // Query the database to check if the email and password match
+        const [rows] = await connection.execute('SELECT * FROM utilisateur WHERE email = ? AND motdepasse = ?', [email, password]);
 
-// Route pour récupérer un utilisateur par son ID
-router.get('/:id', utilisateurController.getUtilisateurById);
+        // Check if any rows were returned (i.e., user with matching credentials)
+        if (rows.length > 0) {
+            // Authentication successful
+            res.json({ success: true, message: 'Login successful' });
+        } else {
+            // No user found or incorrect credentials
+            res.status(401).json({ success: false, message: 'Invalid email or password' });
+        }
 
-// Route pour mettre à jour un utilisateur existant
-router.put('/:id', utilisateurController.updateUtilisateur);
-
-// Route pour supprimer un utilisateur par son ID
-router.delete('/:id', utilisateurController.deleteUtilisateur);
+        // Release the database connection
+        await connection.release();
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
 
 module.exports = router;
