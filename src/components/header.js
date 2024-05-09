@@ -29,7 +29,6 @@ const Header = () => {
               <Link
                 to="/"
                 className="nav-link"
-                activeClassName="active"
                 exact
               >
                 Accueil
@@ -39,7 +38,7 @@ const Header = () => {
               <Link
                 to="/formations"
                 className="nav-link"
-                activeClassName="active"
+                activeclassName="active"
               >
                 Formations
               </Link>
@@ -48,7 +47,7 @@ const Header = () => {
               <Link
                 to="/communaute"
                 className="nav-link"
-                activeClassName="active"
+                activeclassName="active"
               >
                 Communauté
               </Link>
@@ -57,7 +56,7 @@ const Header = () => {
               <Link
                 to="/apropos"
                 className="nav-link"
-                activeClassName="active"
+                activeclassName="active"
               >
                 A propos
               </Link>
@@ -66,7 +65,7 @@ const Header = () => {
               <Link
                 to="/contact"
                 className="nav-link"
-                activeClassName="active"
+                activeclassName="active"
               >
                 Contact
               </Link>

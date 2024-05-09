@@ -4,6 +4,9 @@ import facebook from '../assets/facebook.png';
 import instagram from '../assets/instagram.png';
 import tiktok from '../assets/tiktok.png';
 
+import axios from 'axios';
+
+
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
 
@@ -64,13 +67,21 @@ const Login = () => {
 
 
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateEmail() && validatePassword() && validateConfirmPassword() ) {
-            // Continuer avec la soumission du formulaire
+        if (validateEmail() && validatePassword() && validateConfirmPassword()) {
+            try {
+                const response = await axios.post('/api/login', {
+                    email,
+                    password
+                });
+                console.log(response.data); // Response from the backend
+                // Handle successful login response (e.g., redirect to dashboard)
+            } catch (error) {
+                console.error('Error:', error); // Handle errors
+            }
         } else {
-            // Gérer les erreurs de validation
+            // Handle validation errors if any
         }
     };
     
@@ -109,8 +120,8 @@ const Login = () => {
                             </div>
                             <p className="mt-5">Ou utilisez votre compte email</p>
                             <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
-                                <input className="mt-4 inputlogin" type="email" id="tel" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className="mt-4 inputlogin" type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <input className="mt-4 inputlogin" type="password" id="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 {emailError && <p className="error-message">{emailError}</p>}
                                 {passwordError && <p className="error-message">{passwordError}</p>}
                                 <a className="mt-4 mb-4 motdepasseoublié">Mot de passe oublié ?</a>
