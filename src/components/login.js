@@ -71,16 +71,18 @@ const Login = () => {
         e.preventDefault();
         if (validateEmail() && validatePassword() && validateConfirmPassword()) {
             try {
-                const response = await axios.post('/api/login', {
+                const response = await axios.post('http://localhost:3001/routes/utilisateurRoutes', {
                     email,
                     password
                 });
-                console.log(response.data); // Response from the backend
-                // Handle successful login response (e.g., redirect to dashboard)
+                console.log(response.data); 
+                prompt('working');
             } catch (error) {
                 console.error('Error:', error); // Handle errors
             }
         } else {
+            prompt('notworking');
+
             // Handle validation errors if any
         }
     };
