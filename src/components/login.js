@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
-import facebook from '../assets/facebook.png';
-import instagram from '../assets/instagram.png';
-import tiktok from '../assets/tiktok.png';
-
+import SignIn from "./signin";
+import SignUp from "./signup";
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -12,56 +10,11 @@ const Login = () => {
         setIsSignUp(!isSignUp);
     };
 
-    const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
-    const validateEmail = () => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email.trim()) {
-            setEmailError('Veuillez saisir votre email.');
-            return false;
-        } else if (!emailPattern.test(email)) {
-            setEmailError('Veuillez saisir une adresse email valide.');
-            return false;
-        } else {
-            setEmailError('');
-            return true;
-        }
-    };
-
-    const validatePassword = () => {
-        if (!password.trim()) {
-            setPasswordError('Veuillez saisir votre mot de passe.');
-            return false;
-        } else if (password.length < 6) {
-            setPasswordError('Le mot de passe doit comporter au moins 6 caractères.');
-            return false;
-        } else {
-            setPasswordError('');
-            return true;
-        }
-    };
-
-    const validateConfirmPassword = () => {
-        if (!confirmPassword.trim()) {
-            setConfirmPasswordError('Veuillez confirmer votre mot de passe.');
-            return false;
-        } else if (confirmPassword !== password) {
-            setConfirmPasswordError('Le mot de passe de confirmation ne correspond pas au mot de passe.');
-            return false;
-        } else {
-            setConfirmPasswordError('');
-            return true;
-        }
-    };
-
     const handleSignIn = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
-        
+        if (event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+        }
+    
         try {
             const { email, password } = event.target.elements;
     
@@ -79,105 +32,68 @@ const Login = () => {
     
             if (response.ok) {
                 // Successful signin
-                console.log('Signin successful:', data.message);
+                console.log('Signin successful:', data.token);
                 
-                // Handle further actions if needed
+                // Store the JWT token in local storage or session storage
+                localStorage.setItem('token', data.token);
+    
+                // Redirect or perform further actions if needed
+            } else if (response.status === 401) {
+                // Invalid credentials or unauthorized
+                console.error('Signin failed:', data.error);
+                // Display an error message to the user
+                // For example:
+                // setError('Invalid email or password');
             } else {
-                // Failed signin
-                console.error('Signin failed:', data.message);
-                console.log('connectionworkd user not found')
-                console.log(email , password);
-                // Handle error display or other actions
+                // Other errors
+                console.error('Signin failed:', data.error);
+                // Handle other error scenarios
             }
         } catch (error) {
             console.error('Signin failed:', error);
-            console.log('didnt work');
-            // Handle error display or other actions
+            // Handle network or other errors
         }
     };
-
-
-
-    const handleSignUp = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
-        
-        try {
-            const { email, password } = event.target.elements;
     
+
+    const handleSignUp = async (email, password) => {
+        try {
             // Make a POST request to the signup endpoint
             const response = await fetch('http://localhost:3001/api/users/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email.value, password: password.value }),
+                body: JSON.stringify({ email, password }),
             });
-    
-            // Check if the response status is ok
-            if (!response.ok) {
-                throw new Error('Signup failed'); // Throw an error if the response status is not ok
-            }
-    
+
             // Parse the response JSON
             const data = await response.json();
-    
-            // Display a success message to the user
-            console.log('Signup successful:', data.message);
-    
-            // Redirect or handle further actions if needed
+
+            if (response.ok) {
+                // Successful signup
+                console.log('Signup successful:', data.message);
+                
+                // Handle further actions if needed
+            } else {
+                // Failed signup
+                console.error('Signup failed:', data.message);
+                // Handle error display or other actions
+            }
         } catch (error) {
-            console.error('Signup failed:', error.message);
+            console.error('Signup failed:', error);
             // Handle error display or other actions
         }
     };
-    
-    
-    
-    
 
-    
     return (
-        <>
         <div className="container">
             <div className="row">
                 <div className={`col-md-6 ${isSignUp ? 'order-md-2 slide-in-right' : 'order-md-1 slide-in-left'}`}>
                     {isSignUp ? (
-                        <div className="p-5 signup">
-                            <h2 className="titresignin">Créez un compte</h2>
-                            <div className="d-flex justify-content-center gap-5 mt-5">
-                                <img src={facebook} alt="Facebook" className="iconsignin" />
-                                <img src={instagram} alt="Instagram" className="iconsignin" />
-                                <img src={tiktok} alt="TikTok" className="iconsignin" />
-                            </div>
-                            <p className="mt-4">Ou utilisez votre compte email</p>
-                            <form onSubmit={handleSignUp} >
-                                <input className="mt-4 inputlogin" type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
-                                <input className="mt-4 inputlogin" type="password" id="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <input className="mt-4 inputlogin" type="password" id="confirmPassword" placeholder="Confirmez le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                                {emailError && <p className="error-message">{emailError}</p>}
-                                {passwordError && <p className="error-message">{passwordError}</p>}
-                                {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
-                                <button type="submit" className="btn mt-3">S'inscrire</button>
-                            </form>
-                        </div>
+                        <SignUp handleSignUp={handleSignUp} />
                     ) : (
-                        <div className="signin p-5">
-                            <h2 className="titresignin">Connectez-vous à Jock'Art Formation</h2>
-                            <div className="d-flex justify-content-center gap-5 mt-5">
-                                <img src={facebook} alt="Facebook" className="iconsignin" />
-                                <img src={instagram} alt="Instagram" className="iconsignin" />
-                                <img src={tiktok} alt="TikTok" className="iconsignin" />
-                            </div>
-                            <p className="mt-5">Ou utilisez votre compte email</p>
-                            <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSignIn}>
-                                <input className="mt-4 inputlogin" type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                <input className="mt-4 inputlogin" type="password" id="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                {emailError && <p className="error-message">{emailError}</p>}
-                                {passwordError && <p className="error-message">{passwordError}</p>}
-                                <a className="mt-4 mb-4 motdepasseoublié">Mot de passe oublié ?</a>
-                                <button type="submit" className="btn">Se connecter</button>
-                            </form>
-                        </div>
+                        <SignIn handleSignIn={handleSignIn} />
                     )}
                 </div>
                 <div className={`col-md-6 ${isSignUp ? 'order-md-1 slide-in-left' : 'order-md-2 slide-in-right'}`}>
@@ -197,7 +113,6 @@ const Login = () => {
                 </div>
             </div>
         </div>
-        </>
     );
 };
 

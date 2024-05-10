@@ -1,23 +1,21 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const userroutes = require('./routes/userroutes');
-
 const app = express();
+const userRoutes = require('./routes/userroutes');
 
-// Middleware
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Enable CORS for all routes
 app.use(cors());
-app.use(bodyParser.json());
 
-// API Routes
-app.use('/api/users/signin', userroutes); // Make sure this line is included
-app.use('/api/users/signup', userroutes); // Make sure this line is included
+// Use the user routes
+app.use('/api/users', userRoutes);
 
-
-// Other route definitions and error handling
-
-// Start server
+// Start the server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

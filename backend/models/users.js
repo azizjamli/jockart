@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 const bcrypt = require('bcrypt');
 
-
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
@@ -11,16 +10,16 @@ const User = sequelize.define('User', {
   },
   nom: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true, // Allow null values for last name
   },
   prenom: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true, // Allow null values for first name
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true, // Assurez-vous que chaque utilisateur a un email unique
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -32,16 +31,13 @@ const User = sequelize.define('User', {
     },
   },
   numtel: DataTypes.STRING,
-
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-}
-, {
-  tableName: 'users', // Set the table name explicitly
-  timestamps: true, 
-}
-);
+}, {
+  tableName: 'users',
+  timestamps: true,
+});
 
 module.exports = User;
