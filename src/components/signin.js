@@ -60,9 +60,10 @@ const SignIn = ({ handleSignIn }) => {
                 <img src={tiktok} alt="TikTok" className="iconsignin" />
             </div>
             <p className="mt-5">Ou utilisez votre compte email</p>
-            <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
-                <input className="mt-4 inputlogin" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input className="mt-4 inputlogin" type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <form id="signinform" className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
+                <input className="mt-4 inputlogin" type="email" placeholder="Email" autoComplete="current-email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input className="mt-4 inputlogin" type="password" placeholder="Mot de passe"   autoComplete="current-password" // Add autocomplete attribute
+                 value={password} onChange={(e) => setPassword(e.target.value)} />
                 {emailError && <p className="error-message">{emailError}</p>}
                 {passwordError && <p className="error-message">{passwordError}</p>}
                 <a className="mt-4 mb-4 motdepasseoublié">Mot de passe oublié ?</a>

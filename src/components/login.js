@@ -24,22 +24,29 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
+
             });
-    
             if (response.ok) {
-                // Parse the response JSON
-                const data = await response.json();
-                console.log('Signin successful:', data.message);
-                console.log('hello user');
-                navigate('/DashboardEtud'); // Use navigate instead of history.push
-                // Handle further actions if needed, such as redirecting the user
+                               // Parse the response JSON
+                               const data = await response.json();
+                               console.log('Signin successful:', data.message);
+                               console.log('hello user');
+                               navigate('/DashboardEtud'); // Use navigate instead of history.push
+                               // Handle further actions if needed, such as redirecting the user
+
+                
+                
+                // Handle further actions if needed
             } else {
-                // Failed signin
-                const errorData = await response.json(); // Parse error response
-                console.error('Signin failed:', errorData.error);
-                // Handle error display or other actions
+                  // Failed signin
+                  const errorData = await response.json(); // Parse error response
+                  console.error('Signin failed:', errorData.error);
+                  // Handle error display or other actions
             }
-        } catch (error) {
+ 
+        }
+        
+        catch (error) {
             console.error('Signin failed:', error);
             // Handle error display or other actions
         }
