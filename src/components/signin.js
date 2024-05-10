@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+
 import "./login.css";
 import facebook from '../assets/facebook.png';
 import instagram from '../assets/instagram.png';
@@ -45,6 +47,8 @@ const SignIn = ({ handleSignIn }) => {
         }
 
         handleSignIn(email, password);
+
+
     };
 
     return (
