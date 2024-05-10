@@ -1,30 +1,28 @@
-const User = require('../models/users'); // Assuming your User model is in a file named 'models.js'
+const User = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const sequelize = require('../dbConfig');
+const { validationResult } = require('express-validator');
+const { SECRET_KEY } = process.env;
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user exists in the database
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Compare the provided password with the hashed password in the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate a JWT token for the user
-    const token = jwt.sign({ userId: user.id }, 'your_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
 
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -32,28 +30,19 @@ const signup = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user already exists in the database
-    const existingUser = await User.findOne({ where: { email: email } });
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ email, password: hashedPassword });
 
-    // Create the new user with the hashed password
-    const newUser = await User.create({
-      email: email,
-      password: hashedPassword,
-      // Add other user data as needed
-    });
-
-    // Generate a JWT token for the new user
-    const token = jwt.sign({ userId: newUser.id }, 'your_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
 
     res.status(201).json({ message: 'User created', token });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
