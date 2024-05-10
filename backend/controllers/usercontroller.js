@@ -1,3 +1,4 @@
+const { sequelize } = require('../dbConfig'); // Adjust the path as per your project structure
 const User = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -10,19 +11,22 @@ const signin = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(401).json({ error: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    // Generate JWT token
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
 
+    // Send token in response
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Signin error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -42,6 +46,7 @@ const signup = async (req, res) => {
 
     res.status(201).json({ message: 'User created', token });
   } catch (error) {
+    console.error('Signup error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
