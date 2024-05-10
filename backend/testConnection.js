@@ -1,22 +1,21 @@
-// Importez le fichier dbConfig.js pour obtenir l'objet de connexion
-const dbConnection = require('./dbConfig');
+// Import the Sequelize instance from dbConfig.js
+const sequelize = require('./dbConfig');
 
-// Test de la connexion à la base de données
-dbConnection.connect((err) => {
-    if (err) {
-        console.error('Erreur de connexion à la base de données :', err);
-    } else {
-        console.log('Connexion à la base de données réussie !');
+// Test the database connection
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Database connection successful.');
 
-        // Exemple de requête SQL pour tester la connexion
-        dbConnection.query('SELECT * FROM etudiant', (queryErr, results) => {
-            if (queryErr) {
-                console.error('Erreur lors de l\'exécution de la requête :', queryErr);
-            } else {
-                console.log('Résultats de la requête :', results);
-            }
-            // Fermez la connexion après avoir terminé
-            dbConnection.end();
-        });
-    }
-});
+    // Example query to test the connection
+    sequelize.query('SELECT * FROM users')
+      .then((results) => {
+        console.log('Query results:', results);
+      })
+      .catch((queryErr) => {
+        console.error('Error executing query:', queryErr);
+      });
+  })
+  .catch((err) => {
+    console.error('Database connection error:', err);
+  });

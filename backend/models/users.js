@@ -1,7 +1,9 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../sequelize-config');
+const sequelize = require('../dbConfig');
+const bcrypt = require('bcrypt');
 
-const Utilisateur = sequelize.define('Utilisateur', {
+
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -20,15 +22,26 @@ const Utilisateur = sequelize.define('Utilisateur', {
     allowNull: false,
     unique: true, // Assurez-vous que chaque utilisateur a un email unique
   },
-  motdepasse: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
+    set(value) {
+      // Hash the password before saving it to the database
+      const hashedPassword = bcrypt.hashSync(value, bcrypt.genSaltSync(10));
+      this.setDataValue('password', hashedPassword);
+    },
   },
   numtel: DataTypes.STRING,
-  datecreationcompte: {
+
+  createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-});
+}
+, {
+  tableName: 'users', // Set the table name explicitly
+  timestamps: true, 
+}
+);
 
-module.exports = Utilisateur;
+module.exports = User;

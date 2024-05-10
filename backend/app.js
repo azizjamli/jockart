@@ -1,17 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db = require('./dbConfig'); 
-const utilisateurRoutes = require('./routes/utilisateurRoutes'); // Import your API routes
+const userroutes = require('./routes/userroutes');
 
 const app = express();
 
 // Middleware
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 // API Routes
-app.use('/api/users', utilisateurRoutes); // Mount user-related routes
+app.use('/api/users/signin', userroutes); // Make sure this line is included
+app.use('/api/users/signup', userroutes); // Make sure this line is included
+
+
+// Other route definitions and error handling
 
 // Start server
 const PORT = process.env.PORT || 3001;
