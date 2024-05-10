@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const { SECRET_KEY } = process.env;
 
+
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -22,9 +23,14 @@ const signin = async (req, res) => {
     }
 
     // Validate the password
+    console.log('Entered password:', password);
+    console.log('Stored hashed password:', user.password);
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('Password validation result:', isPasswordValid);
+
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      console.error('Password validation failed. Entered password:', password);
+      throw new Error('Incorrect password');
     }
 
     // Generate JWT token
@@ -33,11 +39,10 @@ const signin = async (req, res) => {
     res.status(200).json({ message: 'Signin successful', token }); // Send token in response
 
   } catch (error) {
-    console.error('Signin error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Signin error:', error.message);
+    res.status(401).json({ error: 'Incorrect password' });
   }
 };
-
 
 
 const signup = async (req, res) => {
@@ -55,10 +60,9 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ email, password: hashedPassword });
+    const newUser = await User.create({ email, password});
 
-    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, );
 
     res.status(201).json({ message: 'User created', token });
   } catch (error) {

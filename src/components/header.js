@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <nav className="navbar navbar-header navbar-expand-lg container bg-white">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link  className="navbar-brand">
           <img src="/logo.png" alt="Logo" className="logoimg img-fluid" />
         </Link>
         <button
@@ -27,9 +27,9 @@ const Header = () => {
           <ul className="navbar-nav mb-2 mb-lg-0 me-5">
             <li className="nav-item nav-item-header">
               <Link
-                to="/"
+                to="./acceuil.js"
                 className="nav-link"
-                exact
+                exact="true"
               >
                 Accueil
               </Link>
@@ -38,7 +38,7 @@ const Header = () => {
               <Link
                 to="/formations"
                 className="nav-link"
-                activeclassName="active"
+                activeclassname="active"
               >
                 Formations
               </Link>
@@ -47,7 +47,7 @@ const Header = () => {
               <Link
                 to="/communaute"
                 className="nav-link"
-                activeclassName="active"
+                activeclassname="active"
               >
                 Communauté
               </Link>
@@ -56,7 +56,7 @@ const Header = () => {
               <Link
                 to="/apropos"
                 className="nav-link"
-                activeclassName="active"
+                activeclassname="active"
               >
                 A propos
               </Link>
@@ -65,7 +65,7 @@ const Header = () => {
               <Link
                 to="/contact"
                 className="nav-link"
-                activeclassName="active"
+                activeclassname="active"
               >
                 Contact
               </Link>
