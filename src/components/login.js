@@ -2,58 +2,49 @@ import React, { useState } from "react";
 import "./login.css";
 import SignIn from "./signin";
 import SignUp from "./signup";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
+
+    const navigate = useNavigate(); // Initialize useNavigate
+
 
     const toggleSignUp = () => {
         setIsSignUp(!isSignUp);
     };
 
-    const handleSignIn = async (event) => {
-        if (event) {
-            event.preventDefault(); // Prevent the default form submission behavior
-        }
-    
+    const handleSignIn = async (email, password) => {
         try {
-            const { email, password } = event.target.elements;
-    
             // Make a POST request to the signin endpoint
             const response = await fetch('http://localhost:3001/api/users/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email.value, password: password.value }),
+                body: JSON.stringify({ email, password }),
             });
     
-            // Parse the response JSON
-            const data = await response.json();
-    
             if (response.ok) {
-                // Successful signin
-                console.log('Signin successful:', data.token);
-                
-                // Store the JWT token in local storage or session storage
-                localStorage.setItem('token', data.token);
-    
-                // Redirect or perform further actions if needed
-            } else if (response.status === 401) {
-                // Invalid credentials or unauthorized
-                console.error('Signin failed:', data.error);
-                // Display an error message to the user
-                // For example:
-                // setError('Invalid email or password');
+                // Parse the response JSON
+                const data = await response.json();
+                console.log('Signin successful:', data.message);
+                console.log('hello user');
+                navigate('/DashboardEtud'); // Use navigate instead of history.push
+                // Handle further actions if needed, such as redirecting the user
             } else {
-                // Other errors
-                console.error('Signin failed:', data.error);
-                // Handle other error scenarios
+                // Failed signin
+                const errorData = await response.json(); // Parse error response
+                console.error('Signin failed:', errorData.error);
+                // Handle error display or other actions
             }
         } catch (error) {
             console.error('Signin failed:', error);
-            // Handle network or other errors
+            // Handle error display or other actions
         }
     };
+    
     
 
     const handleSignUp = async (email, password) => {
