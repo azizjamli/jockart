@@ -4,8 +4,6 @@ import facebook from '../assets/facebook.png';
 import instagram from '../assets/instagram.png';
 import tiktok from '../assets/tiktok.png';
 
-import axios from 'axios';
-
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -14,15 +12,12 @@ const Login = () => {
         setIsSignUp(!isSignUp);
     };
 
-
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
-
 
     const validateEmail = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,32 +59,85 @@ const Login = () => {
         }
     };
 
-
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (validateEmail() && validatePassword() && validateConfirmPassword()) {
-            try {
-                const response = await axios.post('http://localhost:3001/routes/utilisateurRoutes', {
-                    email,
-                    password
-                });
-                console.log(response.data); 
-                prompt('working');
-            } catch (error) {
-                console.error('Error:', error); // Handle errors
+    const handleSignIn = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        try {
+            const { email, password } = event.target.elements;
+    
+            // Make a POST request to the signin endpoint
+            const response = await fetch('http://localhost:3001/api/users/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email.value, password: password.value }),
+            });
+    
+            // Parse the response JSON
+            const data = await response.json();
+    
+            if (response.ok) {
+                // Successful signin
+                console.log('Signin successful:', data.message);
+                
+                // Handle further actions if needed
+            } else {
+                // Failed signin
+                console.error('Signin failed:', data.message);
+                console.log('connectionworkd user not found')
+                console.log(email , password);
+                // Handle error display or other actions
             }
-        } else {
-            prompt('notworking');
+        } catch (error) {
+            console.error('Signin failed:', error);
+            console.log('didnt work');
+            // Handle error display or other actions
+        }
+    };
 
-            // Handle validation errors if any
+
+
+    const handleSignUp = async (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        try {
+            const { email, password } = event.target.elements;
+    
+            // Make a POST request to the signup endpoint
+            const response = await fetch('http://localhost:3001/api/users/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email.value, password: password.value }),
+            });
+    
+            // Check if the response status is ok
+            if (!response.ok) {
+                throw new Error('Signup failed'); // Throw an error if the response status is not ok
+            }
+    
+            // Parse the response JSON
+            const data = await response.json();
+    
+            // Display a success message to the user
+            console.log('Signup successful:', data.message);
+    
+            // Redirect or handle further actions if needed
+        } catch (error) {
+            console.error('Signup failed:', error.message);
+            // Handle error display or other actions
         }
     };
     
     
+    
+    
 
+    
     return (
+        <>
         <div className="container">
             <div className="row">
                 <div className={`col-md-6 ${isSignUp ? 'order-md-2 slide-in-right' : 'order-md-1 slide-in-left'}`}>
@@ -102,10 +150,10 @@ const Login = () => {
                                 <img src={tiktok} alt="TikTok" className="iconsignin" />
                             </div>
                             <p className="mt-4">Ou utilisez votre compte email</p>
-                            <form onSubmit={handleSubmit}>
-                                <input className="mt-4 inputlogin inputlogin" type="email" id="tel" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <input className="mt-4 inputlogin" type="password" id="tel" placeholder="Confirmez le mot de passe"     value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                            <form onSubmit={handleSignUp} >
+                                <input className="mt-4 inputlogin" type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
+                                <input className="mt-4 inputlogin" type="password" id="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className="mt-4 inputlogin" type="password" id="confirmPassword" placeholder="Confirmez le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                                 {emailError && <p className="error-message">{emailError}</p>}
                                 {passwordError && <p className="error-message">{passwordError}</p>}
                                 {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
@@ -121,7 +169,7 @@ const Login = () => {
                                 <img src={tiktok} alt="TikTok" className="iconsignin" />
                             </div>
                             <p className="mt-5">Ou utilisez votre compte email</p>
-                            <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
+                            <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSignIn}>
                                 <input className="mt-4 inputlogin" type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 <input className="mt-4 inputlogin" type="password" id="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
                                 {emailError && <p className="error-message">{emailError}</p>}
@@ -142,13 +190,14 @@ const Login = () => {
                     ) : (
                         <div className="signintogglediv p-5 d-flex flex-column align-items-center gap-5">
                             <h2 className="mt-5 text-white">Content de vous revoir</h2>
-                            <p className="mt-5 text-white ">pour rester en contact avec nous, veuillez vous connecter avec vos informations personnelles</p>
+                            <p className="mt-5 text-white">pour rester en contact avec nous, veuillez vous connecter avec vos informations personnelles</p>
                             <button className="btn togglelogin mt-5 float-right" onClick={toggleSignUp}>S'inscrire</button>
                         </div>
                     )}
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
