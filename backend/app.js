@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const userRoutes = require('./routes/userroutes');
+const authRoutes = require('./routes/authRoutes');
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -18,6 +20,8 @@ app.use(cookieParser());
 
 // Use the user routes
 app.use('/api/users', userRoutes);
+app.use('/api', authRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 3001;
