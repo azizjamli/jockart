@@ -4,12 +4,10 @@ import SignIn from "./signin";
 import SignUp from "./signup";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
-
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState(""); // State for error message
     const navigate = useNavigate(); // Initialize useNavigate
-
 
     const toggleSignUp = () => {
         setIsSignUp(!isSignUp);
@@ -24,35 +22,25 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
-
             });
             if (response.ok) {
-                               // Parse the response JSON
-                               const data = await response.json();
-                               console.log('Signin successful:', data.message);
-                               console.log('hello user');
-                               navigate('/DashboardEtud'); // Use navigate instead of history.push
-                               // Handle further actions if needed, such as redirecting the user
-
-                
-                
-                // Handle further actions if needed
+                // Parse the response JSON
+                const data = await response.json();
+                console.log('Signin successful:', data.message);
+                console.log('hello user');
+                navigate('/DashboardEtud'); // Use navigate instead of history.push
+                // Handle further actions if needed, such as redirecting the user
             } else {
-                  // Failed signin
-                  const errorData = await response.json(); // Parse error response
-                  console.error('Signin failed:', errorData.error);
-                  // Handle error display or other actions
+                // Failed signin
+                const errorData = await response.json(); // Parse error response
+                console.error('Signin failed:', errorData.error);
+                setErrorMessage('Verifiez Vos Cordonnées'); // Set error message
             }
- 
-        }
-        
-        catch (error) {
+        } catch (error) {
             console.error('Signin failed:', error);
             // Handle error display or other actions
         }
     };
-    
-    
 
     const handleSignUp = async (email, password) => {
         try {
@@ -72,7 +60,6 @@ const Login = () => {
                 // Successful signup
                 console.log('Signup successful:', data.message);
                 navigate('/signupcontinue');
-                
                 // Handle further actions if needed
             } else {
                 // Failed signup
@@ -89,11 +76,14 @@ const Login = () => {
         <div className="container">
             <div className="row">
                 <div className={`col-md-6 ${isSignUp ? 'order-md-2 slide-in-right' : 'order-md-1 slide-in-left'}`}>
+                    {/* Display error message */}
+                    {errorMessage && <h2 style={{ color: 'red', fontSize: '1.8vw' }}>{errorMessage}</h2>}                    
                     {isSignUp ? (
                         <SignUp handleSignUp={handleSignUp} />
                     ) : (
                         <SignIn handleSignIn={handleSignIn} />
                     )}
+
                 </div>
                 <div className={`col-md-6 ${isSignUp ? 'order-md-1 slide-in-left' : 'order-md-2 slide-in-right'}`}>
                     {isSignUp ? (
