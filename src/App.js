@@ -23,9 +23,11 @@ function App() {
     axios.get('http://localhost:3001/api/check-auth')
       .then(response => {
         setIsLoggedIn(true);
+        console.log('mchett heyy');
       })
       .catch(error => {
         setIsLoggedIn(false);
+        console.log('errorhaa');
       });
   }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
 
@@ -41,11 +43,10 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signupcontinue" element={<Signupcontinue />} />
-            {isLoggedIn ? (
+            
               <Route path="/dashboardetud" element={<DashboardEtud />} />
-            ) : (
-              <Route path="/dashboardetud" element={<Login />} />
-            )}
+         
+    
           </Routes>
 
         <Footer />

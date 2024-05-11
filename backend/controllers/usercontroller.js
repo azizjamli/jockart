@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const { validationResult } = require('express-validator');
 const { SECRET_KEY } = process.env;
 
@@ -28,20 +29,24 @@ const signin = async (req, res) => {
       return res.status(404).json({ error: 'Incorrect password' });
     }
 
+ // Generate JWT access token
+ const accessToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
 
-    // Generate JWT token
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
-    
-     // Set an HTTP-only cookie with the JWT token
-     res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 3600000, // 1 hour in milliseconds
-    });
+ // Generate JWT refresh token
+ const refreshToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '7d' }); // Example: Refresh token expires in 7 days
 
+ // Set HTTP-only cookies with tokens
+ res.cookie('accessToken', accessToken, {
+   httpOnly: true,
+   maxAge: 3600000, // 1 hour in milliseconds
+ });
+ res.cookie('refreshToken', refreshToken, {
+   httpOnly: true,
+   maxAge: 604800000, // 7 days in milliseconds
+ });
 
-    // Send token in response
-    res.status(200).json({ message: 'Signin successful', token });
-
+ // Send tokens in response
+ res.status(200).json({ message: 'Signin successful', accessToken, refreshToken });
   } catch (error) {
     console.error('Signin error:', error.message);
     res.status(500).json({ error: 'Internal server error' });
