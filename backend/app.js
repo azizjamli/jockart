@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 const app = express();
 const userRoutes = require('./routes/userroutes');
 
@@ -10,6 +12,9 @@ app.use(express.json());
 
 // Enable CORS for all routes
 app.use(cors());
+
+app.use(cookieParser());
+
 
 // Use the user routes
 app.use('/api/users', userRoutes);
