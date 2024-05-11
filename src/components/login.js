@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 import SignIn from "./signin";
 import SignUp from "./signup";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import {useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -29,7 +29,7 @@ const Login = () => {
                 console.log('Signin successful:', data.message);
                 console.log('hello user');
                 navigate('/DashboardEtud'); // Use navigate instead of history.push
-                // Handle further actions if needed, such as redirecting the user
+                    // Handle further actions if needed, such as redirecting the user
             } else {
                 // Failed signin
                 const errorData = await response.json(); // Parse error response

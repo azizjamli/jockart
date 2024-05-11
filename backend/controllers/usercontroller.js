@@ -25,7 +25,7 @@ const signin = async (req, res) => {
     // Validate the password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Incorrect password' });
+      return res.status(404).json({ error: 'Incorrect password' });
     }
 
 
