@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { validationResult } = require('express-validator');
 const { SECRET_KEY } = process.env;
-
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -18,9 +17,7 @@ const signin = async (req, res) => {
     // Check if the user exists in the database
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: 'User not found'
-        
-       });
+      return res.status(401).json({ error: 'User not found' });
     }
 
     // Validate the password
@@ -29,24 +26,24 @@ const signin = async (req, res) => {
       return res.status(404).json({ error: 'Incorrect password' });
     }
 
- // Generate JWT access token
- const accessToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
+    // Generate JWT access token with user ID and role
+    const accessToken = jwt.sign({ userId: user.id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
 
- // Generate JWT refresh token
- const refreshToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '7d' }); // Example: Refresh token expires in 7 days
+    // Generate JWT refresh token
+    const refreshToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '7d' });
 
- // Set HTTP-only cookies with tokens
- res.cookie('accessToken', accessToken, {
-   httpOnly: true,
-   maxAge: 3600000, // 1 hour in milliseconds
- });
- res.cookie('refreshToken', refreshToken, {
-   httpOnly: true,
-   maxAge: 604800000, // 7 days in milliseconds
- });
+    // Set HTTP-only cookies with tokens
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      maxAge: 3600000,
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      maxAge: 604800000,
+    });
 
- // Send tokens in response
- res.status(200).json({ message: 'Signin successful', accessToken, refreshToken });
+    // Send tokens in response along with user role
+    res.status(200).json({ message: 'Signin successful', accessToken, refreshToken, role: user.role });
   } catch (error) {
     console.error('Signin error:', error.message);
     res.status(500).json({ error: 'Internal server error' });

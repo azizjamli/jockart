@@ -15,32 +15,44 @@ const Login = () => {
 
     const handleSignIn = async (email, password) => {
         try {
-            // Make a POST request to the signin endpoint
-            const response = await fetch('http://localhost:3001/api/users/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-            if (response.ok) {
-                // Parse the response JSON
-                const data = await response.json();
-                console.log('Signin successful:', data.message);
-                console.log('hello user');
-                navigate('/DashboardEtud'); // Use navigate instead of history.push
-                    // Handle further actions if needed, such as redirecting the user
-            } else {
-                // Failed signin
-                const errorData = await response.json(); // Parse error response
-                console.error('Signin failed:', errorData.error);
-                setErrorMessage('Verifiez Vos Cordonnées'); // Set error message
+          // Make a POST request to the signin endpoint
+          const response = await fetch('http://localhost:3001/api/users/signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+          if (response.ok) {
+            // Parse the response JSON
+            const data = await response.json();
+            console.log('Signin successful:', data.message);
+            const role = data.role; // Get user role from response
+            switch (role) {
+              case 'etudiant':
+                navigate('/Dashboardetud');
+                break;
+              case 'formateur':
+                navigate('/DashboardFormateur');
+                break;
+              case 'admin':
+                navigate('/DashboardAdmin');
+                break;
+              default:
+                // Handle other roles or unknown roles
+                break;
             }
+          } else {
+            // Failed signin
+            const errorData = await response.json(); // Parse error response
+            console.error('Signin failed:', errorData.error);
+            setErrorMessage('Verifiez Vos Cordonnées'); // Set error message
+          }
         } catch (error) {
-            console.error('Signin failed:', error);
-            // Handle error display or other actions
+          console.error('Signin failed:', error);
+          // Handle error display or other actions
         }
-    };
+      };
 
     const handleSignUp = async (email, password) => {
         try {
