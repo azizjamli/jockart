@@ -5,35 +5,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/header';
 import Acceuil from './components/acceuil';
-import Formations from './components/formation'; // Assuming you have a Formations component
-import Communauté from './components/communauté'; // Assuming you have a Communauté component
-import APropos from './components/aPropos'; // Assuming you have an APropos component
-import Contact from './components/contact'; // Assuming you have a Contact component
+import Formations from './components/formation';
+import Communauté from './components/communauté';
+import APropos from './components/aPropos';
+import Contact from './components/contact';
 import Footer from './components/footer';
 import Login from './components/login';
-import Signupcontinue from './components/signupcontinue'
-import DashboardEtud from './components/dashboardetud'; // Import your DashboardEtud component
-
+import DashboardEtud from './components/dashboardetud';
+import Signupcontinue from './components/signupcontinue';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Acceuil />} />
-          <Route path="/formations" element={<Formations />} />
-          <Route path="/communaute" element={<Communauté />} />
-          <Route path="/apropos" element={<APropos />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboardetud" element={<DashboardEtud />} />
-          <Route path="/signupcontinue" element={< Signupcontinue />} />
-
-
-        </Routes>
-        <Footer />
-      </div>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Acceuil />} />
+            <Route path="/formations" element={<Formations />} />
+            <Route path="/communaute" element={<Communauté />} />
+            <Route path="/apropos" element={<APropos />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signupcontinue" element={<Signupcontinue />} />
+            <Route path="/dashboardetud" element={<DashboardEtud />} />
+          </Routes>
+          <Footer />
+        </div>
     </Router>
   );
 }

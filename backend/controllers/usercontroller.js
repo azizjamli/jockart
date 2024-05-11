@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const { SECRET_KEY } = process.env;
 
-
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -17,33 +16,35 @@ const signin = async (req, res) => {
 
     // Check if the user exists in the database
     const user = await User.findOne({ where: { email } });
-    console.log('User found:', user);
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
 
     // Validate the password
-    console.log('Entered password:', password);
-    console.log('Stored hashed password:', user.password);
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('Password validation result:', isPasswordValid);
-
     if (!isPasswordValid) {
-      console.error('Password validation failed. Entered password:', password);
-      throw new Error('Incorrect password');
+      return res.status(401).json({ error: 'Incorrect password' });
     }
+
 
     // Generate JWT token
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '1h' });
-    console.log('Generated JWT token:', token); // Log the generated token
-    res.status(200).json({ message: 'Signin successful', token }); // Send token in response
+    
+     // Set an HTTP-only cookie with the JWT token
+     res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 3600000, // 1 hour in milliseconds
+    });
+
+
+    // Send token in response
+    res.status(200).json({ message: 'Signin successful', token });
 
   } catch (error) {
     console.error('Signin error:', error.message);
-    res.status(401).json({ error: 'Incorrect password' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -60,10 +61,12 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    const newUser = await User.create({ email, password});
+    const newUser = await User.create({ email, password });
 
-    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, );
+    // Generate JWT token
+    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
 
+    // Send token in response
     res.status(201).json({ message: 'User created', token });
   } catch (error) {
     console.error('Signup error:', error);
