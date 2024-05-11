@@ -11,6 +11,7 @@ import APropos from './components/aPropos'; // Assuming you have an APropos comp
 import Contact from './components/contact'; // Assuming you have a Contact component
 import Footer from './components/footer';
 import Login from './components/login';
+import Signupcontinue from './components/signupcontinue'
 import DashboardEtud from './components/dashboardetud'; // Import your DashboardEtud component
 
 
@@ -26,7 +27,9 @@ function App() {
           <Route path="/apropos" element={<APropos />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/login/dashboardetud" element={<DashboardEtud />} />
+          <Route path="/dashboardetud" element={<DashboardEtud />} />
+          <Route path="/signupcontinue" element={< Signupcontinue />} />
+
 
         </Routes>
         <Footer />
