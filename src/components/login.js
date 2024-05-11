@@ -71,6 +71,7 @@ const Login = () => {
             if (response.ok) {
                 // Successful signup
                 console.log('Signup successful:', data.message);
+                navigate('/signupcontinue');
                 
                 // Handle further actions if needed
             } else {
