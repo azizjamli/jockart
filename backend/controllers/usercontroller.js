@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { validationResult } = require('express-validator');
 const { SECRET_KEY } = process.env;
+const cookieJwtAuth = require('../middleware/cookieJwtAuth');
+
 
 
 
@@ -78,15 +80,19 @@ const signup = async (req, res) => {
 };
 
 const getUserProfile = async (req, res) => {
-  const userId = req.user.id; // Assuming you have middleware that extracts user ID from JWT
-
   try {
+    // Assuming you have middleware that extracts user ID from JWT and sets it in req.user
+    const userId = req.user.userId;
+
     const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(408).json({ error: 'User not found' });
     }
-    
-    res.status(200).json(user);
+
+    // Assuming user model has 'nom' and 'prenom' attributes
+    const { nom, prenom } = user;
+
+    res.status(200).json({ nom, prenom });
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -94,4 +100,9 @@ const getUserProfile = async (req, res) => {
 };
 
 
-module.exports = { signin, signup , getUserProfile };
+
+module.exports = {
+  signin,
+  signup,
+  getUserProfile, // Make sure getUserProfile is included in the exports
+};
