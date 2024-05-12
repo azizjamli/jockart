@@ -10,24 +10,9 @@ const UserComponent = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/users/profil');
-        setUser(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setLoading(false);
-      }
-    };
+ 
 
-    fetchUserData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+ 
 
   return (
     <>

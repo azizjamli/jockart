@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authChecker = require('../middleware/authChecker');
+const authChecker = require('../middleware/cookieJwtAuth');
 
 // GET /api/check-auth - Check if user is authenticated
 router.get('/check-auth', authChecker, (req, res) => {
