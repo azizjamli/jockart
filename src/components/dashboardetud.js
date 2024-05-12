@@ -49,12 +49,12 @@ const UserComponent = () => {
             <p>etudiant img</p>
           </div>
           <div className="col-md-5">
-            <p>Nom: {user.nom}</p>
-            <p>Prénom: {user.prenom}</p>
+            <p>Nom: </p>
+            <p>Prénom: </p>
           </div>
           <div className="col-md-5">
-            <p>Email: {user.email}</p>
-            <p>Numéro de téléphone: {user.numtel}</p>
+            <p></p>
+            <p></p>
           </div>
         </div>
       </div>
