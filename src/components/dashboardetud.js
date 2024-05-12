@@ -9,6 +9,20 @@ import './dashboardetud.css';
 const UserComponent = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
  
 
@@ -47,12 +61,13 @@ const UserComponent = () => {
       <div className="container">
         <div className="dashboard row">
           <div className="menucategorie border-0 col-md-3">
-            <div className="list-group">
-              <a href="#" className="list-group-item list-group-item-action">design graphique</a>
-              <a href="#" className="list-group-item list-group-item-action">photographie</a>
-              <a href="#" className="list-group-item list-group-item-action">montage vidéo</a>
-              <a href="#" className="list-group-item list-group-item-action">motion design</a>
-              <a href="#" className="list-group-item list-group-item-action">infographie</a>
+          <div className="list-group">
+              {/* Map through categories and render category names */}
+              {categories.map((categorie) => (
+                <a href="#" key={categorie.id} className="list-group-item list-group-item-action">
+                  {categorie.nom}
+                </a>
+              ))}
             </div>
           </div>
           <div className=" col-md-8 col-sm-12">

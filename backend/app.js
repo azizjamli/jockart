@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userroutes');
+const categorieRouter = require('./routes/categorieroutes');
 const cookieJwtAuth = require('./middleware/cookieJwtAuth'); 
 
 const app = express();
@@ -21,6 +22,8 @@ app.use(cookieParser());
 
 // Use the user routes
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categorieRouter);
+
 
 // Start the server
 const PORT = process.env.PORT || 3001;
