@@ -1,0 +1,9 @@
+.dashboardinfo{
+    background-color: #444FA6;
+    color: white;
+}
+.menucategorie .list-group .list-group-item{
+    background-color: #444FA6;
+    color: white;
+    border-radius: 0;
+}
