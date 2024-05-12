@@ -11,7 +11,23 @@ const UserComponent = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
+
   useEffect(() => {
+
+    
+    async function fetchUserProfile() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/users/profile', {
+          withCredentials: true, // Include cookies in the request
+          // Include other headers if needed for authentication
+        });
+        setUser(response.data); // Assuming response.data contains user profile data
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        setLoading(false);
+      }
+    }
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
@@ -21,12 +37,13 @@ const UserComponent = () => {
       }
     }
 
+    fetchUserProfile();
     fetchCategories();
   }, []);
 
- 
-
- 
+  if (loading) {
+    return <p>Loading...</p>; // Optional: Show loading indicator
+  }
 
   return (
     <>
@@ -43,25 +60,28 @@ const UserComponent = () => {
           </div>
         </div>
 
-        <div className="row mt-5">
-          <div className="col-md-2">
-            <p>etudiant img</p>
+        {/* Check if user is not null before accessing properties */}
+        {user && (
+          <div className="row mt-5">
+            <div className="col-md-2">
+              <p>etudiant img</p>
+            </div>
+            <div className="col-md-5">
+              <p>Nom:  {user.nom}</p>
+              <p>Prénom:  {user.prenom}</p>
+            </div>
+            <div className="col-md-5">
+              <p></p>
+              <p></p>
+            </div>
           </div>
-          <div className="col-md-5">
-            <p>Nom: </p>
-            <p>Prénom: </p>
-          </div>
-          <div className="col-md-5">
-            <p></p>
-            <p></p>
-          </div>
-        </div>
+        )}
       </div>
 
       <div className="container">
         <div className="dashboard row">
           <div className="menucategorie border-0 col-md-3">
-          <div className="list-group">
+            <div className="list-group">
               {/* Map through categories and render category names */}
               {categories.map((categorie) => (
                 <a href="#" key={categorie.id} className="list-group-item list-group-item-action">
@@ -81,12 +101,4 @@ const UserComponent = () => {
   );
 };
 
-const DashboardEtud = () => {
-  return (
-    <div>
-      <UserComponent />
-    </div>
-  );
-};
-
-export default DashboardEtud;
+export default UserComponent;
