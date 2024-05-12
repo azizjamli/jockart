@@ -31,23 +31,18 @@ const signin = async (req, res) => {
     }
 
     // Generate JWT access token with user ID and role
-    const accessToken = jwt.sign({ userId: user.id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     // Generate JWT refresh token
-    const refreshToken = jwt.sign({ userId: user.id }, SECRET_KEY, { expiresIn: '7d' });
 
     // Set HTTP-only cookies with tokens
-    res.cookie('accessToken', accessToken, {
+    res.cookie('token', token, {
       httpOnly: true,
       maxAge: 3600000,
     });
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      maxAge: 604800000,
-    });
-
+   
     // Send tokens in response along with user role
-    res.status(200).json({ message: 'Signin successful', accessToken, refreshToken, role: user.role });
+    res.status(200).json({ message: 'Signin successful', token,  role: user.role });
   } catch (error) {
     console.error('Signin error:', error.message);
     res.status(500).json({ error: 'Internal server error' });
@@ -90,7 +85,7 @@ const getUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
+    
     res.status(200).json(user);
   } catch (error) {
     console.error('Error fetching user profile:', error);

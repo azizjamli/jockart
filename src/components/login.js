@@ -22,6 +22,7 @@ const Login = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email, password }),
+
           });
           if (response.ok) {
             // Parse the response JSON
