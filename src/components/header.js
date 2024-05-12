@@ -25,12 +25,8 @@ const Header = () => {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 me-5">
-            <li className="nav-item nav-item-header">
-              <Link
-                to="./acceuil.js"
-                className="nav-link"
-                exact="true"
-              >
+          <li className="nav-item nav-item-header">
+              <Link to="/" className="nav-link" exact={true}>
                 Accueil
               </Link>
             </li>
