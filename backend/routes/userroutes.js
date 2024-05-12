@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signin, signup } = require('../controllers/usercontroller');
+const { signin, signup , getUserProfile } = require('../controllers/usercontroller');
 const authChecker = require('../middleware/authChecker');
 
 
@@ -10,6 +10,8 @@ router.post('/signin', signin);
 
 // POST /api/users/signup - User sign-up route
 router.post('/signup', signup);
+
+router.get('/profile' , getUserProfile)
 
 
 
