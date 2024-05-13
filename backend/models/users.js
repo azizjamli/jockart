@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 const bcrypt = require('bcrypt');
-const Cours = require('./Cours'); // Import Video model
 
 
 const User = sequelize.define('User', {
@@ -46,7 +45,6 @@ const User = sequelize.define('User', {
   tableName: 'users',
   timestamps: true,
 });
-User.belongsToMany(Cours, { through: 'UserCours' });
-Cours.belongsToMany(User, { through: 'UserCours' });
+
 
 module.exports = User;
