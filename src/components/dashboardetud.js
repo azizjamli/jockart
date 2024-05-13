@@ -18,7 +18,7 @@ const UserComponent = () => {
     async function fetchUserProfile() {
       try {
         const response = await axios.get('http://localhost:3001/api/users/profile', {
-          withCredentials: true, // Include cookies in the request
+          credentials: 'include', // Include credentials (cookies) in the request
           // Include other headers if needed for authentication
         });
         setUser(response.data); // Assuming response.data contains user profile data

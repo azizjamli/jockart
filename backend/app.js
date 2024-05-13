@@ -13,11 +13,11 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS for all routes with specific origin and credentials
-const corsOptions = {
-  origin: 'http://localhost:3000', // Set the specific origin of your client-side application
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-app.use(cors(corsOptions));
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Specify your frontend domain
+  credentials: true,
+}));
 
 app.use(cookieParser());
 

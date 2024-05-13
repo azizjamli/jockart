@@ -40,9 +40,8 @@ const signin = async (req, res) => {
     // Set HTTP-only cookies with tokens
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 3600000,
+      sameSite: 'none', // Adjust as per your requirements
     });
-   
     // Send tokens in response along with user role
     res.status(200).json({ message: 'Signin successful', token,  role: user.role });
   } catch (error) {
