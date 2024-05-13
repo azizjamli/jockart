@@ -28,6 +28,9 @@ const Login = () => {
             // Parse the response JSON
             const data = await response.json();
             console.log('Signin successful:', data.message);
+
+            localStorage.setItem('userId', data.id);
+
             const role = data.role; // Get user role from response
             switch (role) {
               case 'etudiant':
@@ -72,6 +75,8 @@ const Login = () => {
             if (response.ok) {
                 // Successful signup
                 console.log('Signup successful:', data.message);
+                localStorage.setItem('userId', data.userId); // Assuming the user ID is returned as data.userId
+
                 navigate('/signupcontinue');
                 // Handle further actions if needed
             } else {

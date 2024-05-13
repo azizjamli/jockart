@@ -9,45 +9,48 @@ import './dashboardetud.css';
 const UserComponent = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null); // State for selected category ID
-  const [courses, setCourses] = useState([]); // State for courses
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [user, setUser] = useState(null); // State for user data
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const userId = localStorage.getItem('userId');
+        const userResponse = await axios.get('http://localhost:3001/api/users/getInfo', {
+          params: { userId },
+        });
+        setUser(userResponse.data);
+        console.log(userResponse.data); 
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+        setLoading(false);
+      }
+    }
+
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
         setCategories(response.data);
-        setLoading(false); // Set loading to false once categories are fetched
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching categories:', error);
-        setLoading(false); // Handle error by setting loading to false
+        setLoading(false);
       }
     }
 
+
+    fetchData();
     fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    async function fetchCoursesByCategory() {
-      if (selectedCategoryId !== null) {
-        try {
-          const response = await axios.get(`http://localhost:3001/api/courses/byCategory/${selectedCategoryId}`);
-          setCourses(response.data);
-        } catch (error) {
-          console.error('Error fetching courses by category:', error);
-        }
-      }
-    }
-
-    fetchCoursesByCategory();
-  }, [selectedCategoryId]); // Trigger the effect when selectedCategoryId changes
+  }, [selectedCategoryId]);
 
   const handleCategoryClick = (categoryId) => {
-    setSelectedCategoryId(categoryId); // Set selected category ID when a menucategorie item is clicked
+    setSelectedCategoryId(categoryId);
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Show loading indicator while fetching data
+    return <p>Loading...</p>;
   }
 
   return (
@@ -69,15 +72,21 @@ const UserComponent = () => {
           <div className="col-md-2">
             <p>etudiant img</p>
           </div>
-          <div className="col-md-5">
-            <p>Nom: </p>
-            <p>Prénom: </p>
-          </div>
-          <div className="col-md-5">
-            {/* Add actual data here */}
-            <p>User's Last Name</p>
-            <p>User's First Name</p>
-          </div>
+          {user && (
+    <>
+              <div className="col-md-5">
+
+      <p>Nom: {user.nom}</p>
+      <p>Prénom: {user.prenom}</p>
+      </div>
+      <div className="col-md-5">
+      <p>email: {user.email}</p>
+      <p>num: {user.numtel}</p>
+      </div>
+    </>
+  )}
+          
+          
         </div>
       </div>
 
@@ -85,13 +94,12 @@ const UserComponent = () => {
         <div className="dashboard row">
           <div className="menucategorie border-0 col-md-3">
             <div className="list-group">
-              {/* Map through categories and render category names */}
               {categories.map((categorie) => (
                 <a
-                  href="#"
+                  href="javascript:void(0)"
                   key={categorie.id}
-                  className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`} // Apply active class based on selected category
-                  onClick={() => handleCategoryClick(categorie.id)} // Set selected category ID on click
+                  className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+                  onClick={() => handleCategoryClick(categorie.id)}
                 >
                   {categorie.nom}
                 </a>
@@ -99,12 +107,10 @@ const UserComponent = () => {
             </div>
           </div>
           <div className="col-md-8 col-sm-12">
-            {/* Render courses here */}
             {courses.map((course) => (
               <div key={course.id}>
                 <h3>{course.title}</h3>
                 <p>{course.description}</p>
-                {/* Add more course details as needed */}
               </div>
             ))}
           </div>
