@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelize-config');
+const Categorie = require('./categorie'); // Import the Categorie model
 
 const Cours = sequelize.define('Cours', {
   id: {
@@ -18,6 +19,14 @@ const Cours = sequelize.define('Cours', {
   prix: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
+  },
+  categorieId: { // Foreign key for Categorie ID
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Categorie, // Referencing the Categorie model
+      key: 'id', // Primary key of the Categorie model
+    },
   },
 });
 
