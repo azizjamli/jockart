@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 const bcrypt = require('bcrypt');
+const Cours = require('./Cours'); // Import Video model
+
 
 const User = sequelize.define('User', {
   id: {
