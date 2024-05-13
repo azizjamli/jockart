@@ -7,3 +7,7 @@
     color: white;
     border-radius: 0;
 }
+.loading{
+    color: #444FA6;
+    border: solid 4px;
+}
