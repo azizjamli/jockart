@@ -11,23 +11,32 @@ const UserComponent = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
-
   useEffect(() => {
-
-    
     async function fetchUserProfile() {
       try {
+        const userId = localStorage.getItem('userId'); // Get userId from local storage
+
+        if (!userId) {
+          console.error('User ID not found in local storage');
+          return; // Exit function if userId is not found
+        }
+
         const response = await axios.get('http://localhost:3001/api/users/profile', {
-          credentials: 'include', // Include credentials (cookies) in the request
-          // Include other headers if needed for authentication
+          params: {
+            userId: userId,
+          },
         });
+
         setUser(response.data); // Assuming response.data contains user profile data
+        console.log(response.data);
+        console.log('User Profile Data:', response.data); // Log user profile data
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user profile:', error);
         setLoading(false);
       }
     }
+
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
@@ -45,6 +54,7 @@ const UserComponent = () => {
     return <p>Loading...</p>; // Optional: Show loading indicator
   }
 
+  console.log('User State:', user); // Log user state to check for 'nom' property
   return (
     <>
       <div className="container dashboardinfo p-3">
@@ -67,8 +77,8 @@ const UserComponent = () => {
               <p>etudiant img</p>
             </div>
             <div className="col-md-5">
-              <p>Nom:  {user.nom}</p>
-              <p>Prénom:  {user.prenom}</p>
+              <p>Nom: {user.nom}</p>
+              <p>Prénom: {user.prenom}</p>
             </div>
             <div className="col-md-5">
               <p></p>
