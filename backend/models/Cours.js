@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../sequelize-config');
-const Categorie = require('./categorie'); // Import the Categorie model
+const sequelize = require('../dbConfig');
+const Categorie = require('./categorie');
+const User = require('./users');
 
 const Cours = sequelize.define('Cours', {
   id: {
@@ -20,17 +21,23 @@ const Cours = sequelize.define('Cours', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  categorieId: { // Foreign key for Categorie ID
+  photo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true, // Ensure that the value is a valid URL
+    },
+  },
+  categorieId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Categorie, // Referencing the Categorie model
-      key: 'id', // Primary key of the Categorie model
+      model: Categorie,
+      key: 'id',
     },
   },
 });
 
-// Define the many-to-many association with User
 Cours.belongsToMany(User, { through: 'UserCours' });
 User.belongsToMany(Cours, { through: 'UserCours' });
 
