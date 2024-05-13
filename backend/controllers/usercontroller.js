@@ -32,7 +32,7 @@ const signin = async (req, res) => {
       return res.status(404).json({ error: 'Incorrect password' });
     }
 
-// Generate JWT access token with user ID and role
+    // Generate JWT access token with user ID and role
     const token = jwt.sign({ userId: user.id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     // Generate JWT refresh token
@@ -43,7 +43,7 @@ const signin = async (req, res) => {
       sameSite: 'none', // Adjust as per your requirements
     });
     // Send tokens in response along with user role
-    res.status(200).json({ message: 'Signin successful', id:user.id ,  role: user.role });
+    res.status(200).json({ message: 'Signin successful', token,  role: user.role });
   } catch (error) {
     console.error('Signin error:', error.message);
     res.status(500).json({ error: 'Internal server error' });
@@ -80,20 +80,18 @@ const signup = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const userId = req.headers.userid; // Get user ID from request headers
-
-    if (!userId) {
-      return res.status(400).json({ error: 'User ID not provided in headers' });
-    }
+    // Assuming you have middleware that extracts user ID from JWT and sets it in req.user
+    const userId = req.user.userId;
 
     const user = await User.findByPk(userId);
-
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(408).json({ error: 'User not found' });
     }
 
-    // Send all user attributes in the response
-    res.status(200).json(user);
+    // Assuming user model has 'nom' and 'prenom' attributes
+    const { nom, prenom } = user;
+
+    res.status(200).json({ nom, prenom });
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).json({ error: 'Internal server error' });
