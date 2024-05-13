@@ -21,13 +21,18 @@ const Login = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password  }),
 
           });
           if (response.ok) {
             // Parse the response JSON
             const data = await response.json();
+
             console.log('Signin successful:', data.message);
+            const userId = data.id; // Get userId from response
+
+            localStorage.setItem('userId', data.id);
+
             const role = data.role; // Get user role from response
             switch (role) {
               case 'etudiant':
