@@ -30,4 +30,8 @@ const Cours = sequelize.define('Cours', {
   },
 });
 
+// Define the many-to-many association with User
+Cours.belongsToMany(User, { through: 'UserCours' });
+User.belongsToMany(Cours, { through: 'UserCours' });
+
 module.exports = Cours;

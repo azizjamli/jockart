@@ -44,5 +44,7 @@ const User = sequelize.define('User', {
   tableName: 'users',
   timestamps: true,
 });
+User.belongsToMany(Cours, { through: 'UserCours' });
+Cours.belongsToMany(User, { through: 'UserCours' });
 
 module.exports = User;
