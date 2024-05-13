@@ -33,17 +33,17 @@ const signin = async (req, res) => {
     }
 
     // Generate JWT access token with user ID and role
-    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
+   // const token = jwt.sign({ userId: user.id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     // Generate JWT refresh token
 
     // Set HTTP-only cookies with tokens
-    res.cookie('token', token, {
+    /* res.cookie('token', token, {
       httpOnly: true,
       sameSite: 'none', // Adjust as per your requirements
-    });
+    }); */
     // Send tokens in response along with user role
-    res.status(200).json({ message: 'Signin successful', token,  role: user.role });
+    res.status(200).json({ message: 'Signin successful', role: user.role });
   } catch (error) {
     console.error('Signin error:', error.message);
     res.status(500).json({ error: 'Internal server error' });
@@ -68,40 +68,20 @@ const signup = async (req, res) => {
     const newUser = await User.create({ email, password });
 
     // Generate JWT token
-    const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
+   // const token = jwt.sign({ userId: newUser.id }, SECRET_KEY, { expiresIn: '1h' });
 
     // Send token in response
-    res.status(201).json({ message: 'User created', token });
+    res.status(201).json({ message: 'User created' });
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-const getUserProfile = async (req, res) => {
-  try {
-    // Assuming you have middleware that extracts user ID from JWT and sets it in req.user
-    const userId = req.user.userId;
-
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(408).json({ error: 'User not found' });
-    }
-
-    // Assuming user model has 'nom' and 'prenom' attributes
-    const { nom, prenom } = user;
-
-    res.status(200).json({ nom, prenom });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
 
 
 
 module.exports = {
   signin,
   signup,
-  getUserProfile, // Make sure getUserProfile is included in the exports
 };
