@@ -24,6 +24,7 @@ const Chapitre = sequelize.define('Chapitre', {
 // Define associations
 Chapitre.belongsTo(Cours, { foreignKey: 'CoursId' });
 Chapitre.hasMany(Video, { foreignKey: 'ChapitreId' }); // A Chapitre can have multiple videos
-Chapitre.hasMany(PDF, { foreignKey: 'ChapitreId' }); // A Chapitre can have multiple PDFs
+Chapitre.hasMany(PDF, { foreignKey: 'ChapitreId' }); // A Chapitre can have multiple PDFs 
+
 
 module.exports = Chapitre;
