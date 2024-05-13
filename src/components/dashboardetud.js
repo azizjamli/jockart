@@ -7,42 +7,26 @@ import modifyicon from '../assets/modifyicon.png';
 import './dashboardetud.css';
 
 const UserComponent = () => {
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
-
   useEffect(() => {
-
-    
-    async function fetchUserProfile() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/users/profile', {
-          credentials: 'include', // Include credentials (cookies) in the request
-          // Include other headers if needed for authentication
-        });
-        setUser(response.data); // Assuming response.data contains user profile data
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        setLoading(false);
-      }
-    }
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
         setCategories(response.data);
+        setLoading(false); // Set loading to false once categories are fetched
       } catch (error) {
         console.error('Error fetching categories:', error);
+        setLoading(false); // Handle error by setting loading to false
       }
     }
 
-    fetchUserProfile();
     fetchCategories();
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>; // Optional: Show loading indicator
+    return <p>Loading...</p>; // Show loading indicator
   }
 
   return (
@@ -60,22 +44,16 @@ const UserComponent = () => {
           </div>
         </div>
 
-        {/* Check if user is not null before accessing properties */}
-        {user && (
-          <div className="row mt-5">
-            <div className="col-md-2">
-              <p>etudiant img</p>
-            </div>
-            <div className="col-md-5">
-              <p>Nom:  {user.nom}</p>
-              <p>Prénom:  {user.prenom}</p>
-            </div>
-            <div className="col-md-5">
-              <p></p>
-              <p></p>
-            </div>
+        <div className="row mt-5">
+          <div className="col-md-2">
+            <p>etudiant img</p>
           </div>
-        )}
+          <div className="col-md-5">
+            <p>Nom: </p>
+            <p>Prénom: </p>
+          </div>
+
+        </div>
       </div>
 
       <div className="container">
@@ -90,7 +68,8 @@ const UserComponent = () => {
               ))}
             </div>
           </div>
-          <div className=" col-md-8 col-sm-12">
+          <div className="col-md-8 col-sm-12">
+            {/* Add your content here */}
             <p>qshdijhqs</p>
             <p>qshdijhqs</p>
             <p>qshdijhqs</p>

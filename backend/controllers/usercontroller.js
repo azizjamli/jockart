@@ -78,25 +78,6 @@ const signup = async (req, res) => {
   }
 };
 
-const getUserProfile = async (req, res) => {
-  try {
-    // Assuming you have middleware that extracts user ID from JWT and sets it in req.user
-    const userId = req.user.userId;
-
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(408).json({ error: 'User not found' });
-    }
-
-    // Assuming user model has 'nom' and 'prenom' attributes
-    const { nom, prenom } = user;
-
-    res.status(200).json({ nom, prenom });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
 
 
 

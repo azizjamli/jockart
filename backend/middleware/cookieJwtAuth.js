@@ -5,7 +5,7 @@ const cookieJwtAuth = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
     req.isLoggedIn = false; // Set isLoggedIn to false if no token is found
-    return res.status(401).json({ error: 'No token found' });
+    return res.status(411).json({ error: 'No token found' });
   }
 
   try {
