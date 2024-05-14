@@ -1,5 +1,7 @@
 const User = require('../models/users');
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcrypt'); // Import bcrypt library
+
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
