@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../dbConfig');
+const sequelize = require('../dbConfig'); // Import the sequelize object from your configuration file
 const Categorie = require('./categorie');
-const User = require('./users');
 
 const Cours = sequelize.define('Cours', {
   id: {
@@ -37,8 +36,5 @@ const Cours = sequelize.define('Cours', {
     },
   },
 });
-
-Cours.belongsToMany(User, { through: 'UserCours' });
-User.belongsToMany(Cours, { through: 'UserCours' });
 
 module.exports = Cours;

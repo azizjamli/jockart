@@ -1,6 +1,11 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../dbConfig');
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../dbConfig'); // Import the sequelize object from your configuration file
 const bcrypt = require('bcrypt');
+
+const Categorie = require('./categorie');
+
+
+
 
 
 const User = sequelize.define('User', {
@@ -45,6 +50,9 @@ const User = sequelize.define('User', {
   tableName: 'users',
   timestamps: true,
 });
-
-
 module.exports = User;
+
+
+
+
+
