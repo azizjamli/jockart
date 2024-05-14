@@ -116,10 +116,10 @@ router.get('/cours/user/:userId', async (req, res) => {
 
 
 // Get user's courses for a specific category
-router.get('/cours/user/:userId/category/:categoryId', async (req, res) => {
+router.get('/cours/usercours', async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const categoryId = req.params.categoryId;
+    const userId = req.query.userId;
+    const categoryId = req.query.categoryId;
 
     // Fetch user by userId including their courses
     const user = await User.findByPk(userId, { include: Cours });
@@ -129,7 +129,7 @@ router.get('/cours/user/:userId/category/:categoryId', async (req, res) => {
     }
 
     // Filter user's courses by categoryId
-    const userCoursesInCategory = user.Cours.filter(course => course.categoryId === categoryId);
+    const userCoursesInCategory = user.Cours.filter(course => course.categorieId === categoryId);
 
     res.status(200).json(userCoursesInCategory);
   } catch (error) {
@@ -137,6 +137,7 @@ router.get('/cours/user/:userId/category/:categoryId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

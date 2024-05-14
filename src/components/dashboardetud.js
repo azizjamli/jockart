@@ -28,7 +28,7 @@ const UserComponent = () => {
         setLoading(false);
       }
     }
-
+  
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
@@ -40,15 +40,20 @@ const UserComponent = () => {
       }
     }
 
-
     fetchData();
     fetchCategories();
   }, [selectedCategoryId]);
 
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategoryId(categoryId);
+  const handleCategoryClick = async (categoryId) => {
+    try {
+      const userId = localStorage.getItem('userId');
+      const response = await axios.get(`http://localhost:3001/api/cours/usercours?userId=${userId}&categoryId=${categoryId}`);
+      setCourses(response.data);
+    } catch (error) {
+      console.error('Error fetching user courses by category:', error);
+    }
   };
-
+  
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -68,26 +73,22 @@ const UserComponent = () => {
           </div>
         </div>
 
-        <div className="row mt-5">
-          <div className="col-md-2">
-            <p>etudiant img</p>
+        {user && (
+          <div className="row mt-5">
+            <div className="col-md-2">
+              <p>{user.photo}</p>
+            </div>
+            <div className="col-md-5">
+              <p>Nom: {user.nom}</p>
+              <p>Prénom: {user.prenom}</p>
+            </div>
+            <div className="col-md-5">
+              <p>email: {user.email}</p>
+              <p>num: {user.numtel}</p>
+            </div>
           </div>
-          {user && (
-    <>
-              <div className="col-md-5">
+        )}
 
-      <p>Nom: {user.nom}</p>
-      <p>Prénom: {user.prenom}</p>
-      </div>
-      <div className="col-md-5">
-      <p>email: {user.email}</p>
-      <p>num: {user.numtel}</p>
-      </div>
-    </>
-  )}
-          
-          
-        </div>
       </div>
 
       <div className="container">
