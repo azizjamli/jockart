@@ -47,7 +47,11 @@ const UserComponent = () => {
   const handleCategoryClick = async (categoryId) => {
     try {
       const userId = localStorage.getItem('userId');
-      const response = await axios.get(`http://localhost:3001/api/cours/usercours?userId=${userId}&categoryId=${categoryId}`);
+      const selectedCategoryId = categoryId; // Assuming categoryId is obtained from somewhere in your frontend
+  
+      const response = await axios.get(`http://localhost:3001/api/usercours/coursfinder`, {
+        params: { userId, selectedCategoryId },
+      });
       setCourses(response.data);
     } catch (error) {
       console.error('Error fetching user courses by category:', error);

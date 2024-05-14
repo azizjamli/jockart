@@ -5,7 +5,10 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userroutes');
 const categorieRouter = require('./routes/categorieroutes');
-const cookieJwtAuth = require('./middleware/cookieJwtAuth'); 
+const usercoursRouter = require('./routes/usercoursroutes');
+
+//const cookieJwtAuth = require('./middleware/cookieJwtAuth'); 
+const usercours = require('./models/userscours');
 
 const app = express();
 
@@ -24,6 +27,8 @@ app.use(cookieParser());
 // Use the user routes
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categorieRouter);
+app.use('/api/usercours', usercoursRouter);
+
 
 
 // Start the server
