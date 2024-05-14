@@ -3,7 +3,7 @@ const sequelize = require('../dbConfig'); // Import the sequelize object from yo
 const User = require('./users'); // Import the User model
 const Cours = require('./cours'); // Import the Cours model
 
-const usercours = sequelize.define('UserCours', {
+const usercours = sequelize.define('usercours', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
