@@ -10,7 +10,7 @@ const UserComponent = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  const [courses, setCourses] = useState([]);
+  const [cours, setCours] = useState([]);
   const [user, setUser] = useState(null); // State for user data
 
   useEffect(() => {
@@ -44,19 +44,21 @@ const UserComponent = () => {
     fetchCategories();
   }, [selectedCategoryId]);
 
+  
+
   const handleCategoryClick = async (categoryId) => {
     try {
       const userId = localStorage.getItem('userId');
-      const selectedCategoryId = categoryId; // Assuming categoryId is obtained from somewhere in your frontend
-  
+    
       const response = await axios.get(`http://localhost:3001/api/usercours/coursfinder`, {
-        params: { userId, selectedCategoryId },
+        params: { userId, selectedCategoryId: categoryId }, // Use categoryId here
       });
-      setCourses(response.data);
+      setCours(response.data);
     } catch (error) {
       console.error('Error fetching user courses by category:', error);
     }
   };
+  
   
   if (loading) {
     return <p>Loading...</p>;
@@ -97,28 +99,30 @@ const UserComponent = () => {
 
       <div className="container">
         <div className="dashboard row">
-          <div className="menucategorie border-0 col-md-3">
-            <div className="list-group">
-              {categories.map((categorie) => (
-                <a
-                  href="javascript:void(0)"
-                  key={categorie.id}
-                  className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
-                  onClick={() => handleCategoryClick(categorie.id)}
-                >
-                  {categorie.nom}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="col-md-8 col-sm-12">
-            {courses.map((course) => (
-              <div key={course.id}>
-                <h3>{course.title}</h3>
-                <p>{course.description}</p>
-              </div>
-            ))}
-          </div>
+        <div className="menucategorie border-0 col-md-3">
+  <div className="list-group">
+    {categories.map((categorie) => (
+      <a
+        href="javascript:void(0)"
+        key={categorie.id}
+        className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+        onClick={() => handleCategoryClick(categorie.id)}
+      >
+        {categorie.nom}
+      </a>
+    ))}
+  </div>
+</div>
+<div className="col-md-8 col-sm-12">
+  {cours && cours.map((item) => (
+    <div key={item.coursId}>
+      <h3>{item.Cour.titre}</h3>
+      <p>{item.Cour.description}</p>
+    </div>
+  ))}
+</div>
+
+
         </div>
       </div>
     </>
