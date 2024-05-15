@@ -1,12 +1,6 @@
-const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../dbConfig'); // Import the sequelize object from your configuration file
+const { DataTypes } = require('sequelize');
+const sequelize = require('../dbConfig');
 const bcrypt = require('bcrypt');
-
-const Categorie = require('./categorie');
-
-
-
-
 
 const User = sequelize.define('User', {
   id: {
@@ -16,11 +10,11 @@ const User = sequelize.define('User', {
   },
   nom: {
     type: DataTypes.STRING,
-    allowNull: true, // Allow null values for last name
+    allowNull: true,
   },
   prenom: {
     type: DataTypes.STRING,
-    allowNull: true, // Allow null values for first name
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING,
@@ -28,20 +22,23 @@ const User = sequelize.define('User', {
     unique: true,
   },
   role: {
-    type: DataTypes.ENUM('etudiant', 'formateur', 'admin'), // Define the role column as ENUM
+    type: DataTypes.ENUM('etudiant', 'formateur', 'admin'),
     allowNull: false,
-    defaultValue: 'etudiant', // Default value if not specified
+    defaultValue: 'etudiant',
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
     set(value) {
-      // Hash the password before saving it to the database
       const hashedPassword = bcrypt.hashSync(value, bcrypt.genSaltSync(10));
       this.setDataValue('password', hashedPassword);
     },
   },
   numtel: DataTypes.STRING,
+  photo: {
+    type: DataTypes.BLOB, // Changed type to store binary data (PNG files)
+    allowNull: true, // Allow null if no photo is uploaded
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -50,9 +47,5 @@ const User = sequelize.define('User', {
   tableName: 'users',
   timestamps: true,
 });
+
 module.exports = User;
-
-
-
-
-
