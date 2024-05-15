@@ -13,6 +13,7 @@ import Footer from './components/footer';
 import Login from './components/login';
 import DashboardEtud from './components/dashboardetud';
 import Signupcontinue from './components/signupcontinue';
+import Ajoutercours from './components/ajoutercours';
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
@@ -46,6 +47,8 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/signupcontinue" element={<Signupcontinue />} />
         <Route path="/dashboardetud" element={<DashboardEtud />} />
+        <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
+
       </Routes>
       {shouldRenderHeaderFooter() && <Footer />}
     </div>

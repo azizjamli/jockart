@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import homeicon from '../assets/homeicon.png';
 import notificon from '../assets/notificon.png';
@@ -10,9 +11,14 @@ const UserComponent = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
   const [coursFinderData, setCoursFinderData] = useState([]);
   const [coursFinderNouserData, setCoursFinderNouserData] = useState([]); 
+  const [selectedCoursId, setSelectedCoursId] = useState(null); // Changed variable name
  const [user, setUser] = useState(null); // State for user data
+
+ const navigate = useNavigate(); // Use useHistory hook to access history object
+
 
   useEffect(() => {
     async function fetchData() {
@@ -79,7 +85,10 @@ const UserComponent = () => {
       console.error('Error fetching user courses by category:', error);
     }
   };
-  
+  const handleAjouterClick = (id) => {
+    setSelectedCoursId(id); // Use the function to update the state
+    navigate(`/Ajoutercours/${id}`);
+  };
   
   if (loading) {
     return <p>Loading...</p>;
@@ -150,12 +159,14 @@ const UserComponent = () => {
               <div className="col-md-6">
                 <h3>Cours from coursfindernouser</h3>
                 {coursFinderNouserData.map((item) => (
-                  <div className="card" key={item.coursId}>
-                    <div className="card-body">
-                      <h5 className="card-title">{item.titre}</h5>
-                      <button className="btn btn-success">Ajouter</button>
-                    </div>
-                  </div>
+                   <div className="card" key={item.id}>
+                   <div className="card-body">
+                     <h5 className="card-title">{item.titre}</h5>
+                     <p >{item.id}</p>
+
+                     <button className="btn btn-success" onClick={() => handleAjouterClick(item.id)}>Ajouter</button>
+                   </div>
+                 </div>
                 ))}
               </div>
             </div>
