@@ -1,6 +1,8 @@
 const User = require('../models/users');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt'); // Import bcrypt library
+const fs = require('fs');
+const path = require('path');
 
 
 const signin = async (req, res) => {
@@ -78,8 +80,43 @@ const getInfo = async (req, res) => {
   }
 };
 
+
+const uploadPhoto = async (req, res) => {
+  const { userId } = req.params; // Assuming you pass the userId in the URL params
+  const { photo } = req.files; // Assuming req.files contains the uploaded file data
+
+  try {
+    // Check if the user exists in the database
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Ensure the uploaded file is an image (optional)
+    if (!photo || !photo.mimetype.startsWith('image')) {
+      return res.status(400).json({ error: 'Please upload an image file' });
+    }
+
+    // Read the uploaded file and convert it to a Buffer
+    const imageBuffer = fs.readFileSync(photo.path);
+
+    // Update the photo column for the user
+    await user.update({ photo: imageBuffer });
+
+    // Delete the temporary uploaded file (optional, depending on your setup)
+    fs.unlinkSync(photo.path);
+
+    // Send success response
+    res.status(200).json({ message: 'Photo uploaded successfully' });
+  } catch (error) {
+    console.error('Error uploading photo:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 module.exports = {
   signin,
   signup,
   getInfo,
+  uploadPhoto
 };
