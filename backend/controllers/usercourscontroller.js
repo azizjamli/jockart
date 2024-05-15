@@ -37,34 +37,35 @@ const coursfinder = async (req, res) => {
 
 const coursfindernouser = async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const userID = req.query.userId;
+    const selectedCategoryId = req.query.selectedCategoryId;
 
-    if (!userId) {
-      return res.status(400).json({ error: 'User ID missing in query parameters' });
+    if (!userID || !selectedCategoryId) {
+      return res.status(400).json({ error: 'User ID or Selected Category ID missing in query parameters' });
     }
 
-    // Find all courses from the Cours table that the user hasn't added (not in usercours table for the user)
+    // Main query to get courses where coursId is in the subquery result
     const coursesNotAdded = await Cours.findAll({
-      include: [
-        {
-          model: User,
-          through: {
-            model: usercours,
-            where: { userId: userId },
-            attributes: [], // Exclude userId from the result
-          },
-          attributes: [], // Exclude User attributes from the result
+      where: {
+        id: {
+          [Op.in]: Sequelize.literal(`(
+            SELECT \`cours_id\`
+            FROM \`usercours\`
+            WHERE \`user_id\` != ${userID}
+          )`)
         },
-      ],
-      where: { '$Users.id$': null }, // Check for courses not associated with any user
+        categorieId: selectedCategoryId
+      },
+      attributes: ['id', 'titre', 'description', 'prix', 'photo', 'categorieId']
     });
 
     res.status(200).json(coursesNotAdded);
   } catch (error) {
-    console.error('Error fetching courses not added by user:', error);
+    console.error('Error fetching courses:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 
 const allcoursinusercours = async (req, res) => {
@@ -75,8 +76,10 @@ const allcoursinusercours = async (req, res) => {
       return res.status(404).json({ error: 'No courses found' });
     }
 
+    const userId = 1; // or get the userId from req if needed, e.g., req.user.id
+
     const promises = courses.map(async (course) => {
-      await usercours.create({ coursId: course.id });
+      await usercours.create({ coursId: course.id, userId });
     });
 
     await Promise.all(promises);
@@ -87,6 +90,7 @@ const allcoursinusercours = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 module.exports = {
   coursfinder,

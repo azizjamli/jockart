@@ -152,7 +152,7 @@ const UserComponent = () => {
                 {coursFinderNouserData.map((item) => (
                   <div className="card" key={item.coursId}>
                     <div className="card-body">
-                      <h5 className="card-title">{item.Cour.titre}</h5>
+                      <h5 className="card-title">{item.titre}</h5>
                       <button className="btn btn-success">Ajouter</button>
                     </div>
                   </div>
