@@ -118,5 +118,6 @@ module.exports = {
   signin,
   signup,
   getInfo,
-  uploadPhoto
+  uploadPhoto,
+  
 };

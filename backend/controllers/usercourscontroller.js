@@ -3,7 +3,7 @@ const router = express.Router();
 const usercours = require('../models/userscours');
 const User = require('../models/users');
 const Cours = require('../models/cours');
-const { Op, Sequelize } = require('sequelize');
+const { Op, Sequelize, QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig'); // Import the sequelize instance
 
 const coursfinder = async (req, res) => {
@@ -44,17 +44,17 @@ const coursfindernouser = async (req, res) => {
       return res.status(400).json({ error: 'User ID or Selected Category ID missing in query parameters' });
     }
 
-    // Main query to get courses where coursId is in the subquery result
+    // Main query to get courses that the user has not added
     const coursesNotAdded = await Cours.findAll({
       where: {
+        categorieId: selectedCategoryId,
         id: {
-          [Op.in]: Sequelize.literal(`(
+          [Op.notIn]: Sequelize.literal(`(
             SELECT \`cours_id\`
             FROM \`usercours\`
-            WHERE \`user_id\` != ${userID}
+            WHERE \`user_id\` = ${userID}
           )`)
-        },
-        categorieId: selectedCategoryId
+        }
       },
       attributes: ['id', 'titre', 'description', 'prix', 'photo', 'categorieId']
     });
@@ -90,10 +90,40 @@ const allcoursinusercours = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+const addCourseToUser = async (req, res) => {
+  try {
+    const { userId, courseId } = req.body;
+
+    if (!userId || !courseId) {
+      return res.status(400).json({ error: 'User ID or Course ID missing in request body' });
+    }
+
+    // Check if the course and user exist (optional, depending on your application's requirements)
+    // You can remove these checks if you are sure that the provided userId and courseId are valid
+
+    // Construct the SQL INSERT statement
+    const insertQuery = `
+      INSERT INTO usercours (user_id, cours_id, created_at, updated_at)
+      VALUES (?, ?, NOW(), NOW())
+    `;
+
+    // Execute the SQL query
+    await sequelize.query(insertQuery, {
+      replacements: [userId, courseId],
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({ message: 'Course added to user successfully' });
+  } catch (error) {
+    console.error('Error adding course to user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
 module.exports = {
   coursfinder,
   coursfindernouser,
-  allcoursinusercours
+  allcoursinusercours,
+  addCourseToUser
 };
