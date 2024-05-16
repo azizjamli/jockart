@@ -32,7 +32,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categorieRouter);
 app.use('/api/usercours', usercoursRouter);
 app.use('/api/chapitre' , chapitrerouter);
-app.use('/api', pdfchapitreroutes);
+app.use('/api/pdfchapitre', pdfchapitreroutes);
 
 
 
