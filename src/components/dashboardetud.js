@@ -96,11 +96,11 @@ const UserComponent = () => {
               ))}
             </div>
           </div>
-          <div className="col-md-8 col-sm-12 container mt-4">
+          <div className="col-md-8 col-sm-12 container  p-5">
             <div className="row d-flex   justify-content-around ">
                 {coursFinderData.map((item) => (
 
-                  <div className="card mb-3 col-lg-3" key={item.Cour.id}>
+                  <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
                     <div className="card-body">
                       <h5 className="card-title">{item.Cour.titre}</h5>
                       <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
@@ -112,7 +112,7 @@ const UserComponent = () => {
                 {coursFinderNouserData.map((item) => (
                           //      <div className="col-md-6">
 
-                  <div className="card mb-3 col-lg-3" key={item.id}>
+                  <div className="card coursnonacheté mb-3 col-lg-3" key={item.id}>
                     <div className="card-body">
                       <h5 className="card-title">{item.titre}</h5>
                       <p>{item.id}</p>
