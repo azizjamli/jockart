@@ -22,15 +22,15 @@ const UserInfo = ({ user }) => {
       </div>
 
       {user && (
-        <div className="row mt-5">
-          <div className="col-md-2">
+        <div className="row mt-5 text-start ">
+          <div className="col-md-4">
             <p>{user.photo}</p>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-4">
             <p>Nom: {user.nom}</p>
             <p>Prénom: {user.prenom}</p>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-4">
             <p>email: {user.email}</p>
             <p>num: {user.numtel}</p>
           </div>

@@ -31,7 +31,6 @@ const Accedercours = () => {
 
   return (
     <>
-      <h2>iqshd</h2>
       <UserInfo user={user} />
 
       <div className='container bg-success'>
