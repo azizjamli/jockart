@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userroutes');
 const categorieRouter = require('./routes/categorieroutes');
 const usercoursRouter = require('./routes/usercoursroutes');
+const chapitrerouter = require('./routes/chapitreroutes');
 
 //const cookieJwtAuth = require('./middleware/cookieJwtAuth'); 
 const usercours = require('./models/userscours');
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categorieRouter);
 app.use('/api/usercours', usercoursRouter);
+app.use('/api/chapitre' , chapitrerouter);
 
 
 

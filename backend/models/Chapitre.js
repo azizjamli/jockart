@@ -1,30 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
-const Cours = require('./cours');
-const Video = require('./video'); // Import Video model
-const PDF = require('./pdf'); // Import PDF model
 
 const Chapitre = sequelize.define('Chapitre', {
-  id: {
+  chapitre_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  titre: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  ordre: {
+  cours_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true, // Allow null as per your table definition
   },
-  contenu: DataTypes.TEXT,
+  chapitre_name: {
+    type: DataTypes.STRING,
+    allowNull: true, // Allow null as per your table definition
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true, // Allow null as per your table definition
+  },
 });
-
-// Define associations
-Chapitre.belongsTo(Cours, { foreignKey: 'CoursId' });
-Chapitre.hasMany(Video, { foreignKey: 'ChapitreId' }); // A Chapitre can have multiple videos
-Chapitre.hasMany(PDF, { foreignKey: 'ChapitreId' }); // A Chapitre can have multiple PDFs 
-
 
 module.exports = Chapitre;
