@@ -15,6 +15,7 @@ import DashboardEtud from './components/dashboardetud';
 import Signupcontinue from './components/signupcontinue';
 import Ajoutercours from './components/ajoutercours';
 import Accedercours from './components/accedercours';
+import Chapitreetud from './components/chapitreetud';
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
@@ -50,6 +51,8 @@ function AppContent() {
         <Route path="/dashboardetud" element={<DashboardEtud />} />
         <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
         <Route path="/accedercours/:id" element={<Accedercours />} />
+        <Route path="/chapitreetud/:chapitre_id" element={<Chapitreetud />} />
+
 
 
       </Routes>
