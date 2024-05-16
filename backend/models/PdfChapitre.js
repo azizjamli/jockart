@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
-const PdfChapitre = sequelize.define('PdfChapitre', {
+const Pdfchapitre = sequelize.define('PdfChapitre', {
   pdf_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -23,6 +23,10 @@ const PdfChapitre = sequelize.define('PdfChapitre', {
       key: 'chapitre_id', // Name of the referenced column
     },
   },
-});
+} ,{
+    tableName: 'pdfchapitre', // Specify the actual table name in your database
+    timestamps: false,
 
-module.exports = PdfChapitre;
+  });
+
+module.exports = Pdfchapitre;
