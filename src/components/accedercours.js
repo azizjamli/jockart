@@ -7,6 +7,7 @@ const Accedercours = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const { id } = useParams(); // Extract the course ID from the URL
+  const coursId = id; // Define coursId using id extracted from useParams()
   const [chapitres, setChapitres] = useState([]);
 
   useEffect(() => {
@@ -27,8 +28,8 @@ const Accedercours = () => {
 
     async function fetchChapitres() {
       try {
-        const chapitreResponse = await axios.get(`http://localhost:3001/api/chapitre/getChapitresByCoursId`, {
-          params: { coursId: id },
+        const chapitreResponse = await axios.get(`http://localhost:3001/api/chapitre/getChapitresByCoursId/${coursId}`, {
+          params: { coursId }, // Use coursId as a query parameter
         });
         setChapitres(chapitreResponse.data);
       } catch (error) {
@@ -38,7 +39,7 @@ const Accedercours = () => {
 
     fetchData();
     fetchChapitres();
-  }, [id]); // Include id in the dependency array to refetch when id changes
+  }, [coursId]); // Include coursId in the dependency array to refetch when coursId changes
 
   if (loading) {
     return <p>Loading...</p>;
@@ -55,7 +56,7 @@ const Accedercours = () => {
           {chapitres.map(chapitre => (
             <div key={chapitre.id} className='card col-sm-4'>
               <div className='card-body'>
-                <h2 className='card-title'>{chapitre.titre}</h2>
+                <h2 className='card-title'>{chapitre.chapitre_name}</h2>
                 <p className='card-text'>{chapitre.description}</p>
               </div>
             </div>
