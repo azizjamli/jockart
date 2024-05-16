@@ -96,31 +96,32 @@ const UserComponent = () => {
               ))}
             </div>
           </div>
-          <div className="col-md-8 col-sm-12 container">
-            <div className="row">
-              <div className="col-md-6">
-                <h3>Cours from coursfinder</h3>
+          <div className="col-md-8 col-sm-12 container mt-4">
+            <div className="row d-flex   justify-content-around ">
                 {coursFinderData.map((item) => (
-                  <div className="card" key={item.coursId}>
+
+                  <div className="card mb-3 col-lg-3" key={item.Cour.id}>
                     <div className="card-body">
                       <h5 className="card-title">{item.Cour.titre}</h5>
-                      <button className="btn btn-primary" onClick={() => handleAccederClick(item.id)}>Accéder</button>
+                      <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
                     </div>
                   </div>
+//                  </div>
+
                 ))}
-              </div>
-              <div className="col-md-6">
-                <h3>Cours from coursfindernouser</h3>
                 {coursFinderNouserData.map((item) => (
-                  <div className="card" key={item.id}>
+                          //      <div className="col-md-6">
+
+                  <div className="card mb-3 col-lg-3" key={item.id}>
                     <div className="card-body">
                       <h5 className="card-title">{item.titre}</h5>
                       <p>{item.id}</p>
                       <button className="btn btn-success" onClick={() => handleAjouterClick(item.id)}>Ajouter</button>
                     </div>
                   </div>
+                //  </div>
+
                 ))}
-              </div>
             </div>
           </div>
         </div>

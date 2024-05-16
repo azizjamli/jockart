@@ -22,7 +22,6 @@ const coursfinder = async (req, res) => {
           model: Cours,
           attributes: ['id', 'titre', 'description', 'prix', 'photo', 'categorieId'],
           where: { categorieId: selectedCategoryId },
-          as: 'Cour',
         },
       ],
       where: { userId: userID },
