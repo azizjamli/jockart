@@ -18,7 +18,17 @@ const getPdfChapitresByChapitreId = async (req, res) => {
       return res.status(404).json({ message: 'No PDF chapters found for this chapitre ID' });
     }
 
-    res.json(pdfChapitres);
+    // Convert pdf_content from Blob to Base64
+    const pdfsWithBase64Content = pdfChapitres.map(pdf => {
+      const base64Content = pdf.pdf_content ? pdf.pdf_content.toString('base64') : null;
+      console.log(`Base64 Content for PDF ID ${pdf.pdf_id}: ${base64Content}`);
+      return {
+        ...pdf.toJSON(),
+        pdf_content: base64Content
+      };
+    });
+
+    res.json(pdfsWithBase64Content);
   } catch (error) {
     console.error('Error fetching PDF chapitres:', error);
     res.status(500).send('Server Error');

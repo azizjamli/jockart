@@ -25,15 +25,27 @@ const Chapitreetud = () => {
       <p>Chapitre ID: {chapitre_id}</p>
       
       <div className='row'>
-        {pdfs.map(pdf => (
-          <div key={pdf.pdf_id} className='card'>
-            <div className='card-body'>
-              <h5 className='card-title'>{pdf.pdf_name}</h5>
-              {/* Display other PDF details as needed */}
-              <embed src={`data:application/pdf;base64,${pdf.pdf_content}`} type="application/pdf" width="100%" height="500px" />
-            </div>
-          </div>
-        ))}
+      {pdfs.map(pdf => {
+  console.log(pdf.pdf_content); // Add this line for debugging
+  return (
+    <div key={pdf.pdf_id} className='card'>
+      <div className='card-body'>
+        <h5 className='card-title'>{pdf.pdf_name}</h5>
+        {pdf.pdf_content ? (
+          <object 
+          data={`data:application/pdf;base64,${pdf.pdf_content}`} 
+          type="application/pdf" 
+          width="100%" 
+          height="500px" 
+        ></object>
+        ) : (
+          <p>No PDF content available.</p>
+        )}
+      </div>
+    </div>
+  );
+})}
+
       </div>
     </div>
   );
