@@ -1,5 +1,4 @@
 const Video = require('../models/Video');
-const fs = require('fs');
 
 const getVideosByChapitreId = async (req, res) => {
   const chapitreId = parseInt(req.params.chapitreId);
@@ -17,21 +16,14 @@ const getVideosByChapitreId = async (req, res) => {
       return res.status(404).json({ message: 'No videos found for this chapitre ID' });
     }
 
-    // Prepare the response data by decoding video data
-    const videosWithDecodedData = videos.map(video => {
-      if (video.video) {
-        // Assuming the video data is stored as base64 in the database
-        const decodedVideo = Buffer.from(video.video, 'base64').toString('binary');
-        return {
-          ...video.toJSON(),
-          video: decodedVideo,
-        };
-      } else {
-        return video;
-      }
+    const videosWithBase64Data = videos.map(video => {
+      return {
+        ...video.toJSON(),
+        video: video.video.toString('base64'), // Encode the binary data to base64
+      };
     });
 
-    res.json(videosWithDecodedData);
+    res.json(videosWithBase64Data);
   } catch (error) {
     console.error('Error fetching videos:', error);
     res.status(500).send('Server Error');
