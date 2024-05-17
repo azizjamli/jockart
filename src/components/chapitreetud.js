@@ -92,10 +92,11 @@ const Chapitreetud = () => {
                 <div className='card-body'>
                   <h5 className='card-title'>{video.video_titre}</h5>
                   {video.video ? (
-                    <video controls width="100%" height="300px">
-                      <source src={`data:video/mp4;base64,${video.video}`} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                   <video controls width="100%" height="300px">
+                   <source src={`data:video/mp4;base64,${video.video}`} type="video/mp4" />
+                   Your browser does not support the video tag.
+                 </video>
+                 
                   ) : (
                     <p>No video content available.</p>
                   )}

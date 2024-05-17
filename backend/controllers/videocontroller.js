@@ -19,7 +19,7 @@ const getVideosByChapitreId = async (req, res) => {
     const videosWithBase64Data = videos.map(video => {
       return {
         ...video.toJSON(),
-        video: video.video, // Send the base64 encoded string as it is
+        video: video.video.toString('base64'), // Encode the binary data to base64
       };
     });
 
