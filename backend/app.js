@@ -7,10 +7,8 @@ const categorieRouter = require('./routes/categorieroutes');
 const usercoursRouter = require('./routes/usercoursroutes');
 const chapitrerouter = require('./routes/chapitreroutes');
 const pdfchapitreroutes = require('./routes/pdfchapitreroutes');
-const videoroutes = require('./routes/videoroutes'); // Import the videoroutes module
-
-//const cookieJwtAuth = require('./middleware/cookieJwtAuth'); 
-const usercours = require('./models/userscours');
+const videoroutes = require('./routes/videoroutes');
+const seanceenligneRoutes = require('./routes/seanceenligneroutes'); // Import the seanceenligneroutes module
 
 const app = express();
 
@@ -34,6 +32,9 @@ app.use('/api/pdfchapitre', pdfchapitreroutes);
 
 // Use the video routes
 app.use('/api/videos', videoroutes);
+
+// Use the seanceenligne routes
+app.use('/api/seanceenligne', seanceenligneRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3001;
