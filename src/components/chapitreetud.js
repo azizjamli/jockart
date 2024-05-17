@@ -19,33 +19,49 @@ const Chapitreetud = () => {
     fetchPdfChapitres();
   }, [chapitre_id]);
 
+  const handleDownload = (pdfName, pdfContent) => {
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = pdfName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
-    <div>
+    <div className='container'>
       <h2>Chapitreetud Component</h2>
       <p>Chapitre ID: {chapitre_id}</p>
       
-      <div className='row'>
-      {pdfs.map(pdf => {
-  console.log(pdf.pdf_content); // Add this line for debugging
-  return (
-    <div key={pdf.pdf_id} className='card'>
-      <div className='card-body'>
-        <h5 className='card-title'>{pdf.pdf_name}</h5>
-        {pdf.pdf_content ? (
-          <object 
-          data={`data:application/pdf;base64,${pdf.pdf_content}`} 
-          type="application/pdf" 
-          width="100%" 
-          height="500px" 
-        ></object>
-        ) : (
-          <p>No PDF content available.</p>
-        )}
-      </div>
-    </div>
-  );
-})}
-
+      <div className='row d-flex justify-content-around'>
+        {pdfs.map(pdf => (
+          <div key={pdf.pdf_id} className='card col-md-4'>
+            <div className='card-body'>
+              <h5 className='card-title'>{pdf.pdf_name}</h5>
+              {pdf.pdf_content ? (
+                <>
+                  <object 
+                    data={`data:application/pdf;base64,${pdf.pdf_content}`} 
+                    type="application/pdf" 
+                    width="80%" 
+                    height="500px" 
+                  ></object>
+                  <button 
+                    className="btn btn-primary border-0 mt-2" 
+                    onClick={() => handleDownload(pdf.pdf_name, atob(pdf.pdf_content))}
+                  >
+                    Download
+                  </button>
+                </>
+              ) : (
+                <p>No PDF content available.</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
