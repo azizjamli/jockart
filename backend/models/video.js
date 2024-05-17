@@ -7,10 +7,25 @@ const Video = sequelize.define('Video', {
     primaryKey: true,
     autoIncrement: true,
   },
-  url: {
+  video_titre: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  video: {
+    type: DataTypes.BLOB('long'),
+    allowNull: false,
+  },
+  chapitre_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Chapitre', // Name of the referenced model
+      key: 'chapitre_id', // Name of the referenced column
+    },
+  },
+}, {
+  tableName: 'video', // Specify the actual table name in your database
+  timestamps: false,
 });
 
 module.exports = Video;
