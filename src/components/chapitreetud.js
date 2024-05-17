@@ -24,15 +24,25 @@ const Chapitreetud = () => {
   }, [chapitre_id]);
 
   const handlePdfDownload = (pdfName, pdfContent) => {
-    const blob = new Blob([pdfContent], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = pdfName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    try {
+      const byteCharacters = atob(pdfContent);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = pdfName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error during PDF download:', error);
+    }
   };
 
   return (
@@ -58,7 +68,7 @@ const Chapitreetud = () => {
                       ></object>
                       <button
                         className="btn btn-primary border-0 mt-2"
-                        onClick={() => handlePdfDownload(pdf.pdf_name, atob(pdf.pdf_content))}
+                        onClick={() => handlePdfDownload(pdf.pdf_name, pdf.pdf_content)}
                       >
                         Download PDF
                       </button>
