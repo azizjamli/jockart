@@ -2,25 +2,25 @@ const Video = require('../models/Video');
 const fs = require('fs');
 
 const getVideosByChapitreId = async (req, res) => {
-  const chapitreId = parseInt(req.params.chapitreId); // Extract and parse the chapitre ID from the request parameters
+  const chapitreId = parseInt(req.params.chapitreId);
 
-  // Check if chapitreId is a valid number
   if (isNaN(chapitreId) || chapitreId <= 0) {
     return res.status(400).json({ message: 'Invalid chapitre ID' });
   }
 
   try {
     const videos = await Video.findAll({
-      where: { chapitre_id: chapitreId }, // Filter by chapitre_id
+      where: { chapitre_id: chapitreId },
     });
 
     if (videos.length === 0) {
       return res.status(404).json({ message: 'No videos found for this chapitre ID' });
     }
 
-    // Decode base64 video data
+    // Prepare the response data by decoding video data
     const videosWithDecodedData = videos.map(video => {
       if (video.video) {
+        // Assuming the video data is stored as base64 in the database
         const decodedVideo = Buffer.from(video.video, 'base64').toString('binary');
         return {
           ...video.toJSON(),
