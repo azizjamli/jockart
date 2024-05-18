@@ -30,16 +30,10 @@ const Dashboardadmin = () => {
   const handleCategoryClick = async (categoryId) => {
     setSelectedCategoryId(categoryId); // Update selected category
     try {
-      const userId = localStorage.getItem('userId');
       const coursFinderResponse = await axios.get('http://localhost:3001/api/usercours/coursfinder', {
-        params: { userId, selectedCategoryId: categoryId },
+        params: { selectedCategoryId: categoryId },
       });
       setCoursFinderData(coursFinderResponse.data);
-
-      const coursFinderNouserResponse = await axios.get('http://localhost:3001/api/usercours/coursfindernouser', {
-        params: { userId, selectedCategoryId: categoryId },
-      });
-      setCoursFinderNouserData(coursFinderNouserResponse.data);
     } catch (error) {
       console.error('Error fetching user courses by category:', error);
     }
@@ -85,12 +79,23 @@ const Dashboardadmin = () => {
             </div>
           </div>
           <div className="col-md-9">
-            <h2>Selected Category: {selectedCategoryId}</h2>
+            <h2>Les cours pour la catégorie: {selectedCategoryId}</h2>
+            <div className="row">
+              {coursFinderData.map((course) => (
+                <div className="col-md-4 mb-4" key={course.id}>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">{course.title}</h5>
+                      <p className="card-text">{course.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
             {/* Add additional content here */}
           </div>
         </div>
       </div>
-     
     </>
   );
 };
