@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt'); // Import bcrypt library
 const fs = require('fs');
 const path = require('path');
 
-
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -72,14 +71,19 @@ const getInfo = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Send user details in the response
-    res.status(200).json(user);
+    // Encode the photo to Base64 if it exists
+    let photoBase64 = null;
+    if (user.photo) {
+      photoBase64 = Buffer.from(user.photo, 'binary').toString('base64');
+    }
+
+    // Send user details including Base64 encoded photo in the response
+    res.status(200).json({ user: { ...user.toJSON(), photo: photoBase64 } });
   } catch (error) {
     console.error('Error fetching user info:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 const uploadPhoto = async (req, res) => {
   const { userId } = req.params; // Assuming you pass the userId in the URL params
@@ -97,11 +101,12 @@ const uploadPhoto = async (req, res) => {
       return res.status(400).json({ error: 'Please upload an image file' });
     }
 
-    // Read the uploaded file and convert it to a Buffer
+    // Read the uploaded file and convert it to a Base64 string
     const imageBuffer = fs.readFileSync(photo.path);
+    const imageBase64 = imageBuffer.toString('base64');
 
-    // Update the photo column for the user
-    await user.update({ photo: imageBuffer });
+    // Update the photo column for the user with the Base64 encoded image
+    await user.update({ photo: imageBase64 });
 
     // Delete the temporary uploaded file (optional, depending on your setup)
     fs.unlinkSync(photo.path);
@@ -119,5 +124,4 @@ module.exports = {
   signup,
   getInfo,
   uploadPhoto,
-  
 };
