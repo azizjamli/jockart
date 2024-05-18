@@ -1,4 +1,3 @@
-// UserComponent.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +10,6 @@ const UserComponent = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [coursFinderData, setCoursFinderData] = useState([]);
   const [coursFinderNouserData, setCoursFinderNouserData] = useState([]);
-  const [selectedCoursId, setSelectedCoursId] = useState(null);
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
@@ -36,16 +34,14 @@ const UserComponent = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
         setCategories(response.data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching categories:', error);
-        setLoading(false);
       }
     }
 
     fetchData();
     fetchCategories();
-  }, [selectedCategoryId]);
+  }, []); // Empty dependency array to run only once
 
   const handleCategoryClick = async (categoryId) => {
     try {
@@ -72,14 +68,14 @@ const UserComponent = () => {
     navigate(`/Accedercours/${id}`);
   };
 
-
   if (loading) {
     return <p>Loading...</p>;
   }
 
   return (
     <>
-      <UserInfo user={user} />
+      <UserInfo />
+
       <div className="container">
         <div className="dashboard row">
           <div className="menucategorie border-0 col-md-3">
@@ -96,32 +92,25 @@ const UserComponent = () => {
               ))}
             </div>
           </div>
-          <div className="col-md-8 col-sm-12 container  p-5">
-            <div className="row d-flex   justify-content-around ">
-                {coursFinderData.map((item) => (
-
-                  <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
-                    <div className="card-body">
-                      <h5 className="card-title">{item.Cour.titre}</h5>
-                      <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
-                    </div>
+          <div className="col-md-8 col-sm-12 container p-5">
+            <div className="row d-flex justify-content-around">
+              {coursFinderData.map((item) => (
+                <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
+                  <div className="card-body">
+                    <h5 className="card-title">{item.Cour.titre}</h5>
+                    <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
                   </div>
-//                  </div>
-
-                ))}
-                {coursFinderNouserData.map((item) => (
-                          //      <div className="col-md-6">
-
-                  <div className="card coursnonacheté mb-3 col-lg-3" key={item.id}>
-                    <div className="card-body">
-                      <h5 className="card-title">{item.titre}</h5>
-                      <p>{item.id}</p>
-                      <button className="btn btn-success" onClick={() => handleAjouterClick(item.id)}>Ajouter</button>
-                    </div>
+                </div>
+              ))}
+              {coursFinderNouserData.map((item) => (
+                <div className="card coursnonacheté mb-3 col-lg-3" key={item.id}>
+                  <div className="card-body">
+                    <h5 className="card-title">{item.titre}</h5>
+                    <p>{item.id}</p>
+                    <button className="btn btn-success" onClick={() => handleAjouterClick(item.id)}>Ajouter</button>
                   </div>
-                //  </div>
-
-                ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>
