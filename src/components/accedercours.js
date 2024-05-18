@@ -103,7 +103,9 @@ const Accedercours = () => {
               <h5 className='card-title'>Session Title: {seance.title}</h5>
               <p className='card-text'>Date: {formatSeanceDate(seance.date)}</p>
               <h5 className='card-title'>heure : {seance.heure}</h5>
-              <p className='card-text'>Link: {seance.link}</p>
+              <a className='card-text' href={seance.link} target='_blank' rel='noopener noreferrer'>
+                Link: {seance.link}
+              </a>
             </div>
           </div>
         ))}
