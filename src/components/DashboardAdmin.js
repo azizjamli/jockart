@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import AddCategory from './addcategory'; // Import the AddCategory component
 
 const Dashboardadmin = () => {
   const [loading, setLoading] = useState(true);
@@ -8,6 +10,7 @@ const Dashboardadmin = () => {
   const [coursFinderData, setCoursFinderData] = useState([]);
   const [coursFinderNouserData, setCoursFinderNouserData] = useState([]);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     async function fetchCategories() {
@@ -65,20 +68,20 @@ const Dashboardadmin = () => {
               )}
             </div>
             <div className='d-flex justify-content-around'>
-            <button 
-              className='btn p-2' 
-              style={{ backgroundColor: 'green', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
-              onClick={() => { /* Logic to add a category */ }}
-            >
-              Ajouter une catégorie
-            </button>
-            <button 
-              className='btn p-2' 
-              style={{ backgroundColor: 'red', color: 'white', fontSize: '0.7vw',  margin: '0.5vw 0' }}
-              onClick={() => { /* Logic to delete a category */ }}
-            >
-              Supprimer une catégorie
-            </button>
+              <button 
+                className='btn p-2' 
+                style={{ backgroundColor: 'green', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
+                onClick={() => navigate('/addcategory')} // Navigate to AddCategory component
+              >
+                Ajouter une catégorie
+              </button>
+              <button 
+                className='btn p-2' 
+                style={{ backgroundColor: 'red', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
+                onClick={() => { /* Logic to delete a category */ }}
+              >
+                Supprimer une catégorie
+              </button>
             </div>
           </div>
           <div className="col-md-9">
@@ -87,6 +90,7 @@ const Dashboardadmin = () => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };
