@@ -1,0 +1,94 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Dashboardadmin = () => {
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [coursFinderData, setCoursFinderData] = useState([]);
+  const [coursFinderNouserData, setCoursFinderNouserData] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
+        setCategories(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        setLoading(false); // Ensure loading state is updated in case of error
+      }
+    }
+
+    fetchCategories();
+  }, []); // Empty dependency array to run only once
+
+  const handleCategoryClick = async (categoryId) => {
+    setSelectedCategoryId(categoryId); // Update selected category
+    try {
+      const userId = localStorage.getItem('userId');
+      const coursFinderResponse = await axios.get('http://localhost:3001/api/usercours/coursfinder', {
+        params: { userId, selectedCategoryId: categoryId },
+      });
+      setCoursFinderData(coursFinderResponse.data);
+
+      const coursFinderNouserResponse = await axios.get('http://localhost:3001/api/usercours/coursfindernouser', {
+        params: { userId, selectedCategoryId: categoryId },
+      });
+      setCoursFinderNouserData(coursFinderNouserResponse.data);
+    } catch (error) {
+      console.error('Error fetching user courses by category:', error);
+    }
+  };
+
+  return (
+    <>
+      <p>Dashboard Admin</p>
+      <div className="container">
+        <div className="dashboard row">
+          <div className="menucategorie border-0 col-md-3">
+            <div className="list-group">
+              {loading ? (
+                <p>Loading categories...</p>
+              ) : (
+                categories.map((categorie) => (
+                  <a
+                    href="#"
+                    key={categorie.id}
+                    className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+                    onClick={() => handleCategoryClick(categorie.id)}
+                  >
+                    {categorie.nom}
+                  </a>
+                ))
+              )}
+            </div>
+            <div className='d-flex justify-content-around'>
+            <button 
+              className='btn p-2' 
+              style={{ backgroundColor: 'green', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
+              onClick={() => { /* Logic to add a category */ }}
+            >
+              Ajouter une catégorie
+            </button>
+            <button 
+              className='btn p-2' 
+              style={{ backgroundColor: 'red', color: 'white', fontSize: '0.7vw',  margin: '0.5vw 0' }}
+              onClick={() => { /* Logic to delete a category */ }}
+            >
+              Supprimer une catégorie
+            </button>
+            </div>
+          </div>
+          <div className="col-md-9">
+            <h2>Selected Category: {selectedCategoryId}</h2>
+            {/* Add additional content here */}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Dashboardadmin;
