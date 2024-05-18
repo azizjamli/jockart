@@ -98,7 +98,7 @@ if (loading) {
               {coursFinderData.map((item) => (
                 <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
                   <div className="card-body">
-                    <h5 className="card-title">{item.Cour.titre}</h5>
+                    <h5 className="card-title ">{item.Cour.titre}</h5>
                     <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
                   </div>
                 </div>
