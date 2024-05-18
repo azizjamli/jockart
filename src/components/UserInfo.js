@@ -32,35 +32,40 @@ const UserInfo = () => {
 
   return (
     <div className="container dashboardinfo p-3">
-      <div className="row">
-        <div className="col-md-3 text-start ms-5 mt-4">
-          <p>Profil Étudiant</p>
-        </div>
-        <div className="icons col-md-6 d-flex justify-content-end align-items-start gap-3">
-          <img style={{ width: '1.4vw' }} src={homeicon} className="img-fluid mt-5" alt="Home Icon" />
-          <img style={{ width: '1.4vw' }} src={notificon} className="img-fluid mt-5" alt="Notification Icon" />
-          <img style={{ width: '1.4vw' }} src={settingsicon} className="img-fluid mt-5" alt="Settings Icon" />
-          <img style={{ width: '1.4vw' }} src={modifyicon} className="img-fluid mt-5" alt="Modify Icon" />
-        </div>
+      <div className="row ps-3 pe-5 d-flex align-items-center">
+          <p className=" text-start ms-5 mt-4">Profil Étudiant</p>
+          <div className="icons  d-flex justify-content-end  gap-3">
+            <img style={{ width: '1.4vw' }} src={homeicon} className="img-fluid icon mt-5" alt="Home Icon" />
+            <img style={{ width: '1.4vw' }} src={notificon} className="img-fluid icon mt-5" alt="Notification Icon" />
+            <img style={{ width: '1.4vw' }} src={settingsicon} className="img-fluid icon mt-5" alt="Settings Icon" />
+            <img style={{ width: '1.4vw' }} src={modifyicon} className="img-fluid icon mt-5" alt="Modify Icon" />
+          </div>
       </div>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
         usera && (
-          <div className="row mt-5 text-start">
-            <div className="col-md-4">
+          <div className="row mt-5 text-start d-flex align-items-center p-3">
+              <div className='col-md-4 '>
               {/* Render the user photo as an image */}
-              {usera.photo && <img src={`data:image/png;base64,${usera.photo}`} alt="User Photo" />}
-            </div>
-            <div className="col-md-4">
-              <p>Nom: {usera.nom}</p> {/* Access nom from usera object */}
-              <p>Prénom: {usera.prenom}</p> {/* Access prenom from usera object */}
-            </div>
-            <div className="col-md-4">
-              <p>Email: {usera.email}</p> {/* Access email from usera object */}
-              <p>Numéro: {usera.numtel}</p> {/* Access numtel from usera object */}
-            </div>
+              {usera.photo && (
+                <img
+                  src={`data:image/png;base64,${usera.photo}`}
+                  className='userphoto ms-5   img-fluid'
+                  alt="User Photo"
+                  //style={{ width: '100%', height: 'auto' }} // Adjust image size
+                />
+              )}
+              </div>
+              <div className="col-md-3 ms-5">
+                <p>Nom: {usera.nom}</p> {/* Access nom from usera object */}
+                <p>Prénom: {usera.prenom}</p> {/* Access prenom from usera object */}
+              </div>
+              <div className='col-md-3 ms-5' >
+                <p>Email: {usera.email}</p> {/* Access email from usera object */}
+                <p>Numéro: {usera.numtel}</p> {/* Access numtel from usera object */}
+              </div>
           </div>
         )
       )}

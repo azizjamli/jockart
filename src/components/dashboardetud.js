@@ -26,7 +26,6 @@ const UserComponent = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user info:', error);
-        setLoading(false);
       }
     }
 
@@ -34,12 +33,14 @@ const UserComponent = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
         setCategories(response.data);
+        setLoading(false);
+
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     }
 
-    fetchData();
+    //fetchData();
     fetchCategories();
   }, []); // Empty dependency array to run only once
 
@@ -68,7 +69,7 @@ const UserComponent = () => {
     navigate(`/Accedercours/${id}`);
   };
 
-  if (loading) {
+if (loading) {
     return <p>Loading...</p>;
   }
 

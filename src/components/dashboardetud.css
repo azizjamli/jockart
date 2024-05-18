@@ -11,3 +11,16 @@
     color: #444FA6;
     border: solid 4px;
 }
+.userphoto {
+    border-radius: 50%;
+    width: 10vw; /* Adjust the value as needed */
+    min-width: 70px;
+    min-height: 70px;
+    height: 10vw; /* Same value as width to maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the entire circle without stretching */
+}
+.icon{
+    min-width: 15px;
+    height: auto;
+
+}
