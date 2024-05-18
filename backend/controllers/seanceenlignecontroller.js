@@ -1,21 +1,31 @@
+const Sequelize = require('sequelize');
+const { Op } = Sequelize; // Import Sequelize operators
+
 const SeanceEnLigne = require('../models/seanceenligne');
 
 const getSeanceEnLigneByCoursId = async (req, res) => {
-  const coursId = parseInt(req.params.coursId); // Extract and parse the course ID from the request parameters
+  const coursId = parseInt(req.params.coursId);
 
-  // Check if coursId is a valid number
   if (isNaN(coursId) || coursId <= 0) {
     return res.status(400).json({ message: 'Invalid course ID' });
   }
 
   try {
-    // Fetch SeanceEnLigne entries based on the cours_id foreign key
+    // Get the current date
+    const currentDate = new Date();
+
+    console.log('Current Date:', currentDate); // Debugging statement
+
+    // Fetch SeanceEnLigne entries based on the cours_id and date condition
     const seanceEnLigneEntries = await SeanceEnLigne.findAll({
-      where: { cours_id: coursId },
+      where: {
+        cours_id: coursId,
+        date: { [Op.gte]: currentDate }, // Use the gte (greater than or equal) operator
+      },
     });
 
     if (seanceEnLigneEntries.length === 0) {
-      return res.status(404).json({ message: 'No sessions found for this course ID' });
+      return res.status(404).json({ message: 'No sessions found for this course ID and date' });
     }
 
     res.json(seanceEnLigneEntries);
