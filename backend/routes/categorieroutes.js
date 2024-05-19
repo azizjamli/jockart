@@ -21,6 +21,6 @@ router.get('/getCategoryById/:id', getCategoryById);
 router.post('/updateCategory/:id', updateCategory);
 
 // POST /api/categories/deleteCategory/:id - Delete a category by ID
-router.post('/deleteCategory/:id', deleteCategory);
+router.delete('/deleteCategory/:id', deleteCategory);
 
 module.exports = router;

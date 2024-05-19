@@ -39,6 +39,17 @@ const Dashboardadmin = () => {
     navigate(`/addcours/${selectedCategoryId}`); // Navigate to AddCours component with selected category ID
   };
 
+  const handleDeleteCategoryClick = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/api/categories/deleteCategory/${selectedCategoryId}`);
+      // Refresh categories after deletion
+      const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
+  };
+
   return (
     <>
       <p>Dashboard Admin</p>
@@ -72,7 +83,7 @@ const Dashboardadmin = () => {
               <button 
                 className='btn p-2' 
                 style={{ backgroundColor: 'red', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
-                onClick={() => { /* Logic to delete a category */ }}
+                onClick={handleDeleteCategoryClick} // Call handleDeleteCategoryClick on button click
               >
                 Supprimer une catégorie
               </button>
