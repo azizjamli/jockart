@@ -2,29 +2,26 @@ const Cours = require('../models/Cours');
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
+// Function to fetch courses by category ID
 const getCoursByCategorieId = async (req, res) => {
-  const categorieId = parseInt(req.params.categorieId); // Extract and parse the category ID from the request parameters
+  const categorieId = parseInt(req.params.categorieId);
 
-  // Check if categorieId is a valid number
   if (isNaN(categorieId) || categorieId <= 0) {
     return res.status(400).json({ message: 'Invalid category ID' });
   }
 
   try {
-    // Construct the SQL SELECT statement with a named placeholder
     const selectQuery = `
       SELECT * FROM cours WHERE categorieId = :categorieId
     `;
 
-    // Execute the SQL query with named placeholder and replacement map
     const cours = await sequelize.query(selectQuery, {
-      replacements: { categorieId }, // Pass the parsed categorieId as a named placeholder
+      replacements: { categorieId },
       type: QueryTypes.SELECT,
     });
 
-    console.log('categorieId:', categorieId); // Log the categorieId here
+    console.log('categorieId:', categorieId);
 
-    // Send an empty array if no courses are found
     res.json(cours || []);
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -32,6 +29,34 @@ const getCoursByCategorieId = async (req, res) => {
   }
 };
 
+// Function to create a new course
+const createCours = async (req, res) => {
+  const { titre, description, prix } = req.body;
+  const categorieId = parseInt(req.params.categorieId);
+
+  if (isNaN(categorieId) || categorieId <= 0) {
+    return res.status(400).json({ message: 'Invalid category ID' });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO cours (titre, description, prix, categorieId)
+      VALUES (:titre, :description, :prix, :categorieId)
+    `;
+
+    await sequelize.query(insertQuery, {
+      replacements: { titre, description, prix, categorieId },
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(201).json({ message: 'Course created successfully' });
+  } catch (error) {
+    console.error('Error creating course:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
-  getCoursByCategorieId
+  getCoursByCategorieId,
+  createCours,
 };

@@ -33,7 +33,7 @@ function AppContent() {
   const location = useLocation();
 
   // Define an array of routes where Header and Footer should be rendered
-  const headerFooterRoutes = [ '/' , '/formations', '/communaute', '/apropos', '/contact', '/login', ];
+  const headerFooterRoutes = ['/', '/formations', '/communaute', '/apropos', '/contact', '/login'];
 
   // Function to check if Header and Footer should be rendered based on the current route
   const shouldRenderHeaderFooter = () => {
@@ -44,7 +44,7 @@ function AppContent() {
     <div className="App">
       {shouldRenderHeaderFooter() && <Header />}
       <Routes>
-      <Route path="/" element={<Acceuil />} />
+        <Route path="/" element={<Acceuil />} />
         <Route path="/formations" element={<Formations />} />
         <Route path="/communaute" element={<Communauté />} />
         <Route path="/apropos" element={<APropos />} />
@@ -54,15 +54,10 @@ function AppContent() {
         <Route path="/dashboardetud" element={<DashboardEtud />} />
         <Route path="/dashboardadmin" element={<Dashboardadmin />} />
         <Route path="/addcategory" element={<AddCategory />} />
-        <Route path="/addcours" element={<AddCours />} />
-
-
+        <Route path="/addcours/:categoryId" element={<AddCours />} />
         <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
         <Route path="/accedercours/:id" element={<Accedercours />} />
         <Route path="/chapitreetud/:chapitre_id" element={<Chapitreetud />} />
-
-
-
       </Routes>
       {shouldRenderHeaderFooter() && <Footer />}
     </div>
