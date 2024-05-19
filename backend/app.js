@@ -8,7 +8,8 @@ const usercoursRouter = require('./routes/usercoursroutes');
 const chapitrerouter = require('./routes/chapitreroutes');
 const pdfchapitreroutes = require('./routes/pdfchapitreroutes');
 const videoroutes = require('./routes/videoroutes');
-const seanceenligneRoutes = require('./routes/seanceenligneroutes'); // Import the seanceenligneroutes module
+const seanceenligneRoutes = require('./routes/seanceenligneroutes');
+const coursRoutes = require('./routes/coursroutes'); // Import the coursroutes module
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categorieRouter);
 app.use('/api/usercours', usercoursRouter);
-app.use('/api/chapitre' , chapitrerouter);
+app.use('/api/chapitre', chapitrerouter);
 app.use('/api/pdfchapitre', pdfchapitreroutes);
 
 // Use the video routes
@@ -35,6 +36,9 @@ app.use('/api/videos', videoroutes);
 
 // Use the seanceenligne routes
 app.use('/api/seanceenligne', seanceenligneRoutes);
+
+// Use the cours routes
+app.use('/api/cours', coursRoutes); // Add this line to use coursRoutes
 
 // Start the server
 const PORT = process.env.PORT || 3001;
