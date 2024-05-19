@@ -94,7 +94,7 @@ if (loading) {
             </div>
           </div>
           <div className="col-md-8 col-sm-12 container p-5">
-            <div className="row d-flex justify-content-around">
+            <div className="row d-flex justify-content-around gap-1">
               {coursFinderData.map((item) => (
                 <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
                   <div className="card-body">
