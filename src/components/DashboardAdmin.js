@@ -8,6 +8,7 @@ const Dashboardadmin = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [coursFinderData, setCoursFinderData] = useState([]);
+  const [selectedCoursId, setSelectedCoursId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const Dashboardadmin = () => {
 
   const handleCategoryClick = async (categoryId) => {
     setSelectedCategoryId(categoryId); // Update selected category
+    setSelectedCoursId(null); // Reset selected course ID
     try {
       const response = await axios.get(`http://localhost:3001/api/cours/getCoursByCategorieId/${categoryId}`);
       setCoursFinderData(response.data);
@@ -45,8 +47,25 @@ const Dashboardadmin = () => {
       // Refresh categories after deletion
       const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
       setCategories(response.data);
+      setSelectedCategoryId(null); // Reset selected category ID after deletion
     } catch (error) {
       console.error('Error deleting category:', error);
+    }
+  };
+
+  const handleDeleteCoursClick = async () => {
+    if (!selectedCoursId) {
+      console.error('No course selected.');
+      return;
+    }
+    try {
+      await axios.delete(`http://localhost:3001/api/cours/deleteCours/${selectedCoursId}`);
+      // Refresh course finder data after deletion
+      const response = await axios.get(`http://localhost:3001/api/cours/getCoursByCategorieId/${selectedCategoryId}`);
+      setCoursFinderData(response.data);
+      setSelectedCoursId(null); // Reset selected course ID after deletion
+    } catch (error) {
+      console.error('Error deleting course:', error);
     }
   };
 
@@ -91,9 +110,10 @@ const Dashboardadmin = () => {
           </div>
           <div className="col-md-9">
             <h2>Les cours pour la catégorie: {selectedCategoryId}</h2>
+            <h3>{selectedCoursId}</h3>
             <div className="row">
               {coursFinderData.map((course) => (
-                <div className="col-md-4 mb-4" key={course.id}>
+                <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">{course.title}</h5>
@@ -104,6 +124,8 @@ const Dashboardadmin = () => {
               ))}
             </div>
             <button className='btn align-self-end' onClick={handleAddCoursClick}>Ajouter un cours</button>
+            <button className='btn align-self-end' onClick={handleDeleteCoursClick}>Supprimer un cours</button>
+
           </div>
         </div>
       </div>

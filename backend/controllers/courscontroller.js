@@ -56,7 +56,40 @@ const createCours = async (req, res) => {
   }
 };
 
+// Function to delete a course by ID
+const deleteCours = async (req, res) => {
+  const selectedCoursId = parseInt(req.params.id);
+
+  if (isNaN(selectedCoursId) || selectedCoursId <= 0) {
+    return res.status(400).json({ message: 'Invalid course ID' });
+  }
+
+  try {
+    const deleteQuery = `
+      DELETE FROM cours WHERE id = :selectedCoursId
+    `;
+
+    const deletedRows = await sequelize.query(deleteQuery, {
+      replacements: { selectedCoursId },
+      type: QueryTypes.DELETE,
+    });
+
+    /*if (deletedRows[0].affectedRows === 0) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+*/
+    res.status(200).json({ message: 'Course deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting course:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+
+
+
 module.exports = {
   getCoursByCategorieId,
   createCours,
+  deleteCours,
 };
