@@ -2,6 +2,13 @@ const Cours = require('../models/Cours');
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
+// Helper function to encode photo to Base64
+const encodePhotoToBase64 = (photo) => {
+  if (!photo) return null;
+  const base64Image = Buffer.from(photo, 'binary').toString('base64');
+  return base64Image;
+};
+
 // Function to fetch courses by category ID
 const getCoursByCategorieId = async (req, res) => {
   const categorieId = parseInt(req.params.categorieId);
@@ -20,9 +27,13 @@ const getCoursByCategorieId = async (req, res) => {
       type: QueryTypes.SELECT,
     });
 
-    console.log('categorieId:', categorieId);
+    // Encode photo to Base64 before sending response
+    const coursesWithBase64Photo = cours.map((course) => ({
+      ...course,
+      photo: encodePhotoToBase64(course.photo),
+    }));
 
-    res.json(cours || []);
+    res.json(coursesWithBase64Photo || []);
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).send('Server Error');
@@ -40,12 +51,16 @@ const createCours = async (req, res) => {
 
   try {
     const insertQuery = `
-      INSERT INTO cours (titre, description, prix, categorieId)
-      VALUES (:titre, :description, :prix, :categorieId)
+      INSERT INTO cours (titre, description, prix, categorieId, photo)
+      VALUES (:titre, :description, :prix, :categorieId, :photo)
     `;
 
+    // Encode photo to Base64 before insertion if it exists
+    const base64Photo = encodePhotoToBase64(req.body.photo);
+    const replacements = { titre, description, prix, categorieId, photo: base64Photo };
+
     await sequelize.query(insertQuery, {
-      replacements: { titre, description, prix, categorieId },
+      replacements,
       type: QueryTypes.INSERT,
     });
 
@@ -69,7 +84,7 @@ const deleteCours = async (req, res) => {
       DELETE FROM cours WHERE id = :selectedCoursId
     `;
 
-    const deletedRows = await sequelize.query(deleteQuery, {
+    await sequelize.query(deleteQuery, {
       replacements: { selectedCoursId },
       type: QueryTypes.DELETE,
     });
@@ -84,7 +99,6 @@ const deleteCours = async (req, res) => {
 // Function to update a course by ID
 const updateCours = async (req, res) => {
   const id = parseInt(req.params.id);
-  console.log(id);
   const { titre, description, prix, photo } = req.body;
 
   if (isNaN(id) || id <= 0) {
@@ -101,22 +115,20 @@ const updateCours = async (req, res) => {
 
     // Check if photo is included in the request body
     if (photo) {
+      // Encode photo to Base64 before updating if it exists
+      const base64Photo = encodePhotoToBase64(photo);
       updateQuery = `
         UPDATE cours
         SET titre = :titre, description = :description, prix = :prix, photo = :photo
         WHERE id = :id
       `;
-      replacements.photo = photo;
+      replacements.photo = base64Photo;
     }
 
-    const [result] = await sequelize.query(updateQuery, {
+    await sequelize.query(updateQuery, {
       replacements,
       type: QueryTypes.UPDATE,
     });
-
-    /*if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Course not found' });
-    }*/
 
     res.status(200).json({ message: 'Course updated successfully' });
   } catch (error) {
@@ -124,8 +136,6 @@ const updateCours = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
-
-
 
 module.exports = {
   getCoursByCategorieId,
