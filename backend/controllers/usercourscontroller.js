@@ -119,10 +119,35 @@ const addCourseToUser = async (req, res) => {
   }
 };
 
+const getCoursUsers = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+
+    if (!courseId) {
+      return res.status(400).json({ error: 'Course ID missing in request parameters' });
+    }
+
+    // Query to find users who have the given course ID in the userscours table
+    const usersWithCourse = await User.findAll({
+      include: [
+        {
+          model: usercours,
+          where: { coursId: courseId },
+        },
+      ],
+    });
+
+    res.status(200).json(usersWithCourse);
+  } catch (error) {
+    console.error('Error fetching users for course:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 module.exports = {
   coursfinder,
   coursfindernouser,
   allcoursinusercours,
-  addCourseToUser
+  addCourseToUser,
+  getCoursUsers, // Add the getCoursUsers function to the exports
 };
