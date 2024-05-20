@@ -75,6 +75,15 @@ const Dashboardadmin = () => {
     navigate(`/admincours/${selectedCoursId}`);
   };
 
+  // Render course photo
+  const renderCoursePhoto = (photo) => {
+    return photo ? (
+      <img src={`data:image/jpeg;base64,${photo}`} alt="Course Image" className="card-img-top" />
+    ) : (
+      <div>No Photo</div>
+    );
+  };
+
   return (
     <>
       <p>Dashboard Admin</p>
@@ -121,6 +130,7 @@ const Dashboardadmin = () => {
               {coursFinderData.map((course) => (
                 <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
                   <div className="card">
+                    {renderCoursePhoto(course.photo)}
                     <div className="card-body">
                       <h5 className="card-title">{course.title}</h5>
                       <p className="card-text">{course.description}</p>

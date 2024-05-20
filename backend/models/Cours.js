@@ -22,10 +22,10 @@ const Cours = sequelize.define('Cours', {
     allowNull: false,
   },
   photo: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.BLOB('long'),
+    allowNull: true, // Assuming photo can be optional
     validate: {
-      isUrl: true, // Ensure that the value is a valid URL
+      isUrl: true, // Ensure that the value is a valid URL (if needed)
     },
   },
   categorieId: {
