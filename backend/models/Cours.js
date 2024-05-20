@@ -22,10 +22,10 @@ const Cours = sequelize.define('Cours', {
     allowNull: false,
   },
   photo: {
-    type: DataTypes.BLOB('long'),
+    type: DataTypes.STRING(255),
     allowNull: true, // Assuming photo can be optional
     validate: {
-      isUrl: true, // Ensure that the value is a valid URL (if needed)
+      isUrl: true, // Ensure that the value is a valid URL
     },
   },
   categorieId: {
@@ -37,6 +37,10 @@ const Cours = sequelize.define('Cours', {
     },
   },
 });
+
+Cours.associate = (models) => {
+  Cours.hasMany(models.usercours, { foreignKey: 'coursId' });
+};
 
 usercours.associate = (models) => {
   usercours.belongsTo(models.Cours, { as: 'CoursID', foreignKey: 'coursId' });

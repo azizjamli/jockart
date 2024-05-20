@@ -76,13 +76,14 @@ const Dashboardadmin = () => {
   };
 
   // Render course photo
-  const renderCoursePhoto = (photo) => {
-    return photo ? (
-      <img src={`data:image/jpeg;base64,${photo}`} alt="Course Image" className="card-img-top" />
-    ) : (
-      <div>No Photo</div>
-    );
-  };
+const renderCoursePhoto = (photo) => {
+  return photo ? (
+    <img src={photo} alt="Course" className="card-img-top" />
+  ) : (
+    <div>No Photo</div>
+  );
+};
+
 
   return (
     <>
@@ -132,8 +133,9 @@ const Dashboardadmin = () => {
                   <div className="card">
                     {renderCoursePhoto(course.photo)}
                     <div className="card-body">
-                      <h5 className="card-title">{course.title}</h5>
+                      <h5 className="card-title">{course.titre}</h5>
                       <p className="card-text">{course.description}</p>
+                      <p className="card-text">Prix: {course.prix} €</p>
                     </div>
                   </div>
                 </div>

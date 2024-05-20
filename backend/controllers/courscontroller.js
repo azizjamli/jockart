@@ -1,13 +1,14 @@
 const Cours = require('../models/Cours');
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
+const path = require('path'); // Import path for handling file paths
 
 // Helper function to encode photo to Base64
-const encodePhotoToBase64 = (photo) => {
+/*const encodePhotoToBase64 = (photo) => {
   if (!photo) return null;
   const base64Image = Buffer.from(photo, 'binary').toString('base64');
   return base64Image;
-};
+};*/
 
 // Function to fetch courses by category ID
 const getCoursByCategorieId = async (req, res) => {
@@ -27,13 +28,13 @@ const getCoursByCategorieId = async (req, res) => {
       type: QueryTypes.SELECT,
     });
 
-    // Encode photo to Base64 before sending response
-    const coursesWithBase64Photo = cours.map((course) => ({
+    // Include the file path for the photo in the response
+    const coursesWithPhotoPath = cours.map((course) => ({
       ...course,
-      photo: encodePhotoToBase64(course.photo),
+      photo: course.photo ? `${req.protocol}://${req.get('host')}/uploads/cours/${course.photo}` : null,
     }));
 
-    res.json(coursesWithBase64Photo || []);
+    res.json(coursesWithPhotoPath || []);
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).send('Server Error');
@@ -50,14 +51,15 @@ const createCours = async (req, res) => {
   }
 
   try {
+    // Get the uploaded file information from multer
+    const photo = req.file ? req.file.filename : null;
+
     const insertQuery = `
       INSERT INTO cours (titre, description, prix, categorieId, photo)
       VALUES (:titre, :description, :prix, :categorieId, :photo)
     `;
 
-    // Encode photo to Base64 before insertion if it exists
-    const base64Photo = encodePhotoToBase64(req.body.photo);
-    const replacements = { titre, description, prix, categorieId, photo: base64Photo };
+    const replacements = { titre, description, prix, categorieId, photo };
 
     await sequelize.query(insertQuery, {
       replacements,
