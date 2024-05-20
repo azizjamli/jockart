@@ -1,6 +1,8 @@
 const Cours = require('../models/Cours');
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
+const multer = require('multer');
+
 const path = require('path'); // Import path for handling file paths
 
 // Helper function to encode photo to Base64
@@ -98,35 +100,49 @@ const deleteCours = async (req, res) => {
   }
 };
 
+
 // Function to update a course by ID
 const updateCours = async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { titre, description, prix, photo } = req.body;
-
-  if (isNaN(id) || id <= 0) {
-    return res.status(400).json({ message: 'Invalid course ID' });
-  }
-
   try {
-    let updateQuery = `
-      UPDATE cours
-      SET titre = :titre, description = :description, prix = :prix
-      WHERE id = :id
-    `;
-    const replacements = { titre, description, prix, id };
+    const id = parseInt(req.params.id);
+    const { titre, description, prix } = req.body;
+    const photo = req.file ? req.file.filename : null;
 
-    // Check if photo is included in the request body
-    /*if (photo) {
-      // Encode photo to Base64 before updating if it exists
-      const base64Photo = encodePhotoToBase64(photo);
-      updateQuery = `
-        UPDATE cours
-        SET titre = :titre, description = :description, prix = :prix, photo = :photo
-        WHERE id = :id
-      `;
-      replacements.photo = base64Photo;
-    }*/
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ message: 'Invalid course ID' });
+    }
 
+    let updateQuery = 'UPDATE cours SET';
+    const replacements = {};
+
+    // Conditionally append each field to the query and replacements object
+    if (titre) {
+      updateQuery += ' titre = :titre,';
+      replacements.titre = titre;
+    }
+    if (description) {
+      updateQuery += ' description = :description,';
+      replacements.description = description;
+    }
+    if (prix) {
+      updateQuery += ' prix = :prix,';
+      replacements.prix = prix;
+    }
+    if (photo) {
+      updateQuery += ' photo = :photo,';
+      replacements.photo = photo;
+    }
+
+    // Check if there is at least one field to update
+    if (Object.keys(replacements).length === 0) {
+      return res.status(400).json({ message: 'No fields to update' });
+    }
+
+    // Remove the last comma and add the WHERE clause
+    updateQuery = updateQuery.slice(0, -1) + ' WHERE id = :id';
+    replacements.id = id;
+
+    // Execute the update query
     await sequelize.query(updateQuery, {
       replacements,
       type: QueryTypes.UPDATE,
@@ -143,5 +159,7 @@ module.exports = {
   getCoursByCategorieId,
   createCours,
   deleteCours,
-  updateCours,
+  updateCours
 };
+
+
