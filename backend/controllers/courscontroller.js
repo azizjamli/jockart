@@ -116,7 +116,7 @@ const updateCours = async (req, res) => {
     const replacements = { titre, description, prix, id };
 
     // Check if photo is included in the request body
-    if (photo) {
+    /*if (photo) {
       // Encode photo to Base64 before updating if it exists
       const base64Photo = encodePhotoToBase64(photo);
       updateQuery = `
@@ -125,7 +125,7 @@ const updateCours = async (req, res) => {
         WHERE id = :id
       `;
       replacements.photo = base64Photo;
-    }
+    }*/
 
     await sequelize.query(updateQuery, {
       replacements,
