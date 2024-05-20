@@ -1,34 +1,29 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-const DefaultContent = () => {
-  return (
-    <>
-      <div className="container">
-        <h2>Default Content</h2>
-      </div>
-    </>
-  );
-};
-
 const ModifyingPart = () => {
-  const { id } = useParams(); // Extract ID from URL
-  const [titre, setTitre] = useState(""); // State for titre
-  const [description, setDescription] = useState(""); // State for description
-  const [prix, setPrix] = useState(""); // State for prix
-  const [photo, setPhoto] = useState(""); // State for photo
+  const { id } = useParams();
+  const [titre, setTitre] = useState("");
+  const [description, setDescription] = useState("");
+  const [prix, setPrix] = useState("");
+  const [photo, setPhoto] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting with ID:", id); // Log the ID for debugging
-    const formData = { titre, description, prix, photo };
+    console.log("Submitting with ID:", id);
+
+    const formData = new FormData();
+    formData.append('titre', titre);
+    formData.append('description', description);
+    formData.append('prix', prix);
+    if (photo) {
+      formData.append('photo', photo);
+    }
+
     try {
       const response = await fetch(`http://localhost:3001/api/cours/updateCours/${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formData,
       });
       const data = await response.json();
       console.log("Update response:", data);
@@ -36,7 +31,6 @@ const ModifyingPart = () => {
       console.error("Error updating course:", error);
     }
   };
-  
 
   return (
     <div className="container modifyingpart">
@@ -69,10 +63,8 @@ const ModifyingPart = () => {
         </div>
         <div className="form-group">
           <input
-            type="url"
-            placeholder="Photo URL"
-            value={photo}
-            onChange={(e) => setPhoto(e.target.value)}
+            type="file"
+            onChange={(e) => setPhoto(e.target.files[0])}
           />
         </div>
         <button type="submit">Enregistrer les modifications</button>
@@ -81,26 +73,4 @@ const ModifyingPart = () => {
   );
 };
 
-const Coursdetails = () => {
-  const [isModifying, setIsModifying] = useState(false);
-
-  const handleModifierClick = () => {
-    setIsModifying(true);
-  };
-
-  return (
-    <>
-      {!isModifying && (
-        <>
-          <DefaultContent />
-          <button className="btn" onClick={handleModifierClick}>
-            Modifier ce cours
-          </button>
-        </>
-      )}
-      {isModifying && <ModifyingPart />}
-    </>
-  );
-};
-
-export default Coursdetails;
+export default ModifyingPart;

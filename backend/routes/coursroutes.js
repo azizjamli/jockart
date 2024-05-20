@@ -27,6 +27,6 @@ router.post('/createCours/:categorieId', upload.single('photo'), createCours);
 router.delete('/deleteCours/:id', deleteCours);
 
 // PUT /api/cours/updateCours/:id - Update a course by ID
-router.put('/updateCours/:id', updateCours);
+router.put('/updateCours/:id', upload.single('photo'), updateCours);
 
 module.exports = router;
