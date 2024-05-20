@@ -74,10 +74,6 @@ const deleteCours = async (req, res) => {
       type: QueryTypes.DELETE,
     });
 
-    /*if (deletedRows[0].affectedRows === 0) {
-      return res.status(404).json({ message: 'Course not found' });
-    }
-*/
     res.status(200).json({ message: 'Course deleted successfully' });
   } catch (error) {
     console.error('Error deleting course:', error);
@@ -85,6 +81,49 @@ const deleteCours = async (req, res) => {
   }
 };
 
+// Function to update a course by ID
+const updateCours = async (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  const { titre, description, prix, photo } = req.body;
+
+  if (isNaN(id) || id <= 0) {
+    return res.status(400).json({ message: 'Invalid course ID' });
+  }
+
+  try {
+    let updateQuery = `
+      UPDATE cours
+      SET titre = :titre, description = :description, prix = :prix
+      WHERE id = :id
+    `;
+    const replacements = { titre, description, prix, id };
+
+    // Check if photo is included in the request body
+    if (photo) {
+      updateQuery = `
+        UPDATE cours
+        SET titre = :titre, description = :description, prix = :prix, photo = :photo
+        WHERE id = :id
+      `;
+      replacements.photo = photo;
+    }
+
+    const [result] = await sequelize.query(updateQuery, {
+      replacements,
+      type: QueryTypes.UPDATE,
+    });
+
+    /*if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Course not found' });
+    }*/
+
+    res.status(200).json({ message: 'Course updated successfully' });
+  } catch (error) {
+    console.error('Error updating course:', error);
+    res.status(500).send('Server Error');
+  }
+};
 
 
 
@@ -92,4 +131,5 @@ module.exports = {
   getCoursByCategorieId,
   createCours,
   deleteCours,
+  updateCours,
 };
