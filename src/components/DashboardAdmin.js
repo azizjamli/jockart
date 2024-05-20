@@ -27,8 +27,8 @@ const Dashboardadmin = () => {
   }, []);
 
   const handleCategoryClick = async (categoryId) => {
-    setSelectedCategoryId(categoryId); // Update selected category
-    setSelectedCoursId(null); // Reset selected course ID
+    setSelectedCategoryId(categoryId);
+    setSelectedCoursId(null);
     try {
       const response = await axios.get(`http://localhost:3001/api/cours/getCoursByCategorieId/${categoryId}`);
       setCoursFinderData(response.data);
@@ -38,16 +38,15 @@ const Dashboardadmin = () => {
   };
 
   const handleAddCoursClick = () => {
-    navigate(`/addcours/${selectedCategoryId}`); // Navigate to AddCours component with selected category ID
+    navigate(`/addcours/${selectedCategoryId}`);
   };
 
   const handleDeleteCategoryClick = async () => {
     try {
       await axios.delete(`http://localhost:3001/api/categories/deleteCategory/${selectedCategoryId}`);
-      // Refresh categories after deletion
       const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
       setCategories(response.data);
-      setSelectedCategoryId(null); // Reset selected category ID after deletion
+      setSelectedCategoryId(null);
     } catch (error) {
       console.error('Error deleting category:', error);
     }
@@ -60,13 +59,20 @@ const Dashboardadmin = () => {
     }
     try {
       await axios.delete(`http://localhost:3001/api/cours/deleteCours/${selectedCoursId}`);
-      // Refresh course finder data after deletion
       const response = await axios.get(`http://localhost:3001/api/cours/getCoursByCategorieId/${selectedCategoryId}`);
       setCoursFinderData(response.data);
-      setSelectedCoursId(null); // Reset selected course ID after deletion
+      setSelectedCoursId(null);
     } catch (error) {
       console.error('Error deleting course:', error);
     }
+  };
+
+  const handleInspectCourseClick = () => {
+    if (!selectedCoursId) {
+      console.error('No course selected.');
+      return;
+    }
+    navigate(`/admincours/${selectedCoursId}`);
   };
 
   return (
@@ -84,7 +90,7 @@ const Dashboardadmin = () => {
                     href="#"
                     key={categorie.id}
                     className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
-                    onClick={() => handleCategoryClick(categorie.id)} // Pass category ID to handleCategoryClick
+                    onClick={() => handleCategoryClick(categorie.id)}
                   >
                     {categorie.nom}
                   </a>
@@ -102,7 +108,7 @@ const Dashboardadmin = () => {
               <button 
                 className='btn p-2' 
                 style={{ backgroundColor: 'red', color: 'white', fontSize: '0.7vw', margin: '0.5vw 0' }}
-                onClick={handleDeleteCategoryClick} // Call handleDeleteCategoryClick on button click
+                onClick={handleDeleteCategoryClick}
               >
                 Supprimer une catégorie
               </button>
@@ -123,9 +129,11 @@ const Dashboardadmin = () => {
                 </div>
               ))}
             </div>
-            <button className='btn align-self-end' onClick={handleAddCoursClick}>Ajouter un cours</button>
-            <button className='btn align-self-end' onClick={handleDeleteCoursClick}>Supprimer un cours</button>
-
+            <div className='d-flex justify-content-end gap-3'>
+              <button className='btn align-self-end' onClick={handleAddCoursClick}>Ajouter un cours</button>
+              <button className='btn align-self-end' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
+              <button className='btn align-self-end' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
+            </div>  
           </div>
         </div>
       </div>
