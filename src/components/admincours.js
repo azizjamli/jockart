@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Coursdetails from "./coursdetails";  // Ensure these components are defined
-// import Etudiants from "./Etudiants";        // Ensure these components are defined
+import Coursadminetudiant from "./coursadminetudiant";
 // import Formateur from "./Formateur";        // Ensure these components are defined
 
 const Admincours = () => {
@@ -11,7 +11,7 @@ const Admincours = () => {
       case "coursdetails":
         return <Coursdetails />;
       case "etudiants":
-        // return <Etudiants />;
+        return <Coursadminetudiant />;
       case "formateur":
         // return <Formateur />;
       default:
