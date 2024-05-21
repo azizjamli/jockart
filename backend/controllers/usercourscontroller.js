@@ -256,6 +256,29 @@ const createRowInUserCours = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+const deleteRowFromUserCours = async (req, res) => {
+  try {
+    const { userId, courseId } = req.body;
+
+    if (!userId || !courseId) {
+      return res.status(400).json({ error: 'User ID or Course ID missing in request parameters' });
+    }
+
+    // Check if the row exists before attempting to delete (optional, depending on your application's requirements)
+    const existingRow = await usercours.findOne({ where: { userId, coursId: courseId } });
+    if (!existingRow) {
+      return res.status(404).json({ error: 'Row not found in usercours' });
+    }
+
+    // Delete the row from usercours
+    await usercours.destroy({ where: { userId, coursId: courseId } });
+
+    res.status(200).json({ message: 'Row deleted from usercours successfully' });
+  } catch (error) {
+    console.error('Error deleting row from usercours:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
 
@@ -267,6 +290,7 @@ module.exports = {
   getCoursUsers,
   getCoursnotUsers,
   getCoursUsersFormateur,
-  createRowInUserCours
+  createRowInUserCours,
+  deleteRowFromUserCours
    // Add the getCoursUsers function to the exports
 };
