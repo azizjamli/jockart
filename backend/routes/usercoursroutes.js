@@ -1,13 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { coursfinder, coursfindernouser, allcoursinusercours, addCourseToUser, getCoursUsers } = require('../controllers/usercourscontroller');
+const {  
+    coursfinder,
+    coursfindernouser,
+    allcoursinusercours,
+    addCourseToUser,
+    getCoursUsers,
+    getCoursnotUsers,
+    getCoursUsersFormateur
+  } = require('../controllers/usercourscontroller');
 
 router.get('/coursfinder', coursfinder);
 router.get('/coursfindernouser', coursfindernouser);
 router.get('/allcoursinusercours', allcoursinusercours);
 router.post('/addCourseToUser', addCourseToUser);
 
-// New route for fetching users associated with a course
+// Route to fetch users associated with a course and a specific role (e.g., 'etudiant')
 router.get('/getCoursUsers/:courseId', getCoursUsers);
+
+// Route to fetch users not associated with a course and a specific role (e.g., 'etudiant')
+router.get('/getCoursnotUsers/:courseId', getCoursnotUsers);
+
+// Route to fetch users associated with a course and a specific role (e.g., 'formateur')
+router.get('/getCoursUsersFormateur/:courseId', getCoursUsersFormateur);
 
 module.exports = router;
