@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios"; // Assuming you use axios for API requests
+import axios from "axios";
 
 const Coursadminetudiant = () => {
   const { id } = useParams();
-  const courseId = id; // Extract courseId from URL
+  const courseId = id;
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
-  const [selectedOption, setSelectedOption] = useState("inspecter"); // State for selected option
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOption, setSelectedOption] = useState("inspecter");
 
   const fetchData = async () => {
     try {
       if (selectedOption === "ajouter") {
         const response = await axios.get(`http://localhost:3001/api/usercours/getCoursnotUsers/${courseId}`);
-        setUsers(response.data); // Set users state with API response for not users
+        setUsers(response.data);
       } else {
         const response = await axios.get(`http://localhost:3001/api/usercours/getCoursUsers/${courseId}`);
-        setUsers(response.data); // Set users state with API response
+        setUsers(response.data);
       }
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -24,15 +24,8 @@ const Coursadminetudiant = () => {
   };
 
   useEffect(() => {
-    fetchData(); // Call the fetchData function when component mounts or selected option changes
-  }, [courseId, selectedOption]); // Include courseId and selectedOption in the dependency array
-
-  // Filter users based on search term
-  const filteredUsers = users.filter(user =>
-    user.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    fetchData();
+  }, [courseId, selectedOption]);
 
   const handleAddStudent = async (userId) => {
     try {
@@ -40,13 +33,28 @@ const Coursadminetudiant = () => {
         userId,
         courseId,
       });
-      // Optionally, you can refetch the users after adding a student
-      // This ensures that the updated list is displayed immediately
       fetchData();
     } catch (error) {
       console.error("Error adding student:", error);
     }
   };
+
+  const handleRemoveStudent = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/usercours/deleteRowFromUserCours`, {
+        data: { userId, courseId },
+      });
+      fetchData();
+    } catch (error) {
+      console.error("Error removing student:", error);
+    }
+  };
+
+  const filteredUsers = users.filter(user =>
+    user.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -82,6 +90,9 @@ const Coursadminetudiant = () => {
               </div>
               {selectedOption === "ajouter" && (
                 <button className="btn" onClick={() => handleAddStudent(user.id)}>Ajouter</button>
+              )}
+              {selectedOption === "inspecter" && (
+                <button className="btn" onClick={() => handleRemoveStudent(user.id)}>Retirer de ce cours</button>
               )}
             </li>
           ))}
