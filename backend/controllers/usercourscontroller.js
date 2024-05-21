@@ -118,7 +118,6 @@ const addCourseToUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 const getCoursUsers = async (req, res) => {
   try {
     const courseId = req.params.courseId;
@@ -140,10 +139,47 @@ const getCoursUsers = async (req, res) => {
       return res.status(404).json({ message: 'No users found for this course' });
     }
 
-    // Query to find users with the extracted user IDs
+    // Query to find users with the extracted user IDs and etudiant role
     const usersWithCourse = await User.findAll({
       where: {
         id: userIds,
+        role: 'etudiant', // Assuming 'etudiant' is the role name for students
+      },
+    });
+
+    res.status(200).json(usersWithCourse);
+  } catch (error) {
+    console.error('Error fetching users for course:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const getCoursUsersFormateur = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+
+    if (!courseId) {
+      return res.status(400).json({ error: 'Course ID missing in request parameters' });
+    }
+
+    // Query to find user IDs who have the given course ID in the usercours table
+    const userCourses = await usercours.findAll({
+      where: { coursId: courseId },
+      attributes: ['userId'],
+    });
+
+    // Extract user IDs from the result
+    const userIds = userCourses.map(uc => uc.userId);
+
+    if (userIds.length === 0) {
+      return res.status(404).json({ message: 'No users found for this course' });
+    }
+
+    // Query to find users with the extracted user IDs and formateur role
+    const usersWithCourse = await User.findAll({
+      where: {
+        id: userIds,
+        role: 'formateur', // Assuming 'formateur' is the role name for trainers
       },
     });
 
@@ -155,10 +191,13 @@ const getCoursUsers = async (req, res) => {
 };
 
 
+
 module.exports = {
   coursfinder,
   coursfindernouser,
   allcoursinusercours,
   addCourseToUser,
-  getCoursUsers, // Add the getCoursUsers function to the exports
+  getCoursUsers,
+  getCoursUsersFormateur
+   // Add the getCoursUsers function to the exports
 };
