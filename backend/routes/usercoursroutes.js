@@ -7,7 +7,8 @@ const {
     addCourseToUser,
     getCoursUsers,
     getCoursnotUsers,
-    getCoursUsersFormateur
+    getCoursUsersFormateur,
+    createRowInUserCours
   } = require('../controllers/usercourscontroller');
 
 router.get('/coursfinder', coursfinder);
@@ -23,5 +24,8 @@ router.get('/getCoursnotUsers/:courseId', getCoursnotUsers);
 
 // Route to fetch users associated with a course and a specific role (e.g., 'formateur')
 router.get('/getCoursUsersFormateur/:courseId', getCoursUsersFormateur);
+
+// Route to create a row in usercours with provided userId and courseId
+router.post('/createRowInUserCours', createRowInUserCours);
 
 module.exports = router;
