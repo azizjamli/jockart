@@ -153,6 +153,42 @@ const getCoursUsers = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+const getCoursnotUsers = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+
+    if (!courseId) {
+      return res.status(400).json({ error: 'Course ID missing in request parameters' });
+    }
+
+    // Query to find user IDs who have the given course ID in the usercours table
+    const userCourses = await usercours.findAll({
+      where: { coursId: courseId },
+      attributes: ['userId'],
+    });
+
+    // Extract user IDs from the result
+    const userIds = userCourses.map(uc => uc.userId);
+
+    if (userIds.length === 0) {
+      return res.status(404).json({ message: 'No users found for this course' });
+    }
+
+    // Query to find users with user IDs not in the extracted user IDs and etudiant role
+    const usersWithDifferentRole = await User.findAll({
+      where: {
+        id: { [Op.notIn]: userIds }, // Find users whose IDs are not in the extracted user IDs
+        role: 'etudiant', // Assuming 'etudiant' is the role name for students
+      },
+    });
+
+    res.status(200).json(usersWithDifferentRole);
+  } catch (error) {
+    console.error('Error fetching users with different role for course:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 
 const getCoursUsersFormateur = async (req, res) => {
   try {
@@ -198,6 +234,7 @@ module.exports = {
   allcoursinusercours,
   addCourseToUser,
   getCoursUsers,
+  getCoursnotUsers,
   getCoursUsersFormateur
    // Add the getCoursUsers function to the exports
 };
