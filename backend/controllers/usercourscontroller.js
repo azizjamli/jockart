@@ -127,14 +127,24 @@ const getCoursUsers = async (req, res) => {
       return res.status(400).json({ error: 'Course ID missing in request parameters' });
     }
 
-    // Query to find users who have the given course ID in the userscours table
+    // Query to find user IDs who have the given course ID in the usercours table
+    const userCourses = await usercours.findAll({
+      where: { coursId: courseId },
+      attributes: ['userId'],
+    });
+
+    // Extract user IDs from the result
+    const userIds = userCourses.map(uc => uc.userId);
+
+    if (userIds.length === 0) {
+      return res.status(404).json({ message: 'No users found for this course' });
+    }
+
+    // Query to find users with the extracted user IDs
     const usersWithCourse = await User.findAll({
-      include: [
-        {
-          model: usercours,
-          where: { coursId: courseId },
-        },
-      ],
+      where: {
+        id: userIds,
+      },
     });
 
     res.status(200).json(usersWithCourse);
@@ -143,6 +153,7 @@ const getCoursUsers = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 module.exports = {
   coursfinder,
