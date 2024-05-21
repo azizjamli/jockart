@@ -227,6 +227,37 @@ const getCoursUsersFormateur = async (req, res) => {
 };
 
 
+const createRowInUserCours = async (req, res) => {
+  try {
+    const { userId, courseId } = req.body;
+
+    if (!userId || !courseId) {
+      return res.status(400).json({ error: 'User ID or Course ID missing in request body' });
+    }
+
+    // Check if the course and user exist (optional, depending on your application's requirements)
+    // You can remove these checks if you are sure that the provided userId and courseId are valid
+
+    // Construct the SQL INSERT statement
+    const insertQuery = `
+      INSERT INTO usercours (user_id, cours_id, created_at, updated_at)
+      VALUES (?, ?, NOW(), NOW())
+    `;
+
+    // Execute the SQL query
+    await sequelize.query(insertQuery, {
+      replacements: [userId, courseId],
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({ message: 'Row created in usercours successfully' });
+  } catch (error) {
+    console.error('Error creating row in usercours:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 
 module.exports = {
   coursfinder,
@@ -235,6 +266,7 @@ module.exports = {
   addCourseToUser,
   getCoursUsers,
   getCoursnotUsers,
-  getCoursUsersFormateur
+  getCoursUsersFormateur,
+  createRowInUserCours
    // Add the getCoursUsers function to the exports
 };
