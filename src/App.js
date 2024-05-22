@@ -20,6 +20,7 @@ import Dashboardadmin from './components/DashboardAdmin';
 import AddCategory from './components/addcategory';
 import AddCours from './components/addcours';
 import Admincours from './components/admincours';
+import AdminCreateProfile from './components/admincreateprofil';
 import Coursdetails from './components/coursdetails';
 import axios from 'axios'; // Import Axios for API requests
 
@@ -56,6 +57,8 @@ function AppContent() {
         <Route path="/dashboardetud" element={<DashboardEtud />} />
         <Route path="/dashboardadmin" element={<Dashboardadmin />} />
         <Route path="/addcategory" element={<AddCategory />} />
+        <Route path="/admincreateprofile" element={<AdminCreateProfile />} />
+
         <Route path="/addcours/:categoryId" element={<AddCours />} />
         <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
         <Route path="/accedercours/:id" element={<Accedercours />} />
