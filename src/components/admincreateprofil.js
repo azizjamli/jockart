@@ -9,6 +9,7 @@ const AdminCreateProfile = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('admin'); // Default role
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
@@ -54,7 +55,7 @@ const AdminCreateProfile = () => {
         }
     };
 
-    const handleSignUp = async (email, password) => {
+    const handleSignUp = async (email, password, role) => {
         try {
             // Make a POST request to the signup endpoint
             const response = await fetch('http://localhost:3001/api/users/signup', {
@@ -62,7 +63,7 @@ const AdminCreateProfile = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, role }),
             });
 
             // Parse the response JSON
@@ -73,7 +74,7 @@ const AdminCreateProfile = () => {
                 console.log('Signup successful:', data.message);
                 localStorage.setItem('userId', data.userId); // Assuming the user ID is returned as data.userId
 
-                navigate('/signupcontinue');
+                navigate('/dashboardadmin');
                 // Handle further actions if needed
             } else {
                 // Failed signup
@@ -90,7 +91,7 @@ const AdminCreateProfile = () => {
         event.preventDefault();
 
         if (validateEmail() && validatePassword() && validateConfirmPassword()) {
-            handleSignUp(email, password);
+            handleSignUp(email, password, role);
         }
     };
 
@@ -107,6 +108,11 @@ const AdminCreateProfile = () => {
                 <input className="mt-4 inputlogin" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input className="mt-4 inputlogin" type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input className="mt-4 inputlogin" type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <select className="mt-4 inputlogin" value={role} onChange={(e) => setRole(e.target.value)}>
+                    <option value="admin">Admin</option>
+                    <option value="etudiant">Etudiant</option>
+                    <option value="formateur">Formateur</option>
+                </select>
                 {emailError && <p className="error-message">{emailError}</p>}
                 {passwordError && <p className="error-message">{passwordError}</p>}
                 {confirmPasswordError && <p className="error-message">{confirmPasswordError}</p>}
