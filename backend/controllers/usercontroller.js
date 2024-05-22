@@ -35,7 +35,7 @@ const signin = async (req, res) => {
 };
 
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role = 'etudiant' } = req.body; // Destructure role with a default value
 
   try {
     // Validate request data
@@ -49,8 +49,8 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Create a new user
-    const newUser = await User.create({ email, password });
+    // Create a new user with the provided role
+    const newUser = await User.create({ email, password, role });
 
     // Send response with the generated user ID
     res.status(201).json({ message: 'User created', userId: newUser.id });
@@ -59,6 +59,7 @@ const signup = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 const getInfo = async (req, res) => {
   try {
