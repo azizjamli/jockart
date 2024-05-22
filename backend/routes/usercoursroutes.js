@@ -8,6 +8,7 @@ const {
     getCoursUsers,
     getCoursnotUsers,
     getCoursUsersFormateur,
+    getCoursnotUsersformateur,
     createRowInUserCours,
     deleteRowFromUserCours
   } = require('../controllers/usercourscontroller');
@@ -32,6 +33,9 @@ router.get('/getCoursnotUsers/:courseId', getCoursnotUsers);
 
 // GET route to fetch users associated with a course and a specific role (e.g., 'formateur')
 router.get('/getCoursUsersFormateur/:courseId', getCoursUsersFormateur);
+
+// GET route to fetch users not associated with a course and a specific role
+router.get('/getCoursnotUsersformateur/:courseId', getCoursnotUsersformateur);
 
 // POST route to create a row in usercours with provided userId and courseId
 router.post('/createRowInUserCours', createRowInUserCours);
