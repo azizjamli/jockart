@@ -140,18 +140,17 @@ const Dashboardadmin = () => {
                 </div>
               ))}
             </div>
-           
-          </div>
-        </div>
-      </div>
-      <div className='d-flex flex-wrap align- justify-content-center  gap-3'>
+            <div className='d-flex flex-wrap align- justify-content-center  gap-3'>
               <button className='btn ' onClick={handleAddCoursClick}>Ajouter un cours</button>
               <button className='btn ' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
               <button className='btn ' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
               <button className='btn ' onClick={() => navigate('/admincreateprofile')}>Creer un compte</button>
-              <button className='btn ' >gerer les etudiants</button>
-              <button className='btn ' >gerer les formateurs</button>
+
             </div>  
+          </div>
+        </div>
+      </div>
+      
     </>
   );
 };
