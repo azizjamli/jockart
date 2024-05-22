@@ -76,14 +76,13 @@ const Dashboardadmin = () => {
   };
 
   // Render course photo
-const renderCoursePhoto = (photo) => {
-  return photo ? (
-    <img src={photo} alt="Course" className="card-img-top" />
-  ) : (
-    <div>No Photo</div>
-  );
-};
-
+  const renderCoursePhoto = (photo) => {
+    return photo ? (
+      <img src={photo} alt="Course" className="card-img-top" />
+    ) : (
+      <div>No Photo</div>
+    );
+  };
 
   return (
     <>
@@ -135,16 +134,17 @@ const renderCoursePhoto = (photo) => {
                     <div className="card-body">
                       <h5 className="card-title">{course.titre}</h5>
                       <p className="card-text">{course.description}</p>
-                      <p className="card-text">Prix: {course.prix} €</p>
+                      <p className="card-text">Prix: {course.prix} Dt</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className='d-flex justify-content-end gap-3'>
-              <button className='btn align-self-end' onClick={handleAddCoursClick}>Ajouter un cours</button>
-              <button className='btn align-self-end' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
-              <button className='btn align-self-end' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
+            <div className='d-flex flex-wrap align- justify-content-center gap-3'>
+              <button className='btn ' onClick={handleAddCoursClick}>Ajouter un cours</button>
+              <button className='btn ' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
+              <button className='btn ' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
+              <button className='btn ' onClick={() => navigate('/admincreateprofile')}>Creer un compte</button>
             </div>  
           </div>
         </div>
