@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
-const Pdfchapitre = sequelize.define('PdfChapitre', {
+const PdfChapitre = sequelize.define('PdfChapitre', {
   pdf_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -9,24 +9,26 @@ const Pdfchapitre = sequelize.define('PdfChapitre', {
   },
   pdf_name: {
     type: DataTypes.STRING,
-    allowNull: false, // Modify as needed
+    allowNull: false,
   },
   pdf_content: {
-    type: DataTypes.BLOB('long'),
-    allowNull: false, // Modify as needed
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    validate: {
+      isUrl: true, // Ensure that the value is a valid URL
+    }
   },
   chapitre_id: {
     type: DataTypes.INTEGER,
-    allowNull: false, // Modify as needed
+    allowNull: false,
     references: {
       model: 'Chapitre', // Name of the referenced model
       key: 'chapitre_id', // Name of the referenced column
-    },
-  },
-} ,{
-    tableName: 'pdfchapitre', // Specify the actual table name in your database
-    timestamps: false,
+    }
+  }
+}, {
+  tableName: 'pdfchapitre', // Specify the actual table name in your database
+  timestamps: false,
+});
 
-  });
-
-module.exports = Pdfchapitre;
+module.exports = PdfChapitre;

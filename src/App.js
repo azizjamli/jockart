@@ -16,6 +16,7 @@ import Signupcontinue from './components/signupcontinue';
 import Ajoutercours from './components/ajoutercours';
 import Accedercours from './components/accedercours';
 import Accedercoursformateur from './components/accedercoursformateur';
+import Chapitreformateur from './components/chapitreformateur';
 
 import Chapitreetud from './components/chapitreetud';
 import Dashboardadmin from './components/DashboardAdmin';
@@ -69,6 +70,8 @@ function AppContent() {
 
         <Route path="/admincours/:id" element={<Admincours />} />
         <Route path="/coursdetails" element={<Coursdetails />} />
+        <Route path="/chapitreformateur/:chapitre_id" element={<Chapitreformateur />} />
+
 
         <Route path="/chapitreetud/:chapitre_id" element={<Chapitreetud />} />
         <Route path="/dashboardformateur" element={<Dashboardformateur />} />
