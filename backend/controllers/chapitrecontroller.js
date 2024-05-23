@@ -1,4 +1,3 @@
-const Chapitre = require('../models/Chapitre');
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
@@ -73,17 +72,26 @@ const updateChapitre = async (req, res) => {
   }
 
   try {
-    const chapitre = await Chapitre.findByPk(chapitreId);
+    const updateQuery = `
+      UPDATE chapitre
+      SET chapitre_name = :title, description = :content, updatedAt = NOW()
+      WHERE chapitre_id = :chapitreId
+    `;
 
-    if (!chapitre) {
-      return res.status(404).json({ message: 'Chapitre not found' });
-    }
+    await sequelize.query(updateQuery, {
+      replacements: { chapitreId, title, content },
+      type: QueryTypes.UPDATE,
+    });
 
-    chapitre.title = title;
-    chapitre.content = content;
-    await chapitre.save();
+    const selectQuery = `
+      SELECT * FROM chapitre WHERE chapitre_id = :chapitreId
+    `;
+    const updatedChapitre = await sequelize.query(selectQuery, {
+      replacements: { chapitreId },
+      type: QueryTypes.SELECT,
+    });
 
-    res.json(chapitre);
+    res.json(updatedChapitre[0]);
   } catch (error) {
     console.error('Error updating chapitre:', error);
     res.status(500).send('Server Error');
@@ -98,13 +106,15 @@ const deleteChapitre = async (req, res) => {
   }
 
   try {
-    const chapitre = await Chapitre.findByPk(chapitreId);
+    const deleteQuery = `
+      DELETE FROM chapitre WHERE chapitre_id = :chapitreId
+    `;
 
-    if (!chapitre) {
-      return res.status(404).json({ message: 'Chapitre not found' });
-    }
+    await sequelize.query(deleteQuery, {
+      replacements: { chapitreId },
+      type: QueryTypes.DELETE,
+    });
 
-    await chapitre.destroy();
     res.json({ message: 'Chapitre deleted successfully' });
   } catch (error) {
     console.error('Error deleting chapitre:', error);
@@ -116,5 +126,5 @@ module.exports = {
   getChapitresByCoursId,
   createChapitre,
   updateChapitre,
-  deleteChapitre
+  deleteChapitre,
 };

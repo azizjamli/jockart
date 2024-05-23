@@ -62,7 +62,7 @@ const Accedercoursformateur = () => {
   const handleDeleteChapitre = async (chapitreId) => {
     try {
       await axios.delete(`http://localhost:3001/api/chapitre/deleteChapitre/${chapitreId}`);
-      setChapitres(chapitres.filter(chapitre => chapitre.id !== chapitreId));
+      setChapitres(chapitres.filter(chapitre => chapitre.chapitre_id !== chapitreId));
     } catch (error) {
       console.error('Error deleting chapitre:', error);
     }
@@ -112,7 +112,6 @@ const Accedercoursformateur = () => {
           <h2 className=''>cours</h2>
         </div>
         <div className='col-md-12'>
-          <button className='btn' onClick={handleAddChapitre}>ajouter un chapitre</button>
           <input
             type='text'
             name='title'
@@ -127,14 +126,16 @@ const Accedercoursformateur = () => {
             onChange={handleInputChange}
             placeholder='Content'
           />
+          <button className='btn' onClick={handleAddChapitre}>ajouter un chapitre</button>
 
           <div className='row d-flex p-3 justify-content-around'>
             {chapitres.map(chapitre => (
-              <div key={chapitre.id} className='card col-sm-3' onClick={() => handleCardClick(chapitre.chapitre_id)}>
+              <div key={chapitre.chapitre_id} className='card col-sm-3'>
                 <div className='card-body'>
-                  <h2 className='card-title'>{chapitre.title}</h2>
-                  <p className='card-text'>{chapitre.content}</p>
-                  <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.id)}>supprimer ce chapitre</button>
+                  <h2 className='card-title'>{chapitre.chapitre_name}</h2>
+                  <p className='card-text'>{chapitre.description}</p>
+                  <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.chapitre_id)}>supprimer ce chapitre</button>
+                  <button className='btn' onClick={() => handleCardClick(chapitre.chapitre_id)}>inspecter</button>
                 </div>
               </div>
             ))}
