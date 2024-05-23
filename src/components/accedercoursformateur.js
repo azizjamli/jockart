@@ -56,7 +56,7 @@ const Accedercoursformateur = () => {
   }
 
   const handleCardClick = (chapitre_id) => {
-    navigate(`/chapitreetud/${chapitre_id}`);
+    navigate(`/chapitreformateur/${chapitre_id}`);
   };
 
   const handleDeleteChapitre = async (chapitreId) => {
