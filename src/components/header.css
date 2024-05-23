@@ -27,10 +27,11 @@
 
 .btn.login {
     background-color: #F0E637;
-    min-width: 10vw;
+    /*min-width: 10vw;*/
     font-size: 1.3vw;
     border-radius: 15px;
-    width: 6.56vw;
+    /*width: 6.56vw;*/
+    padding : 0.6vw 1.6vw 0.6vw 1.6vw;
     height: auto;
 }
 .navbar-header {

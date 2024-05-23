@@ -22,6 +22,7 @@ import AddCours from './components/addcours';
 import Admincours from './components/admincours';
 import AdminCreateProfile from './components/admincreateprofil';
 import Coursdetails from './components/coursdetails';
+import Dashboardformateur  from './components/DashboardFormateur';
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
@@ -66,6 +67,7 @@ function AppContent() {
         <Route path="/coursdetails" element={<Coursdetails />} />
 
         <Route path="/chapitreetud/:chapitre_id" element={<Chapitreetud />} />
+        <Route path="/dashboardformateur" element={<Dashboardformateur />} />
       </Routes>
       {shouldRenderHeaderFooter() && <Footer />}
     </div>
