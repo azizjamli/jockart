@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
-const Chapitre = sequelize.define('Chapitre', {
+const chapitre = sequelize.define('Chapitre', {
   chapitre_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -21,4 +21,4 @@ const Chapitre = sequelize.define('Chapitre', {
   },
 });
 
-module.exports = Chapitre;
+module.exports = chapitre;

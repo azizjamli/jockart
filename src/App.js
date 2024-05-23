@@ -15,6 +15,8 @@ import DashboardEtud from './components/dashboardetud';
 import Signupcontinue from './components/signupcontinue';
 import Ajoutercours from './components/ajoutercours';
 import Accedercours from './components/accedercours';
+import Accedercoursformateur from './components/accedercoursformateur';
+
 import Chapitreetud from './components/chapitreetud';
 import Dashboardadmin from './components/DashboardAdmin';
 import AddCategory from './components/addcategory';
@@ -63,6 +65,8 @@ function AppContent() {
         <Route path="/addcours/:categoryId" element={<AddCours />} />
         <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
         <Route path="/accedercours/:id" element={<Accedercours />} />
+        <Route path="/accedercoursformateur/:id" element={<Accedercoursformateur />} />
+
         <Route path="/admincours/:id" element={<Admincours />} />
         <Route path="/coursdetails" element={<Coursdetails />} />
 

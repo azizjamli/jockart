@@ -3,26 +3,20 @@ const { QueryTypes } = require('sequelize');
 const sequelize = require('../dbConfig');
 
 const getChapitresByCoursId = async (req, res) => {
-  const coursId = parseInt(req.params.coursId); // Extract and parse the course ID from the request parameters
+  const coursId = parseInt(req.params.coursId);
 
-  // Check if coursId is a valid number
   if (isNaN(coursId) || coursId <= 0) {
     return res.status(400).json({ message: 'Invalid course ID' });
   }
 
   try {
-    // Construct the SQL SELECT statement with a named placeholder
     const selectQuery = `
       SELECT * FROM chapitre WHERE cours_id = :coursId
     `;
-
-    // Execute the SQL query with named placeholder and replacement map
     const chapitres = await sequelize.query(selectQuery, {
-      replacements: { coursId }, // Pass the parsed coursId as a named placeholder
+      replacements: { coursId },
       type: QueryTypes.SELECT,
     });
-
-    console.log('coursId:', coursId); // Log the coursId here
 
     if (chapitres.length === 0) {
       return res.status(404).json({ message: 'No chapters found for this course ID' });
@@ -35,6 +29,92 @@ const getChapitresByCoursId = async (req, res) => {
   }
 };
 
+const createChapitre = async (req, res) => {
+  const { coursId, title, content } = req.body;
+
+  if (!coursId || !title || !content) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO chapitre (cours_id, chapitre_name, description)
+      VALUES (:coursId, :title, :content)
+    `;
+
+    await sequelize.query(insertQuery, {
+      replacements: { coursId, title, content },
+      type: QueryTypes.INSERT,
+    });
+
+    const selectQuery = `
+      SELECT * FROM chapitre
+      WHERE cours_id = :coursId AND chapitre_name = :title AND description = :content
+      LIMIT 1
+    `;
+    const newChapitre = await sequelize.query(selectQuery, {
+      replacements: { coursId, title, content },
+      type: QueryTypes.SELECT,
+    });
+
+    res.status(201).json(newChapitre[0]);
+  } catch (error) {
+    console.error('Error creating chapitre:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+const updateChapitre = async (req, res) => {
+  const chapitreId = parseInt(req.params.chapitreId);
+  const { title, content } = req.body;
+
+  if (isNaN(chapitreId) || chapitreId <= 0 || !title || !content) {
+    return res.status(400).json({ message: 'Invalid chapitre ID or missing fields' });
+  }
+
+  try {
+    const chapitre = await Chapitre.findByPk(chapitreId);
+
+    if (!chapitre) {
+      return res.status(404).json({ message: 'Chapitre not found' });
+    }
+
+    chapitre.title = title;
+    chapitre.content = content;
+    await chapitre.save();
+
+    res.json(chapitre);
+  } catch (error) {
+    console.error('Error updating chapitre:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+const deleteChapitre = async (req, res) => {
+  const chapitreId = parseInt(req.params.chapitreId);
+
+  if (isNaN(chapitreId) || chapitreId <= 0) {
+    return res.status(400).json({ message: 'Invalid chapitre ID' });
+  }
+
+  try {
+    const chapitre = await Chapitre.findByPk(chapitreId);
+
+    if (!chapitre) {
+      return res.status(404).json({ message: 'Chapitre not found' });
+    }
+
+    await chapitre.destroy();
+    res.json({ message: 'Chapitre deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting chapitre:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
-  getChapitresByCoursId
+  getChapitresByCoursId,
+  createChapitre,
+  updateChapitre,
+  deleteChapitre
 };
