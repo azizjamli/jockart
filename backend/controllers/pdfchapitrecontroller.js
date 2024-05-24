@@ -1,27 +1,24 @@
 const PdfChapitre = require('../models/PdfChapitre');
 const sequelize = require('../dbConfig');
-const path = require('path');
 const fs = require('fs');
 
 // Get PDF chapitres by chapitre ID
 const getPdfChapitresByChapitreId = async (req, res) => {
-  const chapitreId = parseInt(req.params.chapitreId); // Extract and parse the chapitre ID from the request parameters
+  const chapitreId = parseInt(req.params.chapitreId);
 
-  // Check if chapitreId is a valid number
   if (isNaN(chapitreId) || chapitreId <= 0) {
     return res.status(400).json({ message: 'Invalid chapitre ID' });
   }
 
   try {
     const pdfChapitres = await PdfChapitre.findAll({
-      where: { chapitre_id: chapitreId }, // Filter by chapitre_id
+      where: { chapitre_id: chapitreId },
     });
 
     if (pdfChapitres.length === 0) {
       return res.status(404).json({ message: 'No PDF chapters found for this chapitre ID' });
     }
 
-    // Convert pdf_content from Blob to Base64
     const pdfsWithBase64Content = pdfChapitres.map(pdf => {
       const base64Content = pdf.pdf_content ? pdf.pdf_content.toString('base64') : null;
       console.log(`Base64 Content for PDF ID ${pdf.pdf_id}: ${base64Content}`);
@@ -50,12 +47,14 @@ const createPdfChapitre = async (req, res) => {
     return res.status(400).json({ message: 'PDF file is required' });
   }
 
-  const pdfPath = req.file.path; // Path to the uploaded PDF
+  const pdfName = req.body.title;
+  const pdfPath = req.file.path;
 
   try {
     const newPdfChapitre = await PdfChapitre.create({
       chapitre_id: chapitreId,
-      pdf_content: pdfPath // Store the file path in the database
+      pdf_name: pdfName,
+      pdf_content: pdfPath
     });
 
     res.status(201).json(newPdfChapitre);
@@ -80,7 +79,6 @@ const deletePdfChapitre = async (req, res) => {
       return res.status(404).json({ message: 'PDF chapitre not found' });
     }
 
-    // Delete the file from the filesystem
     if (pdfChapitre.pdf_content) {
       fs.unlinkSync(pdfChapitre.pdf_content);
     }
@@ -106,7 +104,7 @@ const updatePdfChapitre = async (req, res) => {
     return res.status(400).json({ message: 'PDF file is required' });
   }
 
-  const pdfPath = req.file.path; // Path to the new uploaded PDF
+  const pdfPath = req.file.path;
 
   try {
     const pdfChapitre = await PdfChapitre.findByPk(id);
@@ -115,12 +113,10 @@ const updatePdfChapitre = async (req, res) => {
       return res.status(404).json({ message: 'PDF chapitre not found' });
     }
 
-    // Delete the old file from the filesystem
     if (pdfChapitre.pdf_content) {
       fs.unlinkSync(pdfChapitre.pdf_content);
     }
 
-    // Update the PDF chapitre with the new file path
     pdfChapitre.pdf_content = pdfPath;
 
     await pdfChapitre.save();
