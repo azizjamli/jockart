@@ -15,7 +15,7 @@ const PdfChapitre = sequelize.define('PdfChapitre', {
     type: DataTypes.STRING(255),
     allowNull: false,
     validate: {
-      isUrl: true, // Ensure that the value is a valid URL
+//      isUrl: false, // Ensure that the value is a valid URL
     }
   },
   chapitre_id: {
