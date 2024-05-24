@@ -7,7 +7,6 @@ const {
   getPdfChapitresByChapitreId,
   createPdfChapitre,
   deletePdfChapitre,
-  updatePdfChapitre
 } = require('../controllers/pdfchapitrecontroller');
 
 const storage = multer.diskStorage({
@@ -32,6 +31,5 @@ router.post('/createPdfChapitre/:chapitreId', upload.single('pdf'), createPdfCha
 router.delete('/deletePdfChapitre/:id', deletePdfChapitre);
 
 // PUT /api/pdfchapitres/updatePdfChapitre/:id - Update a PDF chapitre by ID
-router.put('/updatePdfChapitre/:id', upload.single('pdf'), updatePdfChapitre);
 
 module.exports = router;
