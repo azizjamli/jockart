@@ -1,6 +1,8 @@
 const PdfChapitre = require('../models/PdfChapitre');
 const sequelize = require('../dbConfig');
 const fs = require('fs');
+const path = require('path');
+
 
 // Get PDF chapitres by chapitre ID
 const getPdfChapitresByChapitreId = async (req, res) => {
@@ -65,6 +67,7 @@ const createPdfChapitre = async (req, res) => {
 
 
 // Delete a PDF chapitre by ID
+// Delete a PDF chapitre by ID
 const deletePdfChapitre = async (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -79,10 +82,13 @@ const deletePdfChapitre = async (req, res) => {
       return res.status(404).json({ message: 'PDF chapitre not found' });
     }
 
-    if (pdfChapitre.pdf_content) {
-      fs.unlinkSync(pdfChapitre.pdf_content);
-    }
+    // Get the full path of the PDF file
+    const pdfFilePath = path.join(__dirname, '..', 'uploads', 'pdfchapitres', pdfChapitre.pdf_content);
 
+    // Delete the PDF file from the uploads folder
+    fs.unlinkSync(pdfFilePath);
+
+    // Delete the PDF chapitre from the database
     await pdfChapitre.destroy();
 
     res.status(200).json({ message: 'PDF chapitre deleted successfully' });
@@ -92,45 +98,9 @@ const deletePdfChapitre = async (req, res) => {
   }
 };
 
-// Update a PDF chapitre by ID
-const updatePdfChapitre = async (req, res) => {
-  const id = parseInt(req.params.id);
-
-  if (isNaN(id) || id <= 0) {
-    return res.status(400).json({ message: 'Invalid PDF chapitre ID' });
-  }
-
-  if (!req.file) {
-    return res.status(400).json({ message: 'PDF file is required' });
-  }
-
-  const pdfPath = req.file.path;
-
-  try {
-    const pdfChapitre = await PdfChapitre.findByPk(id);
-
-    if (!pdfChapitre) {
-      return res.status(404).json({ message: 'PDF chapitre not found' });
-    }
-
-    if (pdfChapitre.pdf_content) {
-      fs.unlinkSync(pdfChapitre.pdf_content);
-    }
-
-    pdfChapitre.pdf_content = pdfPath;
-
-    await pdfChapitre.save();
-
-    res.status(200).json(pdfChapitre);
-  } catch (error) {
-    console.error('Error updating PDF chapitre:', error);
-    res.status(500).send('Server Error');
-  }
-};
 
 module.exports = {
   getPdfChapitresByChapitreId,
   createPdfChapitre,
   deletePdfChapitre,
-  updatePdfChapitre
 };

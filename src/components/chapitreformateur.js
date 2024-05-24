@@ -64,6 +64,23 @@ const Chapireformateur = () => {
   };
 
   const renderContent = () => {
+    const handlePdfDelete = async (pdfId, pdfContent) => {
+      try {
+        await axios.delete(`http://localhost:3001/api/pdfchapitre/deletePdfChapitre/${pdfId}`);
+        // Remove the deleted PDF from the state
+        setPdfs(pdfs.filter(pdf => pdf.pdf_id !== pdfId));
+  
+        // Delete the PDF file from the server
+        const url = `http://localhost:3001/uploads/pdfchapitres/${pdfContent}`;
+        await axios.delete(url);
+  
+        alert('PDF deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting PDF:', error);
+        alert('Error deleting PDF');
+      }
+    };
+  
     switch (activeTab) {
       case 'inspecter':
         return (
@@ -92,7 +109,7 @@ const Chapireformateur = () => {
                         >
                           Télécharger PDF
                         </button>
-                        <button className="btn btn-primary border-0 mt-2">
+                        <button className="btn btn-primary border-0 mt-2" onClick={() => handlePdfDelete(pdf.pdf_id, pdf.pdf_content)}>
                           Supprimer PDF
                         </button>
                       </>
