@@ -9,6 +9,8 @@ const Chapireformateur = () => {
   const [activeTab, setActiveTab] = useState('inspecter');
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfTitle, setPdfTitle] = useState("");
+  const [videoFile, setVideoFile] = useState(null);
+  const [videoTitle, setVideoTitle] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +65,33 @@ const Chapireformateur = () => {
     }
   };
 
+  const handleVideoUpload = async (event) => {
+    event.preventDefault();
+    if (!videoFile || !videoTitle) {
+      alert("Please provide a title and select a video file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('video', videoFile);
+    formData.append('title', videoTitle);
+
+    try {
+      const response = await axios.post(`http://localhost:3001/api/videos/createVideo/${chapitre_id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      alert('Video uploaded successfully!');
+      setVideos([...videos, response.data]);
+      setVideoTitle("");
+      setVideoFile(null);
+    } catch (error) {
+      console.error('Error uploading video:', error);
+      alert('Error uploading video');
+    }
+  };
+
   const handlePdfDelete = async (pdfId, pdfContent) => {
     try {
       await axios.delete(`http://localhost:3001/api/pdfchapitre/deletePdfChapitre/${pdfId}`);
@@ -71,6 +100,17 @@ const Chapireformateur = () => {
     } catch (error) {
       console.error('Error deleting PDF:', error);
       alert('Error deleting PDF');
+    }
+  };
+
+  const handleVideoDelete = async (videoId) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/videos/deleteVideo/${videoId}`);
+      setVideos(videos.filter(video => video.id !== videoId));
+      alert('Video deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting video:', error);
+      alert('Error deleting video');
     }
   };
 
@@ -103,7 +143,7 @@ const Chapireformateur = () => {
                         >
                           Télécharger PDF
                         </button>
-                        <button className="btn btn-primary border-0 mt-2" onClick={() => handlePdfDelete(pdf.pdf_id, pdf.pdf_content)}>
+                        <button className="btn btn-danger border-0 mt-2" onClick={() => handlePdfDelete(pdf.pdf_id, pdf.pdf_content)}>
                           Supprimer PDF
                         </button>
                       </>
@@ -122,11 +162,13 @@ const Chapireformateur = () => {
                   {videos.map(video => (
                     <div key={video.id} className='card col-md-6'>
                       <div className='card-body'>
-                        <button>Supprimer ce vidéo</button>
+                        <button className="btn btn-danger border-0 mt-2" onClick={() => handleVideoDelete(video.id)}>
+                          Supprimer ce vidéo
+                        </button>
                         <h5 className='card-title'>{video.video_titre}</h5>
                         {video.video ? (
                           <video controls width="100%" height="300px">
-                            <source src={`http://localhost:3001${video.video}`} type="video/mp4" />
+                            <source src={`http://localhost:3001/uploads/videos/${video.video}`} type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
                         ) : (
@@ -175,7 +217,31 @@ const Chapireformateur = () => {
         return (
           <div>
             <h3>Ajouter une vidéo</h3>
-            {/* Add video upload form here */}
+            <form onSubmit={handleVideoUpload}>
+              <div className="mb-3">
+                <label htmlFor="videoTitle" className="form-label">Video Title</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  id="videoTitle" 
+                  value={videoTitle} 
+                  onChange={(e) => setVideoTitle(e.target.value)} 
+                  required 
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="videoFile" className="form-label">Video File</label>
+                <input 
+                  type="file" 
+                  className="form-control" 
+                  id="videoFile" 
+                  onChange={(e) => setVideoFile(e.target.files[0])} 
+                  accept="video/*" 
+                  required 
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">Upload Video</button>
+            </form>
           </div>
         );
       default:

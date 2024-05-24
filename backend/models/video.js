@@ -12,7 +12,7 @@ const Video = sequelize.define('Video', {
     allowNull: false,
   },
   video: {
-    type: DataTypes.BLOB('long'),
+    type: DataTypes.STRING(255),  // Changed from BLOB to STRING(255)
     allowNull: false,
   },
   chapitre_id: {
