@@ -27,10 +27,10 @@ const Chapireformateur = () => {
   }, [chapitre_id]);
 
   const handlePdfDownload = (pdfPath) => {
-    const url = `http://localhost:3001${pdfPath}`;
+    const url = `http://localhost:3001/uploads/pdfchapitres/${pdfPath}`;
     const a = document.createElement('a');
     a.href = url;
-    a.download = url.split('/').pop();
+    a.download = pdfPath;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -63,24 +63,18 @@ const Chapireformateur = () => {
     }
   };
 
+  const handlePdfDelete = async (pdfId, pdfContent) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/pdfchapitre/deletePdfChapitre/${pdfId}`);
+      setPdfs(pdfs.filter(pdf => pdf.pdf_id !== pdfId));
+      alert('PDF deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting PDF:', error);
+      alert('Error deleting PDF');
+    }
+  };
+
   const renderContent = () => {
-    const handlePdfDelete = async (pdfId, pdfContent) => {
-      try {
-        await axios.delete(`http://localhost:3001/api/pdfchapitre/deletePdfChapitre/${pdfId}`);
-        // Remove the deleted PDF from the state
-        setPdfs(pdfs.filter(pdf => pdf.pdf_id !== pdfId));
-  
-        // Delete the PDF file from the server
-        const url = `http://localhost:3001/uploads/pdfchapitres/${pdfContent}`;
-        await axios.delete(url);
-  
-        alert('PDF deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting PDF:', error);
-        alert('Error deleting PDF');
-      }
-    };
-  
     switch (activeTab) {
       case 'inspecter':
         return (
