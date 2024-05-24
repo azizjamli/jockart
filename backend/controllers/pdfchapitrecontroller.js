@@ -19,21 +19,20 @@ const getPdfChapitresByChapitreId = async (req, res) => {
       return res.status(404).json({ message: 'No PDF chapters found for this chapitre ID' });
     }
 
-    const pdfsWithBase64Content = pdfChapitres.map(pdf => {
-      const base64Content = pdf.pdf_content ? pdf.pdf_content.toString('base64') : null;
-      console.log(`Base64 Content for PDF ID ${pdf.pdf_id}: ${base64Content}`);
-      return {
-        ...pdf.toJSON(),
-        pdf_content: base64Content
-      };
-    });
+    // Map PDFs to include file path
+    const pdfsWithFilePath = pdfChapitres.map(pdf => ({
+      ...pdf.toJSON(),
+      pdf_file_path: pdf.pdf_content.replace(/\\/g, '/') // Convert backslashes to forward slashes
+    }));
 
-    res.json(pdfsWithBase64Content);
+    res.json(pdfsWithFilePath);
   } catch (error) {
     console.error('Error fetching PDF chapitres:', error);
     res.status(500).send('Server Error');
   }
 };
+
+
 
 // Create a new PDF chapitre
 const createPdfChapitre = async (req, res) => {
@@ -48,13 +47,13 @@ const createPdfChapitre = async (req, res) => {
   }
 
   const pdfName = req.body.title;
-  const pdfPath = req.file.path;
+  const pdfFileName = req.file.filename; // Get the filename from req.file
 
   try {
     const newPdfChapitre = await PdfChapitre.create({
       chapitre_id: chapitreId,
       pdf_name: pdfName,
-      pdf_content: pdfPath
+      pdf_content: pdfFileName // Store the filename instead of the path
     });
 
     res.status(201).json(newPdfChapitre);
@@ -63,6 +62,7 @@ const createPdfChapitre = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
 
 // Delete a PDF chapitre by ID
 const deletePdfChapitre = async (req, res) => {
