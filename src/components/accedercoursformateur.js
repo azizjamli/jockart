@@ -11,6 +11,7 @@ const Accedercoursformateur = () => {
   const [chapitres, setChapitres] = useState([]);
   const [seanceEnLigne, setSeanceEnLigne] = useState([]);
   const [newChapitre, setNewChapitre] = useState({ title: '', content: '' });
+  const [newSeance, setNewSeance] = useState({ title: '', date: '', heure: '', link: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,6 +88,25 @@ const Accedercoursformateur = () => {
     setNewChapitre({ ...newChapitre, [name]: value });
   };
 
+  const handleAddSeance = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3001/api/seanceenligne/createSeanceEnLigne', {
+        coursId,
+        ...newSeance,
+      });
+      setSeanceEnLigne([...seanceEnLigne, response.data]);
+      setNewSeance({ title: '', date: '', heure: '', link: '' });
+    } catch (error) {
+      console.error('Error creating SeanceEnLigne:', error);
+    }
+  };
+
+  const handleSeanceInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewSeance({ ...newSeance, [name]: value });
+  };
+
   const formatSeanceDate = (dateString) => {
     const seanceDate = new Date(dateString);
     const today = new Date();
@@ -127,31 +147,51 @@ const Accedercoursformateur = () => {
             placeholder='Content'
           />
           <button className='btn' onClick={handleAddChapitre}>ajouter un chapitre</button>
-
-          <div className='row d-flex p-3 justify-content-around'>
-            {chapitres.map(chapitre => (
-              <div key={chapitre.chapitre_id} className='card col-sm-3'>
-                <div className='card-body'>
-                  <h2 className='card-title'>{chapitre.chapitre_name}</h2>
-                  <p className='card-text'>{chapitre.description}</p>
-                  <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.chapitre_id)}>supprimer ce chapitre</button>
-                  <button className='btn' onClick={() => handleCardClick(chapitre.chapitre_id)}>inspecter</button>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
       <div className='container mt-5'>
-        <h2>SeanceEnLigne</h2>
-        <button className='btn'>ajouter une seance</button>
+        <h2>Ajouter une Séance En Ligne</h2>
+        <form onSubmit={handleAddSeance}>
+          <input
+            type='text'
+            name='title'
+            value={newSeance.title}
+            onChange={handleSeanceInputChange}
+            placeholder='Title'
+          />
+          <input
+            type='date'
+            name='date'
+            value={newSeance.date}
+            onChange={handleSeanceInputChange}
+            placeholder='Date'
+          />
+          <input
+            type='text'
+            name='heure'
+            value={newSeance.heure}
+            onChange={handleSeanceInputChange}
+            placeholder='Heure'
+          />
+          <input
+            type='text'
+            name='link'
+            value={newSeance.link}
+            onChange={handleSeanceInputChange}
+            placeholder='Link'
+          />
+          <button type='submit' className='btn'>Ajouter une séance</button>
+        </form>
+      </div>
 
+      <div className='container mt-5'>
+        <h2>SeanceEnLigne</h2>
         {seanceEnLigne.map(seance => (
           <div key={seance.id} className='card mb-3'>
             <div className='card-body'>
               <h5 className='card-title'>Session Title: {seance.title}</h5>
-              <p className='card-text'>Date: {formatSeanceDate(seance.date)}</p>
+              <p className='card-text' >Date: {formatSeanceDate(seance.date)}</p>
               <h5 className='card-title'>heure : {seance.heure}</h5>
               <a className='card-text' href={seance.link} target='_blank' rel='noopener noreferrer'>
                 Link: {seance.link}
@@ -159,6 +199,21 @@ const Accedercoursformateur = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className='container mt-5'>
+        <h2>Chapitres</h2>
+        <div className='row d-flex p-3 justify-content-around'>
+          {chapitres.map(chapitre => (
+            <div key={chapitre.chapitre_id} className='card col-sm-3'>
+              <div className='card-body'>
+                <h2 className='card-title'>{chapitre.chapitre_name}</h2>
+                <p className='card-text'>{chapitre.description}</p>
+                <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.chapitre_id)}>supprimer ce chapitre</button>
+                <button className='btn' onClick={() => handleCardClick(chapitre.chapitre_id)}>inspecter</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
