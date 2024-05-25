@@ -107,6 +107,15 @@ const Accedercoursformateur = () => {
     setNewSeance({ ...newSeance, [name]: value });
   };
 
+  const handleDeleteSeance = async (seanceId) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/seanceenligne/deleteSeanceEnLigne/${seanceId}`);
+      setSeanceEnLigne(seanceEnLigne.filter(seance => seance.id !== seanceId));
+    } catch (error) {
+      console.error('Error deleting SeanceEnLigne:', error);
+    }
+  };
+
   const formatSeanceDate = (dateString) => {
     const seanceDate = new Date(dateString);
     const today = new Date();
@@ -127,7 +136,7 @@ const Accedercoursformateur = () => {
       <h1>cours id: {id}</h1>
       <UserInfo user={user} />
 
-      <div className='container bg-success'>
+      <div className='      container bg-success'>
         <div className='row d-flex justify-content-between align-items-baseline'>
           <h2 className=''>cours</h2>
         </div>
@@ -196,10 +205,12 @@ const Accedercoursformateur = () => {
               <a className='card-text' href={seance.link} target='_blank' rel='noopener noreferrer'>
                 Link: {seance.link}
               </a>
+              <button className='btn bg-danger' onClick={() => handleDeleteSeance(seance.id)}>Supprimer</button>
             </div>
           </div>
         ))}
       </div>
+
       <div className='container mt-5'>
         <h2>Chapitres</h2>
         <div className='row d-flex p-3 justify-content-around'>
@@ -220,3 +231,4 @@ const Accedercoursformateur = () => {
 };
 
 export default Accedercoursformateur;
+
