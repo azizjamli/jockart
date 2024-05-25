@@ -106,11 +106,20 @@ const deleteChapitre = async (req, res) => {
   }
 
   try {
-    const deleteQuery = `
+    // First, delete the rows in the pdfchapitre table that reference the chapitre_id
+    const deletePdfChapitreQuery = `
+      DELETE FROM pdfchapitre WHERE chapitre_id = :chapitreId
+    `;
+    await sequelize.query(deletePdfChapitreQuery, {
+      replacements: { chapitreId },
+      type: QueryTypes.DELETE,
+    });
+
+    // Then, delete the row in the chapitre table
+    const deleteChapitreQuery = `
       DELETE FROM chapitre WHERE chapitre_id = :chapitreId
     `;
-
-    await sequelize.query(deleteQuery, {
+    await sequelize.query(deleteChapitreQuery, {
       replacements: { chapitreId },
       type: QueryTypes.DELETE,
     });
@@ -121,6 +130,7 @@ const deleteChapitre = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
 
 module.exports = {
   getChapitresByCoursId,
