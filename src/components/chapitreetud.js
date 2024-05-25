@@ -23,26 +23,14 @@ const Chapitreetud = () => {
     fetchData();
   }, [chapitre_id]);
 
-  const handlePdfDownload = (pdfName, pdfContent) => {
-    try {
-      const byteCharacters = atob(pdfContent);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = pdfName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error during PDF download:', error);
-    }
+  const handlePdfDownload = (pdfPath) => {
+    const url = `http://localhost:3001/uploads/pdfchapitres/${pdfPath}`;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = pdfPath;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
@@ -61,16 +49,20 @@ const Chapitreetud = () => {
                   {pdf.pdf_content ? (
                     <>
                       <object
-                        data={`data:application/pdf;base64,${pdf.pdf_content}`}
+                        data={`http://localhost:3001/uploads/pdfchapitres/${pdf.pdf_content}`}
                         type="application/pdf"
                         width="100%"
                         height="300px"
-                      ></object>
+                      >
+                        <p>Your browser does not support PDFs. Please download the PDF to view it: 
+                          <a href={`http://localhost:3001/uploads/pdfchapitres/${pdf.pdf_content}`} download>Download PDF</a>.
+                        </p>
+                      </object>
                       <button
                         className="btn btn-primary border-0 mt-2"
-                        onClick={() => handlePdfDownload(pdf.pdf_name, pdf.pdf_content)}
+                        onClick={() => handlePdfDownload(pdf.pdf_content)}
                       >
-                        Download PDF
+                        Télécharger PDF
                       </button>
                     </>
                   ) : (
@@ -92,11 +84,10 @@ const Chapitreetud = () => {
                 <div className='card-body'>
                   <h5 className='card-title'>{video.video_titre}</h5>
                   {video.video ? (
-                   <video controls width="100%" height="300px">
-                   <source src={`data:video/mp4;base64,${video.video}`} type="video/mp4" />
-                   Your browser does not support the video tag.
-                 </video>
-                 
+                    <video controls width="100%" height="300px">
+                      <source src={`http://localhost:3001/uploads/videos/${video.video}`} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   ) : (
                     <p>No video content available.</p>
                   )}
