@@ -1,8 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { getSeanceEnLigneByCoursId } = require('../controllers/seanceenlignecontroller');
+const { 
+  getSeanceEnLigneByCoursId,
+  createSeanceEnLigne,
+  deleteSeanceEnLigne
+} = require('../controllers/seanceenlignecontroller');
 
-// Define the route to get SeanceEnLigne entries by course ID
+// Route to get SeanceEnLigne entries by course ID
 router.get('/getSeanceEnLigneByCoursId/:coursId', getSeanceEnLigneByCoursId);
+
+// Route to create a new SeanceEnLigne entry
+router.post('/createSeanceEnLigne', createSeanceEnLigne);
+
+// Route to delete a SeanceEnLigne entry by ID
+router.delete('/deleteSeanceEnLigne/:seanceId', deleteSeanceEnLigne);
 
 module.exports = router;

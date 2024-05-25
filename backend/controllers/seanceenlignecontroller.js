@@ -35,6 +35,46 @@ const getSeanceEnLigneByCoursId = async (req, res) => {
   }
 };
 
+const createSeanceEnLigne = async (req, res) => {
+  const { coursId, title, date, heure, link } = req.body;
+
+  try {
+    const newSeanceEnLigne = await SeanceEnLigne.create({
+      cours_id: coursId,
+      title,
+      date,
+      heure,
+      link,
+    });
+
+    res.status(201).json(newSeanceEnLigne);
+  } catch (error) {
+    console.error('Error creating SeanceEnLigne:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+const deleteSeanceEnLigne = async (req, res) => {
+  const seanceId = parseInt(req.params.seanceId);
+
+  if (isNaN(seanceId) || seanceId <= 0) {
+    return res.status(400).json({ message: 'Invalid Seance ID' });
+  }
+
+  try {
+    await SeanceEnLigne.destroy({
+      where: { id: seanceId },
+    });
+
+    res.json({ message: 'SeanceEnLigne deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting SeanceEnLigne:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
-  getSeanceEnLigneByCoursId
+  getSeanceEnLigneByCoursId,
+  createSeanceEnLigne,
+  deleteSeanceEnLigne,
 };
