@@ -36,7 +36,7 @@ const User = sequelize.define('User', {
   },
   numtel: DataTypes.STRING,
   photo: {
-    type: DataTypes.BLOB, // Changed type to store binary data (image files like PNG, JPG)
+    type: DataTypes.STRING, // Changed type to VARCHAR(255)
     allowNull: true, // Allow null if no photo is uploaded
   },
   createdAt: {
