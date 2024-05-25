@@ -83,18 +83,47 @@ const deleteCours = async (req, res) => {
     return res.status(400).json({ message: 'Invalid course ID' });
   }
 
+  const transaction = await sequelize.transaction();
+
   try {
-    const deleteQuery = `
+    // Delete related PDF chapters first
+    const deletePdfChapitresQuery = `
+      DELETE FROM pdfchapitre
+      WHERE chapitre_id IN (SELECT chapitre_id FROM chapitre WHERE cours_id = :selectedCoursId)
+    `;
+
+    await sequelize.query(deletePdfChapitresQuery, {
+      replacements: { selectedCoursId },
+      type: QueryTypes.DELETE,
+      transaction,
+    });
+
+    // Delete related chapters
+    const deleteChapitresQuery = `
+      DELETE FROM chapitre WHERE cours_id = :selectedCoursId
+    `;
+
+    await sequelize.query(deleteChapitresQuery, {
+      replacements: { selectedCoursId },
+      type: QueryTypes.DELETE,
+      transaction,
+    });
+
+    // Delete the course
+    const deleteCoursQuery = `
       DELETE FROM cours WHERE id = :selectedCoursId
     `;
 
-    await sequelize.query(deleteQuery, {
+    await sequelize.query(deleteCoursQuery, {
       replacements: { selectedCoursId },
       type: QueryTypes.DELETE,
+      transaction,
     });
 
-    res.status(200).json({ message: 'Course deleted successfully' });
+    await transaction.commit();
+    res.status(200).json({ message: 'Course and related chapters deleted successfully' });
   } catch (error) {
+    await transaction.rollback();
     console.error('Error deleting course:', error);
     res.status(500).send('Server Error');
   }
