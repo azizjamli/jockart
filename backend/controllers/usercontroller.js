@@ -72,14 +72,11 @@ const getInfo = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Encode the photo to Base64 if it exists
-    let photoBase64 = null;
-    if (user.photo) {
-      photoBase64 = Buffer.from(user.photo, 'binary').toString('base64');
-    }
+    // Include the file path for the photo in the response
+    const photoPath = user.photo ? `${req.protocol}://${req.get('host')}/uploads/user/${user.photo}` : null;
 
-    // Send user details including Base64 encoded photo in the response
-    res.status(200).json({ user: { ...user.toJSON(), photo: photoBase64 } });
+    // Send user details including photo path in the response
+    res.status(200).json({ user: { ...user.toJSON(), photo: photoPath } });
   } catch (error) {
     console.error('Error fetching user info:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -87,8 +84,7 @@ const getInfo = async (req, res) => {
 };
 
 const uploadPhoto = async (req, res) => {
-  const { userId } = req.params; // Assuming you pass the userId in the URL params
-  const { photo } = req.files; // Assuming req.files contains the uploaded file data
+  const { userId } = req.params;
 
   try {
     // Check if the user exists in the database
@@ -97,25 +93,59 @@ const uploadPhoto = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Ensure the uploaded file is an image (optional)
-    if (!photo || !photo.mimetype.startsWith('image')) {
-      return res.status(400).json({ error: 'Please upload an image file' });
+    // Get the uploaded file information from multer
+    const photo = req.file ? req.file.filename : null;
+
+    if (!photo) {
+      return res.status(400).json({ error: 'No photo uploaded' });
     }
 
-    // Read the uploaded file and convert it to a Base64 string
-    const imageBuffer = fs.readFileSync(photo.path);
-    const imageBase64 = imageBuffer.toString('base64');
-
-    // Update the photo column for the user with the Base64 encoded image
-    await user.update({ photo: imageBase64 });
-
-    // Delete the temporary uploaded file (optional, depending on your setup)
-    fs.unlinkSync(photo.path);
+    // Update the user's photo
+    await user.update({ photo });
 
     // Send success response
-    res.status(200).json({ message: 'Photo uploaded successfully' });
+    res.status(200).json({ message: 'Photo uploaded successfully', photo });
   } catch (error) {
     console.error('Error uploading photo:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+const updateUser = async (req, res) => {
+  const { userId } = req.params;
+  const { email, nom, prenom, numtel } = req.body;
+
+  try {
+    // Validate request data
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Check if the user exists in the database
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Get the uploaded file information from multer
+    const photo = req.file ? req.file.filename : user.photo;
+
+    // Update the user's details without modifying the password
+    await user.update({
+      email: email || user.email,
+      nom: nom || user.nom,
+      prenom: prenom || user.prenom,
+      numtel: numtel || user.numtel,
+      photo
+    });
+
+    // Send success response
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (error) {
+    console.error('Error updating user:', error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -125,4 +155,5 @@ module.exports = {
   signup,
   getInfo,
   uploadPhoto,
+  updateUser,
 };
