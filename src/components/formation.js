@@ -48,10 +48,10 @@ const FormationPage = () => {
     const renderActiveMenuItem = () => {
         const additionalContent = (
             <div className="container mt-5">
-                <div className="row">
+                <div className="row d-flex align-items-center justify-content-around gap-2">
                     {coursFinderData.map((course) => (
                         <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
-                            <div className="card border-0">
+                            <div className="card cardpageformation border-0">
                                 {renderCoursePhoto(course.photo)}
                                 <div className="card-body">
                                     <h5 className="card-title">{course.titre}</h5>
@@ -84,7 +84,7 @@ const FormationPage = () => {
                                 <p className="niveaup text-center mt-5">Une formation à partir de 6 mois cours du jour + weekend</p>
                             </div>
                             <div className="col-md-2 theline"></div>
-                            <div className="col-md-5">
+                            <div className="col-md-5-">
                                 <h1 className="niveau">Niveau <br /> professionnel </h1>
                                 <p className="niveaup text-center mt-5">Une formation à partir de 3 mois le weekend</p>
                             </div>

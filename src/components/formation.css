@@ -61,3 +61,7 @@
     height: max-content ;
 
 }
+.cardpageformation{
+    width: 22vw;
+    min-width: 200px;
+}
