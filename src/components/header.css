@@ -39,6 +39,11 @@
     box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2); /* Add inset drop shadow only at the bottom */
     transition: transform 0.5s ease-out;
   }
+  /* Remove the dropdown caret */
+.navbar-header .navbar-nav .dropdown-toggle::after {
+  display: none;
+}
+
   
   
   .navbar.navbar-exit {
