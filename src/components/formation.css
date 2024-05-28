@@ -1,29 +1,63 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-SemiBold.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/Poppins-Medium.ttf') format('truetype');
+    /* You can add additional properties like font-weight, font-style, etc. here */
+}
+
 .sectionformation1{
     background-color: #4A9AC3;
     height: fit-content;
 }
 .titreformation1{
     color: white;
+    font-size: max(3vw, 20px);
+
 }
 .niveau{
     color: #FFFF;
+    font-size: max(2.6vw, 20px);
+
 }
 .niveaup{
     color: #FFFF;
     width: 14vw;
    margin-left: 30%;
+   font-size: max(0.5vw, 16px);
+
 }
 .theline{
     background-color: #F0E637;
     width: 0.8vw;
+    min-width: 1px;
     height: 10vh;
 }
 .circleformation1{
     width: 10vw;
     height: 10vw;
+    padding: 10%;
     border: #F0E637 solid 4px;
     border-radius:  360%;
 }
 .textcircleformation{
     font-weight: bold;
+    font-size: max(1vw, 8px);
+
+}
+.menupageformation{
+    font-size: max(1.4vw, 15px);
+    cursor: pointer;
+
+}
+.contourmenupageformation{
+    border: solid #138BBD 2px;
+    
+
+    width: 100%;
+    height: max-content ;
+
 }
