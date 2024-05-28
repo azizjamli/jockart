@@ -1,0 +1,99 @@
+.col {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .container.bansortie {
+    color: #311b61;
+    font-size: 30px;
+    margin-top: 50px;
+  }
+  
+  .aposs {
+    color: #f2e52f;
+  }
+  
+  .container.bansor {
+    color: #311b61;
+    font-size: 30px;
+    margin-left: 500px;
+  }
+  
+  .imagefenligne {
+    margin-top: 50px;
+    max-width: 300px;
+  }
+  
+  .block {
+    color: rgb(255, 255, 255);
+    background-color: #4a9ac3;
+    border-radius: 30px;
+    padding: 80px; /* Ajuster le padding selon les besoins */
+    text-align: center;
+    max-width: 300px; /* Ajuster la largeur maximale selon les besoins */
+    font-size: 20px;
+    height: 100%; /* Ensure all blocks have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .custom-bg {
+    background-color: #4a9ac3;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-textsortie {
+    font-size: 1rem;
+    color: #000;
+  }
+  
+  .container.ban5 {
+    color: #311b61;
+    font-size: 30px;
+    text-align: center;
+
+  }
+  .cardsortie {
+    position: relative;
+  }
+  
+  .cardimgsortie {
+    position: absolute;
+    top: -150px; /* Adjust this value to move the image higher or lower */
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+    border-radius: 10px;
+    width: 15vw;
+    min-width: 250px;
+  }
+  
+  .cardsortieb {
+    padding: 0; 
+    padding-top: 50px;/* Ensure the card body content doesn't overlap with the image */
+    z-index: 0; /* Ensure the card body content is behind the image */
+  }
+  
+  .div2sortie{
+    margin-top: 150px;
+  }
+
+  .cardquestion {
+    height: 100%;
+  }
+  
+  .card-bodyquestion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .card-textquestion {
+    flex-grow: 1;
+    font-size: 16px; /* Adjust the font size as needed */
+  }
