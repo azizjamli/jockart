@@ -8,7 +8,7 @@ const FormationEnLigne = () => {
     <>
       <div className="containerbaneligne">
         <div className="row p-5 ">
-          <h1 className="titrefenligne text-center"> <span className='aposs'>"</span>Découvrez notre formation en ligne pour <br /> développer vos compétences créatives<span className='aposs'>"</span> </h1>
+          <h1 className="titrecommunauté text-center"> <span className='aposs'>"</span>Découvrez notre formation en ligne pour <br /> développer vos compétences créatives<span className='aposs'>"</span> </h1>
         </div>
 
         <div className="container containeraaa mt-5">
