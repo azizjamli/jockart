@@ -49,7 +49,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/systeme-pedagogique" className="dropdown-item">
+                  <Link to="/systemepedagogique" className="dropdown-item">
                     Système Pédagogique
                   </Link>
                 </li>
