@@ -38,7 +38,7 @@ const Acceuil = () => {
               <p className="text-1 text-center text-lg-start mt-5">Notre école se distingue par son équipe d'instructeurs passionnés, ses programmes de formation innovants et ses installations de pointe. Nous offrons un environnement d'apprentissage inspirant où chaque élève est encouragé à explorer sa créativité et à développer ses compétences artistiques.</p>
               <div className="mt-5 d-flex g-5 justify-content-center gap-5">
                 <btn className="btn">Découvrez-nous</btn>
-                <btn className="btn btn1">Voir plus </btn>
+             
               </div>
             </div>
 

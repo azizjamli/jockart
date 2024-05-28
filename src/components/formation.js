@@ -51,12 +51,16 @@ const FormationPage = () => {
                 <div className="row">
                     {coursFinderData.map((course) => (
                         <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
-                            <div className="card">
+                            <div className="card border-0">
                                 {renderCoursePhoto(course.photo)}
                                 <div className="card-body">
                                     <h5 className="card-title">{course.titre}</h5>
-                                    <p className="card-text">{course.description}</p>
+                                    
                                     <p className="card-text">Prix: {course.prix} Dt</p>
+                                    <div className='d-flex justify-content-around'>
+                                    <button className='btn'>acheter</button>
+                                    <button className='btn'>voir plus</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,9 +76,9 @@ const FormationPage = () => {
                 <>
                     <div className="row sectionformation1">
                         <div className="">
-                            <h1 className="titreformation1 mt-5">Nos programmes <br /> Par niveau </h1>
+                            <h1 className="titreformation1 text-center mt-5">Nos programmes <br /> Par niveau </h1>
                         </div>
-                        <div className="d-flex justify-content-center mt-3 mb-5">
+                        <div className="d-flex justify-content-around mt-3 mb-5">
                             <div className="col-md-5">
                                 <h1 className="niveau">Niveau <br /> débutant </h1>
                                 <p className="niveaup text-center mt-5">Une formation à partir de 6 mois cours du jour + weekend</p>
@@ -89,13 +93,13 @@ const FormationPage = () => {
                     <div className="row mt-5">
                         <div className="d-flex justify-content-around">
                             <div className="circleformation1 p-5">
-                                <p className="textcircleformation">08 Formateurs </p>
+                                <p className="textcircleformation text-center ">08 Formateurs </p>
                             </div>
                             <div className="circleformation1 p-5">
-                                <p className="textcircleformation">120 Diplômes </p>
+                                <p className="textcircleformation text-center">120 Diplômes </p>
                             </div>
                             <div className="circleformation1 p-5">
-                                <p className="textcircleformation">29 Emplois actuels</p>
+                                <p className="textcircleformation text-center">29 Emplois actuels</p>
                             </div>
                         </div>
                     </div>
@@ -105,7 +109,7 @@ const FormationPage = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container mt-5">
             {/* Header */}
             <div className="row">
                 <h1 className="titreapropos">Formations</h1>
@@ -119,15 +123,15 @@ const FormationPage = () => {
             {/* Bootstrap Navbar */}
             <nav className="navbar navbar-formation navbar-expand-md">
                 <div className="container-fluid">
-                    <div className="collapse d-flex justify-content-evenly navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
+                    <div className="collapse d-flex  navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav d-flex justify-content-around col-md-12  contourmenupageformation">
                             {loading ? (
                                 <li className="nav-item">
                                     <a className="nav-link">Loading...</a>
                                 </li>
                             ) : (
                                 categories.map((categorie) => (
-                                    <li className={`nav-item ${selectedCategoryId === categorie.id ? 'active' : ''}`} key={categorie.id}>
+                                    <li className={` menupageformation  nav-item ${selectedCategoryId === categorie.id ? 'active' : ''}`} key={categorie.id}>
                                         <a className="nav-link" onClick={() => handleCategoryClick(categorie.id)}>{categorie.nom}</a>
                                     </li>
                                 ))
@@ -138,7 +142,7 @@ const FormationPage = () => {
             </nav>
 
             {/* Render active menu item or default content */}
-            <div className="row mt-5">
+            <div className="row ">
                 {renderActiveMenuItem()}
             </div>
         </div>
