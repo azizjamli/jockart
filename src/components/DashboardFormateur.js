@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserInfo from './UserInfo';
-import './dashboardetud.css';
+//import './dashboardetud.css';
 
 const Dashboardformateur = () =>{
     const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ if (loading) {
                 <a
                   href="javascript:void(0)"
                   key={categorie.id}
-                  className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+                  className={`list-group-item text-start ps-5 list-group-item-action${selectedCategoryId === categorie.id ? ' selected-category': ''}`}
                   onClick={() => handleCategoryClick(categorie.id)}
                 >
                   {categorie.nom}
