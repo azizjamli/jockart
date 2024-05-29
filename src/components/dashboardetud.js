@@ -15,47 +15,34 @@ const UserComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-   /* async function fetchData() {
-      try {
-        const userId = localStorage.getItem('userId');
-        const userResponse = await axios.get('http://localhost:3001/api/users/getInfo', {
-          params: { userId },
-        });
-        setUser(userResponse.data);
-        console.log(userResponse.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
-    }*/
-
     async function fetchCategories() {
       try {
         const response = await axios.get('http://localhost:3001/api/categories/getAllCategories');
         setCategories(response.data);
         setLoading(false);
-
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     }
 
-    //fetchData();
     fetchCategories();
-  }, []); // Empty dependency array to run only once
+  }, []);
 
   const handleCategoryClick = async (categoryId) => {
     try {
+      setSelectedCategoryId(categoryId); // Update the selected category
       const userId = localStorage.getItem('userId');
 
       const coursFinderResponse = await axios.get(`http://localhost:3001/api/usercours/coursfinder`, {
         params: { userId, selectedCategoryId: categoryId },
       });
+      console.log('coursFinderResponse data:', coursFinderResponse.data); // Debugging
       setCoursFinderData(coursFinderResponse.data);
 
       const coursFinderNouserResponse = await axios.get(`http://localhost:3001/api/usercours/coursfindernouser`, {
         params: { userId, selectedCategoryId: categoryId },
       });
+      console.log('coursFinderNouserResponse data:', coursFinderNouserResponse.data); // Debugging
       setCoursFinderNouserData(coursFinderNouserResponse.data);
     } catch (error) {
       console.error('Error fetching user courses by category:', error);
@@ -65,11 +52,22 @@ const UserComponent = () => {
   const handleAjouterClick = (id) => {
     navigate(`/Ajoutercours/${id}`);
   };
+
   const handleAccederClick = (id) => {
     navigate(`/Accedercours/${id}`);
   };
 
-if (loading) {
+  const renderCoursePhoto = (photo) => {
+    const photoUrl = `http://localhost:3001/uploads/cours/${photo}`;
+    console.log('renderCoursePhoto - photo URL:', photoUrl); // Debugging
+    return photo ? (
+      <img src={photoUrl} alt="Course" className="card-img-top" />
+    ) : (
+      <div>No Photo</div>
+    );
+  };
+
+  if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -85,7 +83,7 @@ if (loading) {
                 <a
                   href="javascript:void(0)"
                   key={categorie.id}
-                  className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+                  className={`list-group-item text-start ps-5 list-group-item-action${selectedCategoryId === categorie.id ? ' selected-category' : ''}`}
                   onClick={() => handleCategoryClick(categorie.id)}
                 >
                   {categorie.nom}
@@ -97,17 +95,18 @@ if (loading) {
             <div className="row d-flex justify-content-around gap-1">
               {coursFinderData.map((item) => (
                 <div className="card coursacheté mb-3 col-lg-3" key={item.Cour.id}>
+                  {renderCoursePhoto(item.Cour.photo)}
                   <div className="card-body">
-                    <h5 className="card-title ">{item.Cour.titre}</h5>
+                    <h5 className="card-title">{item.Cour.titre}</h5>
                     <button className="btn btn-primary" onClick={() => handleAccederClick(item.Cour.id)}>Accéder</button>
                   </div>
                 </div>
               ))}
               {coursFinderNouserData.map((item) => (
                 <div className="card coursnonacheté mb-3 col-lg-3" key={item.id}>
+                  {renderCoursePhoto(item.photo)}
                   <div className="card-body">
                     <h5 className="card-title">{item.titre}</h5>
-                    <p>{item.id}</p>
                     <button className="btn btn-success" onClick={() => handleAjouterClick(item.id)}>Ajouter</button>
                   </div>
                 </div>

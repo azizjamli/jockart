@@ -48,16 +48,16 @@ const FormationPage = () => {
     const renderActiveMenuItem = () => {
         const additionalContent = (
             <div className="container mt-5">
-                <div className="row d-flex align-items-center justify-content-around gap-2">
+                <div className="row ">
                     {coursFinderData.map((course) => (
-                        <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
-                            <div className="card cardpageformation border-0">
+                        <div className={` d-flex align-items-center justify-content-around col-md-6   mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
+                            <div className="card cardpageformation  border-0">
                                 {renderCoursePhoto(course.photo)}
                                 <div className="card-body">
                                     <h5 className="card-title">{course.titre}</h5>
                                     
                                     <p className="card-text">Prix: {course.prix} Dt</p>
-                                    <div className='d-flex justify-content-around'>
+                                    <div className='d-flex justify-content-around gap-2'>
                                     <button className='btn'>acheter</button>
                                     <button className='btn'>voir plus</button>
                                     </div>

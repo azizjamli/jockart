@@ -106,7 +106,7 @@ const UserInfo = () => {
     return photoUrl ? (
       <img
         src={photoUrl}
-        className='userphoto ms-5 img-fluid'
+        className='userphoto img-fluid'
         alt="User Photo"
       />
     ) : (
@@ -116,12 +116,12 @@ const UserInfo = () => {
 
   return (
     <div className="container dashboardinfo p-3">
-      <div className="row ps-3 pe-5 d-flex align-items-center">
-        <p className="text-start ms-5 mt-4">Profil Étudiant</p>
-        <div className="icons d-flex justify-content-end gap-3">
+      <div className="row ">
+        <p className="text-md-center text-start  mt-4">Mon Profil</p>
+       
+      </div>
+      <div className="icons col-md-2  d-flex flex-column position-fixed  top-0 me-2 end-0">
           <img style={{ width: '1.4vw' }} src={homeicon} className="img-fluid icon mt-5" alt="Home Icon" />
-          <img style={{ width: '1.4vw' }} src={notificon} className="img-fluid icon mt-5" alt="Notification Icon" />
-          <img style={{ width: '1.4vw' }} src={settingsicon} className="img-fluid icon mt-5" alt="Settings Icon" />
           <img
             style={{ width: '1.4vw', cursor: 'pointer' }}
             src={modifyicon}
@@ -129,28 +129,33 @@ const UserInfo = () => {
             alt="Modify Icon"
             onClick={() => setEditing(true)}
           />
+          <img style={{ width: '1.4vw' }} src={notificon} className="img-fluid icon mt-5" alt="Notification Icon" />
+          
         </div>
-      </div>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
         user && (
-          <div className="row mt-5 text-start d-flex align-items-center p-3">
-            <div className='col-md-4'>
+          <div className="row mt-5 text-start d-flex justify-content-start gap-1 align-items-center ">
+            <div className='col-md-2 ms-3'>
               {renderUserPhoto(formData.photoUrl)}
             </div>
-            <div className="col-md-3 ms-5">
-              <p>Nom: {user.nom}</p>
-              <p>Prénom: {user.prenom}</p>
+            <div className="col-md-4 mt-1 ">
+              <p className='infoss'>Nom: {user.nom}</p>
+              <p className='infoss'>Prénom: {user.prenom}</p>
             </div>
-            <div className='col-md-3 ms-5'>
-              <p>Email: {user.email}</p>
-              <p>Numéro: {user.numtel}</p>
+            <div className='col-md-4 '>
+              <p className='infoss'>Email: {user.email}</p>
+              <p className='infoss'>Numéro: {user.numtel}</p>
             </div>
+           
+            
           </div>
+          
         )
       )}
+     
 
       {editing && (
         <form className="mt-3" onSubmit={handleFormSubmit}>
