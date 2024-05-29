@@ -83,7 +83,7 @@ const UserComponent = () => {
                 <a
                   href="javascript:void(0)"
                   key={categorie.id}
-                  className={`list-group-item text-start ps-5 list-group-item-action${selectedCategoryId === categorie.id ? ' selected-category' : ''}`}
+                  className={`list-group-item text-start ps-5 list-group-item-action${selectedCategoryId === categorie.id ? ' selected-category': ''}`}
                   onClick={() => handleCategoryClick(categorie.id)}
                 >
                   {categorie.nom}
