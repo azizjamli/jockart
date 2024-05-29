@@ -1,26 +1,52 @@
-.dashboardinfo{
+.dashboardinfo {
     background-color: #444FA6;
     color: white;
 }
-.menucategorie .list-group .list-group-item{
+.menucategorie .list-group .list-group-item {
     background-color: #444FA6;
     color: white;
-    border-radius: 0;
+    margin-left: 5%;
+    border: none;
+    padding: 5%;
+    font-size: 1rem;
+    font-weight: 500;
 }
-.loading{
+.loading {
     color: #444FA6;
     border: solid 4px;
 }
 .userphoto {
     border-radius: 50%;
-    width: 10vw; /* Adjust the value as needed */
+    width: 8vw; /* Adjust the value as needed */
     min-width: 70px;
     min-height: 70px;
-    height: 10vw; /* Same value as width to maintain aspect ratio */
+    height: 8vw; /* Same value as width to maintain aspect ratio */
     object-fit: cover; /* Ensure the image covers the entire circle without stretching */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+
 }
-.icon{
+.icon {
     min-width: 15px;
     height: auto;
+}
+.menucategorie{
+    background-color: #444FA6;
+    height: max-content;
+}
+.menucategorie .list-group{
+    margin-top: 10%;
+}
 
+.menucategorie .list-group .list-group-item.selected-category {
+    background-color: white;
+    color: #444FA6;
+    border-radius: 30px 0 0 30px;
+    border: 0px;
+}
+.infoss{
+    border-radius: 6px;
+    border: solid #5C68CC 1px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
 }
