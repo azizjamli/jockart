@@ -1,0 +1,32 @@
+.imagetgrp {
+    width: 70%;
+    min-width: 200px;
+    height: auto;
+    position: absolute; /* Change from absolute to relative */
+    margin-top: -70px; /* Adjust this value to control the overlap */
+    left: 40%; /* Center the image horizontally */
+    transform: translateX(-50%); /* Center the image horizontally */
+}
+
+.cardtgrp {
+    margin-top: 70px; /* Adjust this value to account for the image overlap */
+    padding-top: 0; /* Remove extra padding if necessary */
+    text-align: center;
+    position: relative;
+    min-height: 300px; /* Ensure all cards have the same minimum height */
+}
+
+.card-bodytgrp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 20px;
+    border-radius: 60px 0 40px 0 ;
+
+}
+
+.imgtgrp {
+    width: 24vw;
+    min-width: 200px;
+}

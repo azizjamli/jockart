@@ -29,6 +29,8 @@ import Dashboardformateur  from './components/DashboardFormateur';
 import Systemepedagogique from './components/systemepedagogique';
 import Sortie from './components/sortie';
 import FormationEnLigne from './components/formationenligne';
+import TravailDeGroup from './components/travaildegroup';
+import Event from './components/event';
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
@@ -43,7 +45,7 @@ function AppContent() {
   const location = useLocation();
 
   // Define an array of routes where Header and Footer should be rendered
-  const headerFooterRoutes = ['/', '/formations', '/communaute', '/apropos', '/contact', '/login' , '/systemepedagogique' , '/sortie' , '/formationenligne' ];
+  const headerFooterRoutes = ['/', '/formations', '/communaute', '/apropos', '/contact', '/login' , '/systemepedagogique' , '/sortie' , '/formationenligne' , '/travaildegroup' , '/event'];
 
   // Function to check if Header and Footer should be rendered based on the current route
   const shouldRenderHeaderFooter = () => {
@@ -59,6 +61,10 @@ function AppContent() {
         <Route path="/systemepedagogique" element={<Systemepedagogique />} />
         <Route path="/sortie" element={<Sortie />} />
         <Route path="/formationenligne" element={<FormationEnLigne />} />
+        <Route path="/travaildegroup" element={<TravailDeGroup />} />
+        <Route path="/event" element={<Event />} />
+
+
 
 
         <Route path="/communaute" element={<Communauté />} />

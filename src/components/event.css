@@ -1,0 +1,47 @@
+.unique-imagetgrp {
+    width: 70%;
+    height: auto;
+    left: 15%;
+    position: relative;
+    top: -20px; /* Adjust this value to control the overlap */
+    margin-bottom: -20px; /* Adjust this value to control the overlap */
+  }
+  
+  .unique-cardtgrp {
+    margin-top: 40px; /* This should be the same as the top property of .unique-imagetgrp */
+    text-align: center;
+    position: relative;
+    min-height: 300px;
+    border: none ;
+    border-radius: 30px;
+    background: #4A9AC3;
+  }
+  
+  .unique-card-bodytgrp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    height: 100%;
+    padding: 20px;
+  }
+  
+  .unique-imagefenligne2 {
+    width: 100%;
+    height: auto;
+  }
+  
+  .unique-btn-reseau {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  
+  .unique-block {
+    margin-top: 10px;
+  }
+  
+  

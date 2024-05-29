@@ -37,7 +37,7 @@ const Systemepedagogique = () => {
               <p className="mb-3">
                 Des cours en ligne interactifs et des tutoriels vidéo permettent aux étudiants d'apprendre à leur propre rythme et de réviser le contenu à tout moment.
               </p>
-              <div className="formation-lab position-absolute">Travail de Groupe</div>
+              <button className="ms-2 btn formation-lab text-wrap position-absolute" onClick={() => navigate('/travaildegroup')} >Travail de<br /> Groupe</button>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@ const Systemepedagogique = () => {
               <p className="mb-3">
                 Des cours en ligne interactifs et des tutoriels vidéo permettent aux étudiants d'apprendre à leur propre rythme et de réviser le contenu à tout moment.
               </p>
-              <div className="formation-lab position-absolute">Formation en ligne</div>
+              <button className="ms-2 btn formation-lab text-wrap position-absolute" onClick={() => navigate('/event')} >Événements de <br /> Réseautage</button>
             </div>
           </div>
         </div>
