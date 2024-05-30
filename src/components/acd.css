@@ -1,0 +1,39 @@
+/* Add a shadow to all hr elements */
+hr {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Style for séance en ligne section */
+  .seance-en-ligne {
+    color: #311B61;
+  }
+  
+  .seance-en-ligne img {
+    max-width: 24px;
+  }
+  
+  .seance-en-ligne .card-body {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .seance-en-ligne h5 {
+    color: #311B61;
+  }
+  
+  .seance-en-ligne a {
+    text-decoration: none;
+  }
+  
+  .seance-en-ligne a:hover {
+    text-decoration: underline;
+  }
+  .att{
+    color: #311B61;
+
+
+  }
+  hr{
+    box-shadow: 2px rgba(8, 0, 0, 0.1);
+  }
+  

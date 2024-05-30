@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import UserInfo from './UserInfo';
+
 import axios from 'axios';
 
 const Chapitreetud = () => {
@@ -34,16 +36,18 @@ const Chapitreetud = () => {
   };
 
   return (
-    <div className='container'>
-      <h2>Chapitreetud Component</h2>
-      <p>Chapitre ID: {chapitre_id}</p>
+    <>
+    <UserInfo />
+
+    <div className='container mt-3'>
+      <h2>Chapitre</h2>
+      
 
       <div className='row'>
-        <div className='col-md-12'>
-          <h3>PDFs</h3>
-          <div className='d-flex justify-content-around'>
+        <div className='col-md-12 mt-5'>
+          <div className='d-flex flex-wrap justify-content-around gap-2'>
             {pdfs.map(pdf => (
-              <div key={pdf.pdf_id} className='card col-md-3'>
+              <div key={pdf.pdf_id} className='card col-lg-3 col-md-6'>
                 <div className='card-body'>
                   <h5 className='card-title'>{pdf.pdf_name}</h5>
                   {pdf.pdf_content ? (
@@ -78,9 +82,9 @@ const Chapitreetud = () => {
       <div className='row mt-5'>
         <div className='col-md-12'>
           <h3>Videos</h3>
-          <div className='d-flex justify-content-around'>
+          <div className='d-flex flex-wrap justify-content-around gap-1'>
             {videos.map(video => (
-              <div key={video.id} className='card col-md-6'>
+              <div key={video.id} className='card col-md-4  '>
                 <div className='card-body'>
                   <h5 className='card-title'>{video.video_titre}</h5>
                   {video.video ? (
@@ -98,6 +102,7 @@ const Chapitreetud = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

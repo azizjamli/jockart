@@ -61,9 +61,26 @@ function AppContent() {
     '/incours/', // Include a route pattern for incours
   ];
 
+  // Define an array of routes where Header and Footer should NOT be rendered
+  const noHeaderFooterRoutes = [
+    '/dashboardetud',
+    '/dashboardadmin',
+    '/dashboardformateur',
+    '/addcategory',
+    '/admincreateprofile',
+    '/addcours',
+    '/ajoutercours',
+    '/accedercours',
+    '/accedercoursformateur',
+    '/admincours',
+    '/coursdetails',
+    '/chapitreformateur',
+    '/chapitreetud',
+  ];
+
   // Function to check if Header and Footer should be rendered based on the current route
   const shouldRenderHeaderFooter = () => {
-    return headerFooterRoutes.some(route => location.pathname.includes(route));
+    return !noHeaderFooterRoutes.some(route => location.pathname.startsWith(route));
   };
 
   return (
