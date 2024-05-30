@@ -120,7 +120,7 @@ const Chapireformateur = () => {
         return (
           <div>
             <h3>PDFs</h3>
-            <div className='d-flex justify-content-around'>
+            <div className='d-flex justify-content-around mt-3 flex-wrap'>
               {pdfs.map(pdf => (
                 <div key={pdf.pdf_id} className='card col-md-3'>
                   <div className='card-body'>
@@ -158,22 +158,24 @@ const Chapireformateur = () => {
             <div className='row mt-5'>
               <div className='col-md-12'>
                 <h3>Videos</h3>
-                <div className='d-flex justify-content-around'>
+                <div className='d-flex justify-content-around flex-wrap gap-2 mt-4'>
                   {videos.map(video => (
-                    <div key={video.id} className='card col-md-6'>
+                    <div key={video.id} className='card col-md-5'>
                       <div className='card-body'>
-                        <button className="btn btn-danger border-0 mt-2" onClick={() => handleVideoDelete(video.id)}>
-                          Supprimer ce vidéo
-                        </button>
+                       
                         <h5 className='card-title'>{video.video_titre}</h5>
                         {video.video ? (
                           <video controls width="100%" height="300px">
                             <source src={`http://localhost:3001/uploads/videos/${video.video}`} type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
+                          
                         ) : (
                           <p>No video content available.</p>
                         )}
+                         <button className="btn btn-danger border-0 mt-2" onClick={() => handleVideoDelete(video.id)}>
+                          Supprimer ce vidéo
+                        </button>
                       </div>
                     </div>
                   ))}

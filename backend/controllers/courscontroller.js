@@ -47,6 +47,7 @@ const getCoursByCategorieId = async (req, res) => {
 const createCours = async (req, res) => {
   const { titre, description, prix } = req.body;
   const categorieId = parseInt(req.params.categorieId);
+  const userId = 1; // Assuming user ID 1 is hardcoded for simplicity
 
   if (isNaN(categorieId) || categorieId <= 0) {
     return res.status(400).json({ message: 'Invalid category ID' });
@@ -63,17 +64,44 @@ const createCours = async (req, res) => {
 
     const replacements = { titre, description, prix, categorieId, photo };
 
-    await sequelize.query(insertQuery, {
-      replacements,
-      type: QueryTypes.INSERT,
-    });
+    // Start a transaction to ensure both insertions succeed or fail together
+    const transaction = await sequelize.transaction();
 
-    res.status(201).json({ message: 'Course created successfully' });
+    try {
+      // Insert into cours table
+      const [coursId] = await sequelize.query(insertQuery, {
+        replacements,
+        type: QueryTypes.INSERT,
+        transaction,
+      });
+
+      // Insert into usercours table
+      const insertUserCoursQuery = `
+        INSERT INTO usercours (user_id, cours_id)
+        VALUES (:userId, :coursId)
+      `;
+
+      await sequelize.query(insertUserCoursQuery, {
+        replacements: { userId, coursId },
+        type: QueryTypes.INSERT,
+        transaction,
+      });
+
+      // Commit the transaction if everything is successful
+      await transaction.commit();
+
+      res.status(201).json({ message: 'Course created successfully' });
+    } catch (insertError) {
+      // Rollback the transaction if there's an error
+      await transaction.rollback();
+      throw insertError; // Propagate the error to the outer catch block
+    }
   } catch (error) {
     console.error('Error creating course:', error);
     res.status(500).send('Server Error');
   }
 };
+
 
 // Function to delete a course by ID
 const deleteCours = async (req, res) => {

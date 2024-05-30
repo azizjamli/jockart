@@ -50,3 +50,8 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     font-weight: 500;
 }
+.selected {
+    border: 5px solid #5C68CC;
+    /* background-color: #f0f8ff; /* Light blue background for better visibility */
+    margin: 0; /* Ensure no margin around the card to avoid gaps */
+  }
