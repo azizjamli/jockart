@@ -183,12 +183,26 @@ const updateCours = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+const getCoursById = async (req, res) => {
+  try {
+      const coursId = req.params.coursid;
+      const cours = await Cours.findByPk(coursId); // Use findByPk instead of findById
+      if (!cours) {
+          return res.status(404).json({ message: 'Course not found' });
+      }
+      res.json(cours);
+  } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+};
 
 module.exports = {
   getCoursByCategorieId,
   createCours,
   deleteCours,
-  updateCours
+  updateCours,
+  getCoursById
 };
 
 

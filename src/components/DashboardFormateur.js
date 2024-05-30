@@ -15,19 +15,7 @@ const Dashboardformateur = () =>{
   const navigate = useNavigate();
 
   useEffect(() => {
-   /* async function fetchData() {
-      try {
-        const userId = localStorage.getItem('userId');
-        const userResponse = await axios.get('http://localhost:3001/api/users/getInfo', {
-          params: { userId },
-        });
-        setUser(userResponse.data);
-        console.log(userResponse.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
-    }*/
+   
 
     async function fetchCategories() {
       try {
