@@ -12,6 +12,8 @@ const Accedercoursformateur = () => {
   const [seanceEnLigne, setSeanceEnLigne] = useState([]);
   const [newChapitre, setNewChapitre] = useState({ title: '', content: '' });
   const [newSeance, setNewSeance] = useState({ title: '', date: '', heure: '', link: '' });
+  const [showAddChapitreForm, setShowAddChapitreForm] = useState(false);
+  const [showAddSeanceForm, setShowAddSeanceForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,6 +80,7 @@ const Accedercoursformateur = () => {
       });
       setChapitres([...chapitres, response.data]);
       setNewChapitre({ title: '', content: '' });
+      setShowAddChapitreForm(false); // Hide the form after adding a chapitre
     } catch (error) {
       console.error('Error creating chapitre:', error);
     }
@@ -97,6 +100,7 @@ const Accedercoursformateur = () => {
       });
       setSeanceEnLigne([...seanceEnLigne, response.data]);
       setNewSeance({ title: '', date: '', heure: '', link: '' });
+      setShowAddSeanceForm(false); // Hide the form after adding a seance
     } catch (error) {
       console.error('Error creating SeanceEnLigne:', error);
     }
@@ -133,102 +137,114 @@ const Accedercoursformateur = () => {
 
   return (
     <>
-      <h1>cours id: {id}</h1>
       <UserInfo user={user} />
-
-      <div className='      container bg-success'>
-        <div className='row d-flex justify-content-between align-items-baseline'>
-          <h2 className=''>cours</h2>
-        </div>
-        <div className='col-md-12'>
-          <input
-            type='text'
-            name='title'
-            value={newChapitre.title}
-            onChange={handleInputChange}
-            placeholder='Title'
-          />
-          <input
-            type='text'
-            name='content'
-            value={newChapitre.content}
-            onChange={handleInputChange}
-            placeholder='Content'
-          />
-          <button className='btn' onClick={handleAddChapitre}>ajouter un chapitre</button>
-        </div>
-      </div>
-
-      <div className='container mt-5'>
-        <h2>Ajouter une Séance En Ligne</h2>
-        <form onSubmit={handleAddSeance}>
-          <input
-            type='text'
-            name='title'
-            value={newSeance.title}
-            onChange={handleSeanceInputChange}
-            placeholder='Title'
-          />
-          <input
-            type='date'
-            name='date'
-            value={newSeance.date}
-            onChange={handleSeanceInputChange}
-            placeholder='Date'
-          />
-          <input
-            type='text'
-            name='heure'
-            value={newSeance.heure}
-            onChange={handleSeanceInputChange}
-            placeholder='Heure'
-          />
-          <input
-            type='text'
-            name='link'
-            value={newSeance.link}
-            onChange={handleSeanceInputChange}
-            placeholder='Link'
-          />
-          <button type='submit' className='btn'>Ajouter une séance</button>
-        </form>
-      </div>
-
-      <div className='container mt-5'>
-        <h2>SeanceEnLigne</h2>
-        {seanceEnLigne.map(seance => (
-          <div key={seance.id} className='card mb-3'>
-            <div className='card-body'>
-              <h5 className='card-title'>Session Title: {seance.title}</h5>
-              <p className='card-text' >Date: {formatSeanceDate(seance.date)}</p>
-              <h5 className='card-title'>heure : {seance.heure}</h5>
-              <a className='card-text' href={seance.link} target='_blank' rel='noopener noreferrer'>
-                Link: {seance.link}
-              </a>
-              <button className='btn bg-danger' onClick={() => handleDeleteSeance(seance.id)}>Supprimer</button>
-            </div>
-          </div>
-        ))}
-      </div>
-
       <div className='container mt-5'>
         <h2>Chapitres</h2>
-        <div className='row d-flex p-3 justify-content-around'>
+        <div className='row d-flex p-3 justify-content-around gap-1'>
           {chapitres.map(chapitre => (
-            <div key={chapitre.chapitre_id} className='card col-sm-3'>
+            <div key={chapitre.chapitre_id} className='card col-md-3 mb-2 col-sm-3'>
               <div className='card-body'>
                 <h2 className='card-title'>{chapitre.chapitre_name}</h2>
                 <p className='card-text'>{chapitre.description}</p>
-                <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.chapitre_id)}>supprimer ce chapitre</button>
-                <button className='btn' onClick={() => handleCardClick(chapitre.chapitre_id)}>inspecter</button>
+                <div className='d-flex justify-content-center gap-1'>
+                  <button className='btn' onClick={() => handleCardClick(chapitre.chapitre_id)}>Inspecter</button>
+                  <button className='btn bg-danger' onClick={() => handleDeleteChapitre(chapitre.chapitre_id)}>Supprimer</button>
+                </div>
               </div>
             </div>
           ))}
         </div>
+      </div>
+
+      <div className='container mt-5'>
+        <button className='btn btn-primary' onClick={() => setShowAddChapitreForm(!showAddChapitreForm)}>
+          {showAddChapitreForm ? 'Annuler' : 'Ajouter un chapitre'}
+        </button>
+        {showAddChapitreForm && (
+          <div className='col-md-12 mt-3'>
+            <input
+              type='text'
+              name='title'
+              value={newChapitre.title}
+              onChange={handleInputChange}
+              placeholder='Title'
+              className='form-control mb-2'
+            />
+            <input
+              type='text'
+              name='content'
+              value={newChapitre.content}
+              onChange={handleInputChange}
+              placeholder='Content'
+              className='form-control mb-2'
+            />
+            <button className='btn btn-success' onClick={handleAddChapitre}>Enregistrer</button>
+          </div>
+        )}
+      </div>
+
+      <div className='container seance-en-ligne mt-5'>
+        <h2>les cours en lignes</h2>
+        {seanceEnLigne.map(seance => (
+          <div key={seance.id} className='card mb-3'>
+            <div className='card-body'>
+              <h5 className='card-title'>Session Title: {seance.title}</h5>
+              <p className='card-text'>Date: {formatSeanceDate(seance.date)}</p>
+              <h5 className='card-title'>Heure : {seance.heure}</h5>
+              <a className='card-text' href={seance.link} target='_blank' rel='noopener noreferrer'>
+                Link: {seance.link}
+              </a>
+            </div>
+            <button className='btn bg-danger align-self-center mb-2' onClick={() => handleDeleteSeance(seance.id)}>Supprimer</button>
+
+          </div>
+        ))}
+      </div>
+
+      <div className='container seance-en-ligne-ajout mt-5'>
+        <button className='btn btn-primary' onClick={() => setShowAddSeanceForm(!showAddSeanceForm)}>
+          {showAddSeanceForm ? 'Annuler' : 'Ajouter une séance'}
+        </button>
+        {showAddSeanceForm && (
+          <form onSubmit={handleAddSeance} className='mt-3'>
+            <input
+              type='text'
+              name='title'
+              value={newSeance.title}
+              onChange={handleSeanceInputChange}
+              placeholder='Title'
+              className='form-control mb-2'
+            />
+            <input
+              type='date'
+              name='date'
+              value={newSeance.date}
+              onChange={handleSeanceInputChange}
+              placeholder='Date'
+              className='form-control mb-2'
+            />
+            <input
+              type='text'
+              name='heure'
+              value={newSeance.heure}
+              onChange={handleSeanceInputChange}
+              placeholder='Heure'
+              className='form-control mb-2'
+            />
+            <input
+              type='text'
+              name='link'
+              value={newSeance.link}
+              onChange={handleSeanceInputChange}
+              placeholder='Link'
+              className='form-control mb-2'
+            />
+            <button type='submit' className='btn btn-primary'>Ajouter une séance</button>
+          </form>
+        )}
       </div>
     </>
   );
 };
 
 export default Accedercoursformateur;
-

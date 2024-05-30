@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AddCategory from './addcategory';
+//import './Dashboardadmin.css'; // Import the CSS file
 
 const Dashboardadmin = () => {
   const [loading, setLoading] = useState(true);
@@ -75,7 +75,6 @@ const Dashboardadmin = () => {
     navigate(`/admincours/${selectedCoursId}`);
   };
 
-  // Render course photo
   const renderCoursePhoto = (photo) => {
     return photo ? (
       <img src={photo} alt="Course" className="card-img-top" />
@@ -86,7 +85,6 @@ const Dashboardadmin = () => {
 
   return (
     <>
-      <p>Dashboard Admin</p>
       <div className="container">
         <div className="dashboard row">
           <div className="menucategorie border-0 col-md-3">
@@ -124,12 +122,15 @@ const Dashboardadmin = () => {
             </div>
           </div>
           <div className="col-md-9">
-            <h2>Les cours pour la catégorie: {selectedCategoryId}</h2>
-            <h3>{selectedCoursId}</h3>
-            <div className="row">
+            <h1 className=' container ban5'>Admin</h1>
+            <div className="row mt-5">
               {coursFinderData.map((course) => (
-                <div className={`col-md-4 mb-4${selectedCoursId === course.id ? ' selected' : ''}`} key={course.id} onClick={() => setSelectedCoursId(course.id)}>
-                  <div className="card">
+                <div
+                  className={`col-md-4 mb-4`}
+                  key={course.id}
+                  onClick={() => setSelectedCoursId(course.id)}
+                >
+                  <div className={`card ${selectedCoursId === course.id ? 'selected' : ''}`}>
                     {renderCoursePhoto(course.photo)}
                     <div className="card-body">
                       <h5 className="card-title">{course.titre}</h5>
@@ -140,17 +141,15 @@ const Dashboardadmin = () => {
                 </div>
               ))}
             </div>
-            <div className='d-flex flex-wrap align- justify-content-center  gap-3'>
-              <button className='btn ' onClick={handleAddCoursClick}>Ajouter un cours</button>
-              <button className='btn ' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
-              <button className='btn ' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
-              <button className='btn ' onClick={() => navigate('/admincreateprofile')}>Creer un compte</button>
-
-            </div>  
           </div>
         </div>
+        <div className='d-flex flex-wrap align- justify-content-center gap-3'>
+          <button className='btn ' onClick={handleAddCoursClick}>Ajouter un cours</button>
+          <button className='btn ' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
+          <button className='btn ' onClick={handleInspectCourseClick}>Inspecter ce cours</button>
+          <button className='btn ' onClick={() => navigate('/admincreateprofile')}>Creer un compte</button>
+        </div>
       </div>
-      
     </>
   );
 };
