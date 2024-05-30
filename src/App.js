@@ -31,6 +31,7 @@ import Sortie from './components/sortie';
 import FormationEnLigne from './components/formationenligne';
 import TravailDeGroup from './components/travaildegroup';
 import Event from './components/event';
+import Incours from './components/incours';
 import axios from 'axios'; // Import Axios for API requests
 
 function App() {
@@ -45,11 +46,24 @@ function AppContent() {
   const location = useLocation();
 
   // Define an array of routes where Header and Footer should be rendered
-  const headerFooterRoutes = ['/', '/formations', '/communaute', '/apropos', '/contact', '/login' , '/systemepedagogique' , '/sortie' , '/formationenligne' , '/travaildegroup' , '/event'];
+  const headerFooterRoutes = [
+    '/',
+    '/formations',
+    '/communaute',
+    '/apropos',
+    '/contact',
+    '/login',
+    '/systemepedagogique',
+    '/sortie',
+    '/formationenligne',
+    '/travaildegroup',
+    '/event',
+    '/incours/', // Include a route pattern for incours
+  ];
 
   // Function to check if Header and Footer should be rendered based on the current route
   const shouldRenderHeaderFooter = () => {
-    return headerFooterRoutes.includes(location.pathname);
+    return headerFooterRoutes.some(route => location.pathname.includes(route));
   };
 
   return (
@@ -63,10 +77,7 @@ function AppContent() {
         <Route path="/formationenligne" element={<FormationEnLigne />} />
         <Route path="/travaildegroup" element={<TravailDeGroup />} />
         <Route path="/event" element={<Event />} />
-
-
-
-
+        <Route path="/incours/:courseId" element={<Incours />} /> {/* Updated route for Incours */}
         <Route path="/communaute" element={<Communauté />} />
         <Route path="/apropos" element={<APropos />} />
         <Route path="/contact" element={<Contact />} />
@@ -76,17 +87,13 @@ function AppContent() {
         <Route path="/dashboardadmin" element={<Dashboardadmin />} />
         <Route path="/addcategory" element={<AddCategory />} />
         <Route path="/admincreateprofile" element={<AdminCreateProfile />} />
-
         <Route path="/addcours/:categoryId" element={<AddCours />} />
         <Route path="/ajoutercours/:id" element={<Ajoutercours />} />
         <Route path="/accedercours/:id" element={<Accedercours />} />
         <Route path="/accedercoursformateur/:id" element={<Accedercoursformateur />} />
-
         <Route path="/admincours/:id" element={<Admincours />} />
         <Route path="/coursdetails" element={<Coursdetails />} />
         <Route path="/chapitreformateur/:chapitre_id" element={<Chapitreformateur />} />
-
-
         <Route path="/chapitreetud/:chapitre_id" element={<Chapitreetud />} />
         <Route path="/dashboardformateur" element={<Dashboardformateur />} />
       </Routes>

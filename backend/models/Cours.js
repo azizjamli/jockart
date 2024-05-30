@@ -36,6 +36,10 @@ const Cours = sequelize.define('Cours', {
       key: 'id',
     },
   },
+}, {
+  sequelize,
+  modelName: 'Cours',
+  timestamps: false,  // Disable timestamps
 });
 
 Cours.associate = (models) => {

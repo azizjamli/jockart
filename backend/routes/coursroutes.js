@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getCoursByCategorieId, createCours, deleteCours, updateCours } = require('../controllers/courscontroller');
+const { getCoursByCategorieId, createCours, deleteCours, updateCours ,getCoursById } = require('../controllers/courscontroller');
 const multer = require('multer');
 const path = require('path');
+const Categorie = require('../models/categorie');
 
 // Set up storage engine for multer
 const storage = multer.diskStorage({
@@ -19,6 +20,8 @@ const upload = multer({ storage: storage });
 
 // GET /api/cours/getCoursByCategorieId/:categorieId - Get courses by category ID
 router.get('/getCoursByCategorieId/:categorieId', getCoursByCategorieId);
+router.get('/getCoursById/:coursid', getCoursById);
+
 
 // POST /api/cours/createCours/:categorieId - Create a new course
 router.post('/createCours/:categorieId', upload.single('photo'), createCours);
