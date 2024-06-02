@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-//import './Dashboardadmin.css'; // Import the CSS file
+import './dashboardetud.css'; // Import the CSS file
 
 const Dashboardadmin = () => {
   const [loading, setLoading] = useState(true);
@@ -96,7 +96,7 @@ const Dashboardadmin = () => {
                   <a
                     href="#"
                     key={categorie.id}
-                    className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' active' : ''}`}
+                    className={`list-group-item list-group-item-action${selectedCategoryId === categorie.id ? ' selected-category' : ''}`}
                     onClick={() => handleCategoryClick(categorie.id)}
                   >
                     {categorie.nom}
@@ -143,7 +143,7 @@ const Dashboardadmin = () => {
             </div>
           </div>
         </div>
-        <div className='d-flex flex-wrap align- justify-content-center gap-3'>
+        <div className='d-flex mt-5 flex-wrap align- justify-content-center gap-3'>
           <button className='btn ' onClick={handleAddCoursClick}>Ajouter un cours</button>
           <button className='btn ' onClick={handleDeleteCoursClick}>Supprimer ce cours</button>
           <button className='btn ' onClick={handleInspectCourseClick}>Inspecter ce cours</button>

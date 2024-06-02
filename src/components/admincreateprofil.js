@@ -99,16 +99,16 @@ const AdminCreateProfile = () => {
         <div className="p-5 signup">
             <h2 className="titresignin">Créez un compte</h2>
             <div className="d-flex justify-content-center gap-5 mt-5">
-                <img src={facebook} alt="Facebook" className="iconsignin" />
-                <img src={instagram} alt="Instagram" className="iconsignin" />
-                <img src={tiktok} alt="TikTok" className="iconsignin" />
+                <img src={facebook} alt="Facebook" className="img-fluid iconsignin1 " />
+                <img src={instagram} alt="Instagram" className="img-fluid iconsignin1 " />
+                <img src={tiktok} alt="TikTok" className="img-fluid iconsignin1 " />
             </div>
-            <p className="mt-5">Ou inscrivez-vous avec votre email</p>
+            <p className="mt-5" >Ou utilisez votre email pour vous inscrire</p>
             <form className="d-flex flex-column align-items-center gap-3" onSubmit={handleSubmit}>
                 <input className="mt-4 inputlogin" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input className="mt-4 inputlogin" type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input className="mt-4 inputlogin" type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                <select className="mt-4 inputlogin" value={role} onChange={(e) => setRole(e.target.value)}>
+                <select className="mt-4 inputlogin seleect" value={role} onChange={(e) => setRole(e.target.value)}>
                     <option value="admin">Admin</option>
                     <option value="etudiant">Etudiant</option>
                     <option value="formateur">Formateur</option>
