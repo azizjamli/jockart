@@ -18,7 +18,7 @@ const Coursadminetudiant = () => {
         const response = await axios.get(`http://localhost:3001/api/usercours/getCoursUsers/${courseId}`);
         setUsers(response.data);
       }
-    } catch (error) {
+    } catch (error) {   
       console.error("Error fetching users:", error);
     }
   };

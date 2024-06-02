@@ -1,0 +1,118 @@
+
+
+body {
+    background-color: #f8f9fa;
+}
+
+label {
+    color: #4A9AC3;
+    font-weight: bold;
+}
+
+.form-control[readonly] {
+    background-color: #fff;
+    border: 1px solid #F2E52F;
+    color: #000000;
+}
+
+.form-control[readonly]:focus {
+    box-shadow:#3198fe /* border shadow*/
+}
+
+
+
+/* Animation */
+.animated-form {
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.h2{
+    color: #311B61;
+}
+
+
+
+.h2.span{
+    color: #F2E52F;
+}
+.discount-card {
+    background-color: #4A9AC3;
+    color: white;
+    padding: 20px;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: scale(0.5);
+    animation: fadeInScaleUp 1s forwards;
+}
+
+.discount-card{
+    animation-delay: 0.5s;
+}
+
+.discount-text {
+    font-size: 2rem;
+}
+.h2
+p {
+    font-size: 1rem;
+    color: #000000;
+    margin: 0 10px;
+}
+
+.btn.btnreseau {
+    width: max-content; /* Set the button width to 100% of its container */
+    max-width: 200px; /* Set a maximum width for the button to prevent it from becoming too wide */
+    font-size: max(1vw, 15px); /* Set font size to 3vw or minimum of 20px */
+    font-family: 'Poppins Medium', sans-serif;
+    font-weight: bold;
+    background-color: #F2E52F;
+    border-radius: 22px;
+    white-space: normal; /* Allow text to wrap within the button */
+    padding: 10px 20px; /* Adjust padding for better appearance */
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+.btn.btnreseau{
+  
+    border-width: 2px;
+}
+.btn.btnreseau  :hover{
+  
+    color:#000000;
+    background-color: white;
+    border-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+@keyframes fadeInScaleUp {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
