@@ -239,7 +239,7 @@ const Accedercoursformateur = () => {
               placeholder='Link'
               className='form-control mb-2'
             />
-            <button type='submit' className='btn btn-primary'>Ajouter une séance</button>
+            <button type='submit' className='btn '>Ajouter une séance</button>
           </form>
         )}
       </div>
