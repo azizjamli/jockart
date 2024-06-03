@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import homeicon from '../assets/homeicon.png';
 import notificon from '../assets/notificon.png';
-import settingsicon from '../assets/settingsicon.png';
 import modifyicon from '../assets/modifyicon.png';
 import './dashboardetud.css';
 
@@ -16,7 +15,7 @@ const UserInfo = () => {
     numtel: '',
     email: '',
     photo: null,
-    photoUrl: '', // Initialize photoUrl as an empty string
+    photoUrl: '',
   });
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const UserInfo = () => {
         const userData = response.data.user;
         setUser(userData);
 
-        // Set photoUrl based on whether user.photo is present
         setFormData((prevData) => ({
           ...prevData,
           nom: userData.nom,
@@ -85,14 +83,13 @@ const UserInfo = () => {
       const updatedUserData = updatedResponse.data.user;
       setUser(updatedUserData);
 
-      // Update photoUrl based on whether updatedUserData.photo is present
       setFormData((prevData) => ({
         ...prevData,
         nom: updatedUserData.nom,
         prenom: updatedUserData.prenom,
         numtel: updatedUserData.numtel,
         email: updatedUserData.email,
-        photoUrl: updatedUserData.photo ,
+        photoUrl: updatedUserData.photo,
       }));
       setEditing(false);
     } catch (error) {
@@ -100,9 +97,8 @@ const UserInfo = () => {
     }
   };
 
-  // Render user photo
   const renderUserPhoto = (photoUrl) => {
-    console.log('Rendering Photo URL:', photoUrl); // Log photoUrl before rendering
+    console.log('Rendering Photo URL:', photoUrl);
     return photoUrl ? (
       <img
         src={photoUrl}
@@ -116,11 +112,9 @@ const UserInfo = () => {
 
   return (
     <div className="container dashboardinfo p-3">
-      <div className="row ">
-        <p className="text-md-center text-start  mt-4">Mon Profil</p>
-       
-      </div>
-      <div className="icons col-md-2  d-flex flex-column position-fixed  top-0 me-2 end-0">
+      <div className=" position-relative">
+        <p className=" text-start text-md-center  mt-4">Mon Profil</p>
+        <div className="icons d-flex flex-column position-absolute" style={{ top: '-3rem', right: '0rem' }}>
           <img style={{ width: '1.4vw' }} src={homeicon} className="img-fluid icon mt-5" alt="Home Icon" />
           <img
             style={{ width: '1.4vw', cursor: 'pointer' }}
@@ -130,8 +124,8 @@ const UserInfo = () => {
             onClick={() => setEditing(true)}
           />
           <img style={{ width: '1.4vw' }} src={notificon} className="img-fluid icon mt-5" alt="Notification Icon" />
-          
         </div>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
@@ -149,13 +143,9 @@ const UserInfo = () => {
               <p className='infoss'>Email: {user.email}</p>
               <p className='infoss'>Numéro: {user.numtel}</p>
             </div>
-           
-            
           </div>
-          
         )
       )}
-     
 
       {editing && (
         <form className="mt-3" onSubmit={handleFormSubmit}>
@@ -207,7 +197,7 @@ const UserInfo = () => {
               required
             />
           </div>
-          <div className="m" >
+          <div className="m">
             <label htmlFor="photo" className="form-label">Photo</label>
             <input
               type="file"
@@ -226,4 +216,3 @@ const UserInfo = () => {
 };
 
 export default UserInfo;
-
