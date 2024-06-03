@@ -60,22 +60,22 @@ const Coursadminformateur = () => {
     <>
       <div className="container">
         <div className=" row d-flex justify-content-between align-items-center gap-3">
-          <select value={selectedOption} className="col-md-4 ms-4" onChange={(e) => setSelectedOption(e.target.value)}>
-            <option value="inspecter">Inspecter les étudiants pour ce cours</option>
-            <option value="ajouter">Ajouter un étudiant à ce cours</option>
+          <select value={selectedOption} className="col-md-4 ggg ms-4" onChange={(e) => setSelectedOption(e.target.value)}>
+            <option value="inspecter">Inspecter les formateurs pour ce cours</option>
+            <option value="ajouter">Ajouter un formateur à ce cours</option>
           </select>
           {/* Search input */}
           <input
             type="text"
-            className="col-md-4"
+            className="col-md-4 searchd"
             placeholder="Search by name or email"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <ul className="row">
+        <ul className="row ">
           {filteredUsers.map((user) => (
-            <li className="d-flex justify-content-around bg-success p-2 mt-2 mb-2" key={user.id}>
+            <li className="d-flex justify-content-around align-items-center flex-wrap userr p-2 mt-5 mb-2" key={user.id}>
               <div>
                 <strong>Email:</strong> {user.email}
               </div>
