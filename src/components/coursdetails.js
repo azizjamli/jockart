@@ -48,6 +48,7 @@ const ModifyingPart = () => {
         <div className="form-group">
           <textarea
             placeholder="Description"
+            className="textarea col-md-12 mt-2 mb-2"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
@@ -61,13 +62,13 @@ const ModifyingPart = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-3">
           <input
             type="file"
             onChange={(e) => setPhoto(e.target.files[0])}
           />
         </div>
-        <button type="submit">Enregistrer les modifications</button>
+        <button className="btn mt-5" type="submit">Enregistrer </button>
       </form>
     </div>
   );
